@@ -109,16 +109,6 @@
     </div>
   </header>
 
-  <!-- Filigrana fissa del logo: si disegna progressivamente scorrendo la pagina -->
-  <div class="watermark" id="watermark" aria-hidden="true">
-    <svg class="mark" viewBox="0 0 100 94">
-      <use href="#mk-p1" class="mk-fill f-dark"/><use href="#mk-p2" class="mk-fill f-light"/><use href="#mk-p3" class="mk-fill f-light"/>
-      <path class="mk-stroke c-dark"  pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/>
-      <path class="mk-stroke c-light" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/>
-      <path class="mk-stroke c-light" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/>
-    </svg>
-  </div>
-
   <main id="main">
 
     <!-- =========================================================
@@ -134,13 +124,18 @@
         <path pathLength="1" d="M-80 900 C 400 860, 900 820, 1520 640"/>
       </svg>
 
-      <div class="relative mx-auto max-w-site w-full px-5 md:px-8 pt-28 pb-24 text-center flex flex-col items-center">
-        <svg class="mark" viewBox="0 0 100 94" role="img" aria-label="Logo Cavallini & Partners">
-          <use href="#mk-p1" class="mk-fill f-dark"/><use href="#mk-p2" class="mk-fill f-light s2"/><use href="#mk-p3" class="mk-fill f-light s3"/>
-          <path class="mk-stroke c-dark"     pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/>
-          <path class="mk-stroke c-light s2" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/>
-          <path class="mk-stroke c-light s3" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/>
-        </svg>
+      <div class="hero-content mx-auto max-w-site w-full px-5 md:px-8 pt-28 pb-24 text-center flex flex-col items-center">
+        <!-- Posto del logo nell'hero. Il logo "vivo" è #brand-mark (fisso, sotto): parte da qui
+             e scorrendo si sposta e diventa la filigrana. Questo SVG statico resta come fallback
+             (senza JavaScript o con "riduci movimento" attivo). -->
+        <div id="hero-mark-slot" class="hero-mark-slot">
+          <svg class="mark mark-hero mark-static" viewBox="0 0 100 94" role="img" aria-label="Logo Cavallini &amp; Partners">
+            <use href="#mk-p1" class="mk-fill f-dark"/><use href="#mk-p2" class="mk-fill f-light s2"/><use href="#mk-p3" class="mk-fill f-light s3"/>
+            <path class="mk-stroke c-dark"     pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/>
+            <path class="mk-stroke c-light s2" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/>
+            <path class="mk-stroke c-light s3" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/>
+          </svg>
+        </div>
 
         <h1 class="hero-title font-serif font-semibold mt-8 text-5xl sm:text-6xl md:text-7xl tracking-wide leading-none">
           Cavallini <span class="font-medium text-secondary-300">&amp;</span> Partners
@@ -159,6 +154,31 @@
       </div>
       <span class="scroll-cue" aria-hidden="true"></span>
     </section>
+
+    <!-- =========================================================
+         LOGO VIVO (fisso) — hero ➜ filigrana
+         .ga = aspetto hero (pieno, bianco, si traccia all'apertura)
+         .gb = aspetto filigrana (solo linee blu a bassa opacità + "penna" che
+               ripercorre il tratto durante lo scroll)
+         WP: template-part "parts/brand-mark.html" + main.js accodato nel tema
+         ========================================================= -->
+    <div id="brand-mark" class="brand-mark" aria-hidden="true">
+      <svg class="mark" viewBox="0 0 100 94">
+        <g class="mark-hero ga">
+          <use href="#mk-p1" class="mk-fill f-dark"/><use href="#mk-p2" class="mk-fill f-light s2"/><use href="#mk-p3" class="mk-fill f-light s3"/>
+          <path class="mk-stroke c-dark"     pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/>
+          <path class="mk-stroke c-light s2" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/>
+          <path class="mk-stroke c-light s3" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/>
+        </g>
+        <g class="gb">
+          <use href="#mk-p1" class="wb-fill"/><use href="#mk-p2" class="wb-fill"/><use href="#mk-p3" class="wb-fill"/>
+          <use href="#mk-p1" class="wb-line"/><use href="#mk-p2" class="wb-line"/><use href="#mk-p3" class="wb-line"/>
+          <path class="wb-trace"    pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/>
+          <path class="wb-trace t2" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/>
+          <path class="wb-trace t3" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/>
+        </g>
+      </svg>
+    </div>
 
     <div class="page-content">
 

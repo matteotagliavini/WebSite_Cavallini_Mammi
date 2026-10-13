@@ -79,18 +79,20 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .mark .mk-stroke { fill: none; stroke-width: .6; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke; }
 .mark .mk-fill { opacity: 0; }
 
-/* Hero: disegno automatico all'apertura */
-.hero .mark .mk-stroke { stroke-width: 1.4; animation: cp-draw 2.4s cubic-bezier(.65,0,.35,1) forwards; }
-.hero .mark .mk-stroke.s2 { animation-delay: .45s; }
-.hero .mark .mk-stroke.s3 { animation-delay: .8s; }
-.hero .mark .mk-fill { animation: cp-fill 1.2s ease forwards; animation-delay: 2s; }
-.hero .mark .mk-fill.s2 { animation-delay: 2.3s; }
-.hero .mark .mk-fill.s3 { animation-delay: 2.5s; }
+/* Aspetto "hero": tracciamento progressivo delle linee all'apertura, poi riempimento */
+.mark-hero .mk-stroke { stroke-width: 1.4; animation: cp-draw 2.4s cubic-bezier(.65,0,.35,1) forwards; }
+.mark-hero .mk-stroke.s2 { animation-delay: .45s; }
+.mark-hero .mk-stroke.s3 { animation-delay: .8s; }
+.mark-hero .mk-fill { animation: cp-fill 1.2s ease forwards; animation-delay: 2s; }
+.mark-hero .mk-fill.s2 { animation-delay: 2.3s; }
+.mark-hero .mk-fill.s3 { animation-delay: 2.5s; }
+.mark-hero .c-dark { stroke: #fff; } .mark-hero .f-dark { fill: #fff; }
+.mark-hero .c-light { stroke: var(--cp-secondary-300); } .mark-hero .f-light { fill: var(--cp-secondary-300); }
 @keyframes cp-draw { to { stroke-dashoffset: 0; } }
 @keyframes cp-fill { to { opacity: 1; } }
 
 /* ---------- HERO ---------- */
-.hero { position: relative; min-height: 100svh; color: #fff; overflow: hidden; isolation: isolate;
+.hero { position: relative; min-height: 100svh; color: #fff; overflow: hidden;
   background-color: var(--cp-primary);
   /* Inserire una foto di Sassuolo in assets/img/hero-sassuolo.jpg: verrà mostrata sotto il velo blu. */
   background-image:
@@ -98,7 +100,8 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
     var(--cp-hero-img, none),
     radial-gradient(120% 90% at 85% 10%, #2A4B74 0%, var(--cp-primary) 45%, var(--cp-primary-900) 100%);
   background-size: cover; background-position: center; }
-.hero-rays { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; opacity: .5; }
+.hero-rays { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .5; }
+.hero-content { position: relative; z-index: 2; }   /* testi dell'hero sopra il logo vivo */
 .hero-rays path { fill: none; stroke: var(--cp-secondary-300); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .25; stroke-dasharray: 1; stroke-dashoffset: 1; animation: cp-draw 3.5s cubic-bezier(.65,0,.35,1) forwards; }
 .hero-rays path:nth-child(2) { animation-delay: .3s; opacity: .18; }
 .hero-rays path:nth-child(3) { animation-delay: .6s; opacity: .12; }
@@ -106,9 +109,11 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .hero-rays { animation: cp-sway 26s ease-in-out infinite alternate; transform-origin: 50% 100%; }
 @keyframes cp-sway { from { transform: rotate(-.6deg) translateX(-10px); } to { transform: rotate(.6deg) translateX(10px); } }
 
-.hero .mark { width: clamp(150px, 22vw, 260px); height: auto; }
-.hero .mark .c-dark { stroke: #fff; } .hero .mark .f-dark { fill: #fff; }
-.hero .mark .c-light { stroke: var(--cp-secondary-300); } .hero .mark .f-light { fill: var(--cp-secondary-300); }
+.hero-mark-slot { width: clamp(150px, 22vw, 260px); aspect-ratio: 100 / 94; }
+.hero-mark-slot .mark { display: block; width: 100%; height: auto; }
+.js-mark .hero-mark-slot .mark-static { visibility: hidden; }
+/* Parallax leggero delle linee di sfondo (valore aggiornato dal JS) */
+.hero-rays { translate: 0 var(--rays-y, 0px); }
 
 .hero-title, .hero-sub, .hero-cta, .hero-rule { opacity: 0; animation: cp-fade-up 1s ease forwards; }
 .hero-title { animation-delay: 1.6s; } .hero-rule { animation-delay: 1.9s; } .hero-sub { animation-delay: 2.1s; } .hero-cta { animation-delay: 2.4s; }
@@ -118,17 +123,23 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .scroll-cue::after { content: ""; position: absolute; left: -2px; top: 0; width: 5px; height: 5px; border-radius: 50%; background: #fff; animation: cp-cue 2.2s ease-in-out infinite; }
 @keyframes cp-cue { 0% { top: 0; opacity: 0; } 30% { opacity: 1; } 100% { top: 52px; opacity: 0; } }
 
-/* ---------- Filigrana fissa del logo (resta sullo sfondo scorrendo) ---------- */
-.watermark { position: fixed; z-index: 0; pointer-events: none; right: -6vw; top: 50%; width: min(62vw, 720px); transform: translateY(-50%); opacity: 0; transition: opacity .6s ease; }
-.watermark.is-active { opacity: 1; }
-.watermark .mark .mk-stroke { stroke: var(--cp-primary); stroke-width: 1.4; opacity: .28; }
-.watermark .mark .mk-fill.f-dark { fill: var(--cp-primary); }
-.watermark .mark .mk-fill.f-light { fill: var(--cp-secondary); }
-.watermark .mark .mk-stroke.c-light { stroke: var(--cp-secondary); }
-@media (max-width: 767px) { .watermark { right: -30vw; width: 110vw; } }
+/* ---------- Logo vivo: dall'hero alla filigrana ----------
+   Il JS calcola, a ogni frame di scroll, posizione e scala (transform) e
+   l'avanzamento --t (0 = hero, 1 = filigrana). Solo transform/opacity: niente reflow. */
+.brand-mark { position: fixed; left: 0; top: 0; z-index: 1; pointer-events: none; visibility: hidden; transform-origin: 0 0; will-change: transform; }
+.js-mark .brand-mark, .brand-mark.is-static { visibility: visible; }
+.brand-mark svg { display: block; width: 100%; height: auto; overflow: visible; }
+.brand-mark .ga { opacity: var(--ga, 1); }
+.brand-mark .gb { opacity: calc(var(--t, 0) * var(--wm-alpha, 1)); }
+.gb .wb-fill  { fill: var(--cp-primary); opacity: .045; }
+.gb .wb-line  { fill: none; stroke: var(--cp-primary); stroke-width: 1.1; opacity: .2; vector-effect: non-scaling-stroke; }
+.gb .wb-trace { fill: none; stroke: var(--cp-secondary); stroke-width: 2.2; opacity: .55; stroke-linecap: round; vector-effect: non-scaling-stroke;
+                stroke-dasharray: .14 .86; stroke-dashoffset: var(--trace, 0); }
+.gb .wb-trace.t2 { stroke-dashoffset: calc(var(--trace, 0) * 1.3 + .4); }
+.gb .wb-trace.t3 { stroke-dashoffset: calc(var(--trace, 0) * 1.15 + .7); }
 
 /* Contenuto sopra la filigrana: sezioni con fondo semitrasparente */
-.page-content { position: relative; z-index: 1; }
+.page-content { position: relative; z-index: 3; }  /* livelli: hero(0) < logo vivo(1) < testi hero(2) < sezioni(3) < header(50) */
 .bg-surface { background: transparent; }
 .bg-surface-alt { background: rgba(241,245,249,.55); }
 

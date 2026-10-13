@@ -39,38 +39,86 @@
     });
   }
 
-  /* ---------- Filigrana del logo: si disegna con lo scroll ----------
-     Progresso 0→1 dalla fine dell'hero al fondo pagina.
-     I tre tratti (vela, albero, fiocco) si disegnano in sequenza,
-     poi compare un riempimento molto leggero. */
-  var wm = document.getElementById('watermark');
-  var strokes = wm ? wm.querySelectorAll('.mk-stroke') : [];
-  var fills = wm ? wm.querySelectorAll('.mk-fill') : [];
+  /* ---------- Logo vivo: dall'hero alla filigrana ----------
+     Ispirazione "shared element": il logo grande dell'hero, scorrendo,
+     si sposta e si ingrandisce verso destra trasformandosi in filigrana
+     a bassa opacità (solo linee). Poi resta sullo sfondo con:
+       - parallax verticale e lieve rotazione legati all'avanzamento pagina;
+       - una "penna" che ripercorre i tratti del logo man mano che si scorre.
+     Solo transform/opacity e variabili CSS → nessun reflow. */
+  var root = document.documentElement;
+  var mark = document.getElementById('brand-mark');
+  var slot = document.getElementById('hero-mark-slot');
+  var raysEl = document.querySelector('.hero-rays');
+  var M = { W: 0, H: 0, tx: 0, ty: 0, sx: 0, sy: 0, sw: 0 };
+
   function clamp(v) { return Math.max(0, Math.min(1, v)); }
-  function onWatermark() {
-    if (!wm) return;
-    var start = hero ? hero.offsetHeight * 0.6 : 0;
-    var end = document.documentElement.scrollHeight - window.innerHeight;
-    var p = clamp((window.scrollY - start) / Math.max(1, end - start));
-    wm.classList.toggle('is-active', window.scrollY > start);
-    if (reduceMotion) p = 1;
-    strokes.forEach(function (s, i) {
-      var local = clamp((p - i * 0.12) / 0.5);          // sfasamento tra i tratti
-      s.style.strokeDashoffset = 1 - local;
-    });
-    var f = clamp((p - 0.55) / 0.35);
-    fills.forEach(function (el) { el.style.opacity = (f * 0.06).toFixed(3); });
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function easeInOut(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+  if (mark && slot) {
+    if (reduceMotion) mark.classList.add('is-static');   // filigrana fissa, nessun movimento
+    else root.classList.add('js-mark');
+  }
+
+  function layoutMark() {
+    if (!mark) return;
+    var vw = window.innerWidth, vh = window.innerHeight, mobile = vw < 768;
+    M.W = mobile ? vw * 1.15 : Math.min(vw * 0.6, 760);
+    M.H = M.W * 0.94;
+    M.tx = mobile ? vw - M.W * 0.7 : vw - M.W * 0.86;   // esce leggermente dal bordo destro
+    M.ty = (vh - M.H) / 2 + (mobile ? vh * 0.06 : 0);
+    mark.style.width = M.W + 'px';
+    // Punto di partenza: posizione del logo nell'hero a pagina in cima (resta "agganciato" allo schermo)
+    var r = slot.getBoundingClientRect();
+    M.sx = r.left; M.sy = r.top + window.scrollY; M.sw = r.width;
+  }
+
+  function onMark() {
+    if (!mark || !slot) return;
+    var y = window.scrollY, vh = window.innerHeight;
+    var heroH = hero ? hero.offsetHeight : vh;
+    var transEnd = heroH * 0.85;                                        // fine del passaggio hero → filigrana
+    var docEnd = Math.max(1, document.documentElement.scrollHeight - vh - transEnd);
+    var after = clamp((y - transEnd) / docEnd);                          // avanzamento nel resto della pagina
+
+    if (reduceMotion) {
+      mark.style.transform = 'translate(' + M.tx + 'px,' + M.ty + 'px)';
+      mark.style.setProperty('--t', y > heroH * 0.6 ? 1 : 0);
+      return;
+    }
+
+    var raw = clamp(y / transEnd);
+    var t = easeInOut(raw), tx = easeOut(clamp(raw / 0.7));                          // in orizzontale si sposta prima: libera il titolo
+    var s = lerp(M.sw / M.W, 1, t);
+    var par = (after - 0.5) * -0.22 * vh * t;                            // parallax ±11% viewport
+    var rot = (after - 0.5) * 7 * t;                                     // rotazione ±3.5°
+    var x = lerp(M.sx, M.tx, tx);
+    var yy = lerp(M.sy, M.ty + par, t);
+
+    mark.style.transform = 'translate(' + x.toFixed(1) + 'px,' + yy.toFixed(1) + 'px) scale(' + s.toFixed(4) + ') ' +
+      'translate(' + (M.W / 2) + 'px,' + (M.H / 2) + 'px) rotate(' + rot.toFixed(2) + 'deg) translate(' + (-M.W / 2) + 'px,' + (-M.H / 2) + 'px)';
+    // Il logo passa DIETRO ai testi dell'hero (z-index) e si attenua subito per non disturbarne la lettura.
+    // Dissolvenza incrociata: il logo bianco resta visibile sul blu dell'hero, le linee blu
+    // compaiono sul bianco delle sezioni (ognuno "sparisce" da solo sul fondo del suo colore).
+    mark.style.setProperty('--t', clamp(raw * 1.5).toFixed(3));
+    mark.style.setProperty('--ga', ((1 - 0.65 * clamp(raw / 0.3)) * (1 - clamp((raw - 0.5) / 0.5))).toFixed(3));
+    mark.style.setProperty('--trace', (-y / vh * 0.32).toFixed(4));    // la "penna" avanza con lo scroll
+
+    if (raysEl && y < heroH) raysEl.style.setProperty('--rays-y', (y * 0.25).toFixed(1) + 'px');
   }
 
   var ticking = false;
   function onScroll() {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(function () { onHeader(); onWatermark(); ticking = false; });
+    requestAnimationFrame(function () { onHeader(); onMark(); ticking = false; });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  onHeader(); onWatermark();
+  window.addEventListener('resize', function () { layoutMark(); onScroll(); });
+  layoutMark(); onHeader(); onMark();
+  window.addEventListener('load', function () { layoutMark(); onMark(); });  // dopo il caricamento dei font
 
   /* ---------- Comparsa elementi allo scroll ---------- */
   var reveals = document.querySelectorAll('.reveal');
