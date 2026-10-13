@@ -187,8 +187,9 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 /* Contenuto sopra la filigrana: sezioni con fondo semitrasparente */
 .page-content { position: relative; z-index: 3; }  /* livelli: palco < filigrana(1) < sezioni(3) < header(50) */
 /* Sezioni trasparenti: la filigrana del logo resta visibile in modo uniforme (nessun "taglio" ai bordi) */
-.bg-surface { background: transparent; }
-.bg-surface-alt { background: transparent; }
+/* NB: nome di classe proprio (non "bg-surface"): Tailwind CDN genererebbe una classe omonima
+   con sfondo pieno, caricata DOPO questo file, che coprirebbe la filigrana con un taglio netto. */
+.sec-clear { background: transparent; }
 
 /* ---------- Card servizi ---------- */
 .service-card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 2rem; transition: border-color .3s, box-shadow .3s, transform .3s; overflow: hidden; }
