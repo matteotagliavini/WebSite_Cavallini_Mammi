@@ -11,13 +11,13 @@
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 
-  /* ---------- Header: trasparente sull'hero, bianco dopo lo scroll ---------- */
+  /* ---------- Header: trasparente sull'hero blu, bianco quando lo sfondo diventa chiaro ---------- */
   var header = document.getElementById('site-header');
-  var hero = document.querySelector('.hero');
+  var hero = document.querySelector('.stage-hero') || document.querySelector('.hero');
+  var headerLimit = function () { return hero ? hero.offsetHeight - 90 : 10; };   // ridefinito dal palco animato
   function onHeader() {
     if (!header) return;
-    var limit = hero ? hero.offsetHeight - 90 : 10;
-    header.classList.toggle('is-scrolled', window.scrollY > limit);
+    header.classList.toggle('is-scrolled', window.scrollY > headerLimit());
   }
 
   /* ---------- Menu mobile ---------- */
@@ -39,86 +39,171 @@
     });
   }
 
-  /* ---------- Logo vivo: dall'hero alla filigrana ----------
-     Ispirazione "shared element": il logo grande dell'hero, scorrendo,
-     si sposta e si ingrandisce verso destra trasformandosi in filigrana
-     a bassa opacità (solo linee). Poi resta sullo sfondo con:
-       - parallax verticale e lieve rotazione legati all'avanzamento pagina;
-       - una "penna" che ripercorre i tratti del logo man mano che si scorre.
-     Solo transform/opacity e variabili CSS → nessun reflow. */
+  /* ==========================================================================
+     PALCO "SCROLLYTELLING" DEL LOGO (ispirato al video di riferimento)
+     La sezione .stage è alta ~4 schermate; il suo contenitore resta agganciato
+     allo schermo (sticky) e l'avanzamento p (0→1) guida una "timeline":
+
+       p 0.00–0.10  il testo dell'hero sale e svanisce
+       p 0.06–0.28  il logo ruota in 3D attorno all'asse verticale: a metà è di
+                    taglio (sparisce come la bici vista di fronte), lì cambia colore
+                    da bianco a blu mentre lo sfondo passa dal blu al chiaro
+       p 0.05–0.32  il logo vola dal centro a destra e si ingrandisce, compare il disco
+       p 0.27–0.72  a sinistra entra il testo "Lo Studio" (momento di lettura)
+       p 0.44–0.68  "gioco": vela, albero e fiocco si separano e si ricompongono
+       p 0.74–1.00  il logo si sposta e si alleggerisce fino a diventare la filigrana
+       p ≥ 1        il palco si sgancia e la filigrana fissa (#brand-mark) prende il posto
+
+     Solo transform/opacity e variabili CSS (niente reflow). Con "riduci movimento"
+     attivo il palco non viene animato: hero e testo restano statici in sequenza.
+     ========================================================================== */
   var root = document.documentElement;
-  var mark = document.getElementById('brand-mark');
+  var stage = document.querySelector('.stage');
+  var sticky = document.getElementById('stage-sticky');
+  var sm = document.getElementById('stage-mark');
   var slot = document.getElementById('hero-mark-slot');
-  var raysEl = document.querySelector('.hero-rays');
-  var M = { W: 0, H: 0, tx: 0, ty: 0, sx: 0, sy: 0, sw: 0 };
+  var brand = document.getElementById('brand-mark');
+  var smRot = sm ? sm.querySelector('.stage-mark-rot') : null;
+  var pcs = ['pc1', 'pc2', 'pc3'].map(function (id) { return document.getElementById(id); });
+  var disk = document.querySelector('.stage-disk');
+  var heroContent = document.querySelector('.stage-hero .hero-content');
+  var studio = document.querySelector('.stage-studio');
+  var cue = document.querySelector('.stage-hero .scroll-cue');
+  var anchor = document.getElementById('studio');
+
+  var animated = !!(stage && sticky && sm && slot && studio && !reduceMotion);
+  if (animated) { root.classList.add('js-stage'); sticky.appendChild(sm); }
 
   function clamp(v) { return Math.max(0, Math.min(1, v)); }
   function lerp(a, b, t) { return a + (b - a) * t; }
+  function seg(p, a, b) { return clamp((p - a) / (b - a)); }               // avanzamento locale di un tratto della timeline
   function easeInOut(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeIn(t) { return t * t * t; }
 
-  if (mark && slot) {
-    if (reduceMotion) mark.classList.add('is-static');   // filigrana fissa, nessun movimento
-    else root.classList.add('js-mark');
-  }
+  var S = { top: 0, len: 1 }, K0 = {}, K2 = {}, WM = {}, D = 0;
 
-  function layoutMark() {
-    if (!mark) return;
+  function layout() {
     var vw = window.innerWidth, vh = window.innerHeight, mobile = vw < 768;
-    M.W = mobile ? vw * 1.15 : Math.min(vw * 0.6, 760);
-    M.H = M.W * 0.94;
-    M.tx = mobile ? vw - M.W * 0.7 : vw - M.W * 0.86;   // esce leggermente dal bordo destro
-    M.ty = (vh - M.H) / 2 + (mobile ? vh * 0.06 : 0);
-    mark.style.width = M.W + 'px';
-    // Punto di partenza: posizione del logo nell'hero a pagina in cima (resta "agganciato" allo schermo)
-    var r = slot.getBoundingClientRect();
-    M.sx = r.left; M.sy = r.top + window.scrollY; M.sw = r.width;
+    // Filigrana finale: grande, a destra, leggermente fuori dal bordo
+    WM.W = mobile ? vw * 1.15 : Math.min(vw * 0.6, 760);
+    WM.H = WM.W * 0.94;
+    WM.tx = mobile ? vw - WM.W * 0.7 : vw - WM.W * 0.86;
+    WM.ty = (vh - WM.H) / 2 + (mobile ? vh * 0.06 : 0);
+    WM.par0 = 0.11 * vh;                                                    // parallax della filigrana all'inizio
+    if (brand) brand.style.width = WM.W + 'px';
+    if (!animated) return;
+
+    S.top = stage.getBoundingClientRect().top + window.scrollY;
+    S.len = Math.max(1, stage.offsetHeight - vh);
+    headerLimit = function () { return S.top + S.len * 0.14; };
+
+    // K0 = posto del logo nell'hero (misurato senza le trasformazioni del testo)
+    var prev = heroContent ? heroContent.style.transform : '';
+    if (heroContent) heroContent.style.transform = 'none';
+    var r = slot.getBoundingClientRect(), k = sticky.getBoundingClientRect();
+    if (heroContent) heroContent.style.transform = prev;
+    K0 = { cx: r.left - k.left + r.width / 2, cy: r.top - k.top + r.height / 2, w: r.width };
+    // K2 = logo "protagonista" accanto al testo Lo Studio
+    K2 = mobile ? { cx: vw * 0.5, cy: vh * 0.24, w: Math.min(vw * 0.44, 230) }
+                : { cx: vw * 0.72, cy: vh * 0.53, w: Math.min(vw * 0.34, 470) };
+    sm.style.width = WM.W + 'px';
+    D = K2.w * 1.45;
+    if (disk) { disk.style.width = D + 'px'; disk.style.height = D + 'px'; }
+    if (anchor) anchor.style.top = Math.round(S.len * 0.40) + 'px';       // "Lo Studio" nel menu porta al momento giusto
   }
 
-  function onMark() {
-    if (!mark || !slot) return;
-    var y = window.scrollY, vh = window.innerHeight;
-    var heroH = hero ? hero.offsetHeight : vh;
-    var transEnd = heroH * 0.85;                                        // fine del passaggio hero → filigrana
-    var docEnd = Math.max(1, document.documentElement.scrollHeight - vh - transEnd);
-    var after = clamp((y - transEnd) / docEnd);                          // avanzamento nel resto della pagina
+  function markTransform(cx, cy, s, rot) {
+    var W = WM.W, H = WM.H;
+    return 'translate(' + (cx - W * s / 2).toFixed(1) + 'px,' + (cy - H * s / 2).toFixed(1) + 'px) scale(' + s.toFixed(4) + ') ' +
+      'translate(' + W / 2 + 'px,' + H / 2 + 'px) rotate(' + rot.toFixed(2) + 'deg) translate(' + (-W / 2) + 'px,' + (-H / 2) + 'px)';
+  }
 
-    if (reduceMotion) {
-      mark.style.transform = 'translate(' + M.tx + 'px,' + M.ty + 'px)';
-      mark.style.setProperty('--t', y > heroH * 0.6 ? 1 : 0);
-      return;
+  function onStage() {
+    var y = window.scrollY, vh = window.innerHeight;
+    var stageEnd = animated ? S.top + S.len : (stage ? stage.offsetTop + stage.offsetHeight - vh : vh);
+    var docEnd = Math.max(1, document.documentElement.scrollHeight - vh - stageEnd);
+    var after = clamp((y - stageEnd) / docEnd);
+
+    /* ---- Filigrana fissa (dopo il palco) ---- */
+    if (brand) {
+      var on = animated ? y >= stageEnd : y > (hero ? hero.offsetHeight * 0.8 : vh);
+      brand.classList.toggle('is-on', on);
+      var k = reduceMotion ? 0.5 : after;
+      var cx = WM.tx + WM.W / 2, cy = WM.ty + (k - 0.5) * -0.22 * vh + WM.H / 2;
+      brand.style.transform = markTransform(cx, cy, 1, (k - 0.5) * 7);       // parallax ±11% vh, rotazione ±3.5°
+      if (!reduceMotion) {
+        brand.style.setProperty('--trace', (-(y - stageEnd) / vh * 0.32).toFixed(4));
+        brand.style.setProperty('--tro', Math.min(1, after * 25).toFixed(3));
+      }
+    }
+    if (!animated) return;
+
+    var p = clamp((y - S.top) / S.len);
+    sm.style.visibility = p >= 1 ? 'hidden' : '';
+
+    /* ---- Posizione e scala del logo: K0 (hero) → K2 (protagonista) → filigrana ---- */
+    var m1 = easeInOut(seg(p, 0.05, 0.32)), m3 = easeInOut(seg(p, 0.74, 1));
+    var wmCx = WM.tx + WM.W / 2, wmCy = WM.ty + WM.par0 + WM.H / 2;
+    var cx = lerp(lerp(K0.cx, K2.cx, m1), wmCx, m3);
+    var cy = lerp(lerp(K0.cy, K2.cy, m1), wmCy, m3);
+    var w  = lerp(lerp(K0.w,  K2.w,  m1), WM.W, m3);
+
+    /* ---- "Gioco": le tre parti si separano e si ricompongono ---- */
+    var g = seg(p, 0.44, 0.68), e = Math.sin(Math.PI * g);                // 0 → 1 → 0
+    var sway = 4 * Math.sin(2 * Math.PI * g);
+    var rot2d = sway + lerp(0, -3.5, m3);
+    sm.style.transform = markTransform(cx, cy, w / WM.W, rot2d);
+    if (pcs[0]) pcs[0].style.transform = 'translate(' + (-24 * e).toFixed(2) + 'px,' + (12 * e).toFixed(2) + 'px) rotate(' + (-16 * e).toFixed(2) + 'deg)';
+    if (pcs[1]) pcs[1].style.transform = 'translate(' + (2 * e).toFixed(2) + 'px,' + (-24 * e).toFixed(2) + 'px) rotate(' + (5 * e).toFixed(2) + 'deg)';
+    if (pcs[2]) pcs[2].style.transform = 'translate(' + (28 * e).toFixed(2) + 'px,' + (-10 * e).toFixed(2) + 'px) rotate(' + (20 * e).toFixed(2) + 'deg)';
+
+    /* ---- Rotazione 3D con cambio colore quando il logo è di taglio ---- */
+    var r = seg(p, 0.06, 0.28);
+    var ang = r < 0.5 ? 90 * easeIn(r * 2) : -90 * (1 - easeOut((r - 0.5) * 2));
+    smRot.style.transform = 'rotateY(' + ang.toFixed(2) + 'deg)';
+    sm.classList.toggle('is-dark', r >= 0.5);
+
+    /* ---- Da logo pieno a filigrana (solo linee) ---- */
+    sm.style.setProperty('--fo', lerp(1, 0.045, m3).toFixed(3));
+    sm.style.setProperty('--lo', lerp(1, 0.2, m3).toFixed(3));
+    sm.style.setProperty('--lw', lerp(1.4, 1.1, m3).toFixed(2) + 'px');
+
+    /* ---- Disco chiaro dietro al logo protagonista ---- */
+    if (disk) {
+      var ds = easeOut(seg(p, 0.2, 0.36)) * (1 - easeInOut(seg(p, 0.72, 0.86))) * (1 + 0.08 * e);
+      disk.style.transform = 'translate(' + (K2.cx - D / 2).toFixed(1) + 'px,' + (K2.cy - D / 2).toFixed(1) + 'px) scale(' + ds.toFixed(4) + ')';
     }
 
-    var raw = clamp(y / transEnd);
-    var t = easeInOut(raw), tx = easeOut(clamp(raw / 0.7));                          // in orizzontale si sposta prima: libera il titolo
-    var s = lerp(M.sw / M.W, 1, t);
-    var par = (after - 0.5) * -0.22 * vh * t;                            // parallax ±11% viewport
-    var rot = (after - 0.5) * 7 * t;                                     // rotazione ±3.5°
-    var x = lerp(M.sx, M.tx, tx);
-    var yy = lerp(M.sy, M.ty + par, t);
+    /* ---- Hero: il testo sale e svanisce, poi lo sfondo blu lascia il posto al chiaro ---- */
+    var h = seg(p, 0, 0.09);
+    if (heroContent) { heroContent.style.opacity = (1 - h).toFixed(3); heroContent.style.transform = 'translateY(' + (-70 * easeOut(h)).toFixed(1) + 'px)'; }
+    if (cue) cue.style.opacity = (1 - seg(p, 0, 0.03)).toFixed(3);
+    var bg = 1 - seg(p, 0.135, 0.195);                                   // centrato sul momento "di taglio" (p≈0.17)
+    hero.style.opacity = bg.toFixed(3);
+    hero.style.visibility = bg <= 0 ? 'hidden' : '';
 
-    mark.style.transform = 'translate(' + x.toFixed(1) + 'px,' + yy.toFixed(1) + 'px) scale(' + s.toFixed(4) + ') ' +
-      'translate(' + (M.W / 2) + 'px,' + (M.H / 2) + 'px) rotate(' + rot.toFixed(2) + 'deg) translate(' + (-M.W / 2) + 'px,' + (-M.H / 2) + 'px)';
-    // Il logo passa DIETRO ai testi dell'hero (z-index) e si attenua subito per non disturbarne la lettura.
-    // Dissolvenza incrociata: il logo bianco resta visibile sul blu dell'hero, le linee blu
-    // compaiono sul bianco delle sezioni (ognuno "sparisce" da solo sul fondo del suo colore).
-    mark.style.setProperty('--t', clamp(raw * 1.5).toFixed(3));
-    mark.style.setProperty('--ga', ((1 - 0.65 * clamp(raw / 0.3)) * (1 - clamp((raw - 0.5) / 0.5))).toFixed(3));
-    mark.style.setProperty('--trace', (-y / vh * 0.32).toFixed(4));    // la "penna" avanza con lo scroll
-
-    if (raysEl && y < heroH) raysEl.style.setProperty('--rays-y', (y * 0.25).toFixed(1) + 'px');
+    /* ---- Testo "Lo Studio" ---- */
+    var tin = easeOut(seg(p, 0.27, 0.38)), tout = easeIn(seg(p, 0.71, 0.8));
+    var op = tin * (1 - tout);
+    var mobile = window.innerWidth < 768;
+    studio.style.opacity = op.toFixed(3);
+    studio.style.visibility = op > 0.01 ? 'visible' : 'hidden';
+    studio.style.transform = mobile
+      ? 'translateY(' + ((1 - tin) * 40 - tout * 40).toFixed(1) + 'px)'
+      : 'translate(' + ((1 - tin) * -60).toFixed(1) + 'px,' + (-tout * 40).toFixed(1) + 'px)';
   }
 
   var ticking = false;
   function onScroll() {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(function () { onHeader(); onMark(); ticking = false; });
+    requestAnimationFrame(function () { onHeader(); onStage(); ticking = false; });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { layoutMark(); onScroll(); });
-  layoutMark(); onHeader(); onMark();
-  window.addEventListener('load', function () { layoutMark(); onMark(); });  // dopo il caricamento dei font
+  window.addEventListener('resize', function () { layout(); onScroll(); });
+  layout(); onHeader(); onStage();
+  window.addEventListener('load', function () { layout(); onStage(); });   // dopo il caricamento dei font
 
   /* ---------- Comparsa elementi allo scroll ---------- */
   var reveals = document.querySelectorAll('.reveal');

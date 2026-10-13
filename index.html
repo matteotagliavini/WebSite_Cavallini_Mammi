@@ -112,64 +112,94 @@
   <main id="main">
 
     <!-- =========================================================
-         HERO — WP: blocco "Cover" o pattern "cp/hero"
-         Per la foto di Sassuolo: aggiungere style="--cp-hero-img:url('assets/img/hero-sassuolo.jpg')"
+         STAGE "SCROLLYTELLING" — Hero + Lo Studio
+         Ispirato al video di riferimento: la sezione resta "agganciata" allo schermo
+         (position: sticky) mentre lo scroll guida l'animazione del logo:
+           1. Hero blu: il logo si traccia, poi ruota in 3D (si vede di taglio) mentre
+              lo sfondo passa dal blu al chiaro e il logo cambia colore;
+           2. Il logo atterra grande a destra, con il testo "Lo Studio" a sinistra;
+           3. "Gioco": le tre parti del logo (vela, albero, fiocco) si separano e si ricompongono;
+           4. Il logo si sposta e si alleggerisce fino a diventare la filigrana di sfondo.
+         Senza JavaScript o con "riduci movimento": hero e testo in sequenza, statici.
+         WP: pattern "cp/stage" (HTML personalizzato) + main.js accodato nel tema.
+         Foto di Sassuolo: aggiungere style="--cp-hero-img:url('assets/img/hero-sassuolo.jpg')" a .stage-hero
          ========================================================= -->
-    <section class="hero flex items-center" id="top" aria-label="Presentazione">
-      <!-- Linee di sfondo ispirate alla vela del logo -->
-      <svg class="hero-rays" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <path pathLength="1" d="M-80 820 C 300 760, 640 520, 900 -40"/>
-        <path pathLength="1" d="M960 -40 L 1000 940"/>
-        <path pathLength="1" d="M1040 60 L 1520 760"/>
-        <path pathLength="1" d="M-80 900 C 400 860, 900 820, 1520 640"/>
-      </svg>
+    <section class="stage" id="top" aria-label="Presentazione dello studio">
+      <span id="studio" class="stage-anchor" aria-hidden="true"></span>
+      <div class="stage-sticky" id="stage-sticky">
+        <div class="stage-disk" aria-hidden="true"></div>
 
-      <div class="hero-content mx-auto max-w-site w-full px-5 md:px-8 pt-28 pb-24 text-center flex flex-col items-center">
-        <!-- Posto del logo nell'hero. Il logo "vivo" è #brand-mark (fisso, sotto): parte da qui
-             e scorrendo si sposta e diventa la filigrana. Questo SVG statico resta come fallback
-             (senza JavaScript o con "riduci movimento" attivo). -->
-        <div id="hero-mark-slot" class="hero-mark-slot">
-          <svg class="mark mark-hero mark-static" viewBox="0 0 100 94" role="img" aria-label="Logo Cavallini &amp; Partners">
-            <use href="#mk-p1" class="mk-fill f-dark"/><use href="#mk-p2" class="mk-fill f-light s2"/><use href="#mk-p3" class="mk-fill f-light s3"/>
-            <path class="mk-stroke c-dark"     pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/>
-            <path class="mk-stroke c-light s2" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/>
-            <path class="mk-stroke c-light s3" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/>
+        <!-- 1. HERO -->
+        <div class="stage-hero hero">
+          <svg class="hero-rays" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <path pathLength="1" d="M-80 820 C 300 760, 640 520, 900 -40"/>
+            <path pathLength="1" d="M960 -40 L 1000 940"/>
+            <path pathLength="1" d="M1040 60 L 1520 760"/>
+            <path pathLength="1" d="M-80 900 C 400 860, 900 820, 1520 640"/>
           </svg>
+          <div class="hero-content mx-auto max-w-site w-full px-5 md:px-8 pt-28 pb-24 text-center flex flex-col items-center">
+            <div id="hero-mark-slot" class="hero-mark-slot">
+              <!-- Logo protagonista: con JS viene spostato nel palco e animato dallo scroll -->
+              <div class="stage-mark" id="stage-mark">
+                <div class="stage-mark-rot">
+                  <svg class="mark" viewBox="0 0 100 94" role="img" aria-label="Logo Cavallini &amp; Partners">
+                    <g class="pc" id="pc1"><g class="pf"><use href="#mk-p1" class="mk-fill fa"/></g><path class="mk-stroke la" pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/></g>
+                    <g class="pc" id="pc2"><g class="pf"><use href="#mk-p2" class="mk-fill fb s2"/></g><path class="mk-stroke lb s2" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/></g>
+                    <g class="pc" id="pc3"><g class="pf"><use href="#mk-p3" class="mk-fill fb s3"/></g><path class="mk-stroke lb s3" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/></g>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <h1 class="hero-title font-serif font-semibold mt-8 text-5xl sm:text-6xl md:text-7xl tracking-wide leading-none">
+              Cavallini <span class="font-medium text-secondary-300">&amp;</span> Partners
+            </h1>
+            <div class="hero-rule mt-6 flex items-center gap-4 text-[0.72rem] uppercase tracking-[0.32em] text-secondary-300">
+              <span class="h-px w-10 bg-secondary-300/70"></span>Dottori Commercialisti · Sassuolo<span class="h-px w-10 bg-secondary-300/70"></span>
+            </div>
+            <p class="hero-sub mt-8 max-w-2xl text-lg md:text-xl text-white/85 leading-relaxed">
+              Affianchiamo imprese, professionisti e famiglie nelle scelte fiscali, societarie e contabili,
+              con competenza, riservatezza e un dialogo diretto.
+            </p>
+            <div class="hero-cta mt-10 flex flex-col sm:flex-row gap-4">
+              <a href="#servizi" class="btn btn-light">Scopri i servizi</a>
+              <a href="#contatti" class="btn btn-outline-light">Richiedi un appuntamento</a>
+            </div>
+          </div>
+          <span class="scroll-cue" aria-hidden="true"></span>
         </div>
 
-        <h1 class="hero-title font-serif font-semibold mt-8 text-5xl sm:text-6xl md:text-7xl tracking-wide leading-none">
-          Cavallini <span class="font-medium text-secondary-300">&amp;</span> Partners
-        </h1>
-        <div class="hero-rule mt-6 flex items-center gap-4 text-[0.72rem] uppercase tracking-[0.32em] text-secondary-300">
-          <span class="h-px w-10 bg-secondary-300/70"></span>Dottori Commercialisti · Sassuolo<span class="h-px w-10 bg-secondary-300/70"></span>
-        </div>
-        <p class="hero-sub mt-8 max-w-2xl text-lg md:text-xl text-white/85 leading-relaxed">
-          Affianchiamo imprese, professionisti e famiglie nelle scelte fiscali, societarie e contabili,
-          con competenza, riservatezza e un dialogo diretto.
-        </p>
-        <div class="hero-cta mt-10 flex flex-col sm:flex-row gap-4">
-          <a href="#servizi" class="btn btn-light">Scopri i servizi</a>
-          <a href="#contatti" class="btn btn-outline-light">Richiedi un appuntamento</a>
+        <!-- 2. LO STUDIO (entra quando il logo atterra a destra) -->
+        <div class="stage-studio">
+          <div class="stage-studio-inner mx-auto max-w-site w-full px-5 md:px-8">
+            <div class="stage-studio-text">
+              <span class="eyebrow">Lo Studio</span>
+              <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">
+                Un punto di riferimento per chi fa impresa nel distretto.
+              </h2>
+              <p class="mt-6 text-gray-600 leading-relaxed text-lg">
+                Cavallini &amp; Partners è uno studio di dottori commercialisti con sede a Sassuolo.
+                Seguiamo i nostri clienti in modo continuativo, dagli adempimenti quotidiani alle decisioni
+                strategiche, con un unico obiettivo: dare risposte chiare e soluzioni sostenibili nel tempo.
+              </p>
+              <p class="mt-4 text-gray-600 leading-relaxed hidden md:block">
+                Il lavoro di squadra tra i professionisti dello studio ci permette di affrontare ogni tema,
+                fiscale, societario o contabile, con una visione d'insieme e un interlocutore sempre riconoscibile.
+              </p>
+              <a href="#servizi" class="btn btn-outline mt-8">Le nostre aree di competenza</a>
+            </div>
+          </div>
         </div>
       </div>
-      <span class="scroll-cue" aria-hidden="true"></span>
     </section>
 
     <!-- =========================================================
-         LOGO VIVO (fisso) — hero ➜ filigrana
-         .ga = aspetto hero (pieno, bianco, si traccia all'apertura)
-         .gb = aspetto filigrana (solo linee blu a bassa opacità + "penna" che
-               ripercorre il tratto durante lo scroll)
-         WP: template-part "parts/brand-mark.html" + main.js accodato nel tema
+         FILIGRANA FISSA — prende il posto del logo alla fine del palco
+         (stessa posizione e dimensione: il passaggio è invisibile).
+         Parallax, lieve rotazione e una "penna" che ripercorre i tratti con lo scroll.
          ========================================================= -->
     <div id="brand-mark" class="brand-mark" aria-hidden="true">
       <svg class="mark" viewBox="0 0 100 94">
-        <g class="mark-hero ga">
-          <use href="#mk-p1" class="mk-fill f-dark"/><use href="#mk-p2" class="mk-fill f-light s2"/><use href="#mk-p3" class="mk-fill f-light s3"/>
-          <path class="mk-stroke c-dark"     pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/>
-          <path class="mk-stroke c-light s2" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/>
-          <path class="mk-stroke c-light s3" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/>
-        </g>
         <g class="gb">
           <use href="#mk-p1" class="wb-fill"/><use href="#mk-p2" class="wb-fill"/><use href="#mk-p3" class="wb-fill"/>
           <use href="#mk-p1" class="wb-line"/><use href="#mk-p2" class="wb-line"/><use href="#mk-p3" class="wb-line"/>
@@ -183,44 +213,27 @@
     <div class="page-content">
 
       <!-- =========================================================
-           LO STUDIO — WP: pattern "cp/chi-siamo" (Colonne: testo + lista)
+           VALORI — WP: pattern "cp/valori" (4 colonne)
            ========================================================= -->
-      <section id="studio" class="bg-surface py-24 md:py-32">
-        <div class="mx-auto max-w-site px-5 md:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          <div class="lg:col-span-6 reveal">
-            <span class="eyebrow">Lo Studio</span>
-            <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">
-              Un punto di riferimento per chi fa impresa nel distretto.
-            </h2>
-            <p class="mt-6 text-gray-600 leading-relaxed text-lg">
-              Cavallini &amp; Partners è uno studio di dottori commercialisti con sede a Sassuolo.
-              Seguiamo i nostri clienti in modo continuativo, dagli adempimenti quotidiani alle decisioni
-              strategiche, con un unico obiettivo: dare risposte chiare e soluzioni sostenibili nel tempo.
-            </p>
-            <p class="mt-4 text-gray-600 leading-relaxed">
-              Il lavoro di squadra tra i professionisti dello studio ci permette di affrontare ogni tema,
-              fiscale, societario o contabile, con una visione d'insieme e un interlocutore sempre riconoscibile.
-            </p>
-            <a href="#servizi" class="btn btn-outline mt-8">Le nostre aree di competenza</a>
-          </div>
-
-          <div class="lg:col-span-6 grid sm:grid-cols-2 gap-px bg-gray-200 border border-gray-200 rounded-md overflow-hidden">
-            <div class="bg-white p-8 reveal" data-delay="1">
+      <section id="valori" class="bg-surface py-20 md:py-28" aria-label="I nostri valori">
+        <div class="mx-auto max-w-site px-5 md:px-8">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200 rounded-md overflow-hidden">
+            <div class="bg-white p-8 reveal">
               <span class="font-serif text-3xl text-secondary">01</span>
               <h3 class="font-serif text-2xl text-primary font-semibold mt-3">Competenza</h3>
               <p class="mt-2 text-gray-600 text-[0.95rem] leading-relaxed">Aggiornamento costante su normativa fiscale, societaria e contabile.</p>
             </div>
-            <div class="bg-white p-8 reveal" data-delay="2">
+            <div class="bg-white p-8 reveal" data-delay="1">
               <span class="font-serif text-3xl text-secondary">02</span>
               <h3 class="font-serif text-2xl text-primary font-semibold mt-3">Riservatezza</h3>
               <p class="mt-2 text-gray-600 text-[0.95rem] leading-relaxed">Ogni pratica è gestita con la massima discrezione e cura dei dati.</p>
             </div>
-            <div class="bg-white p-8 reveal" data-delay="1">
+            <div class="bg-white p-8 reveal" data-delay="2">
               <span class="font-serif text-3xl text-secondary">03</span>
               <h3 class="font-serif text-2xl text-primary font-semibold mt-3">Chiarezza</h3>
               <p class="mt-2 text-gray-600 text-[0.95rem] leading-relaxed">Spieghiamo scadenze, costi e opzioni in modo semplice e trasparente.</p>
             </div>
-            <div class="bg-white p-8 reveal" data-delay="2">
+            <div class="bg-white p-8 reveal" data-delay="3">
               <span class="font-serif text-3xl text-secondary">04</span>
               <h3 class="font-serif text-2xl text-primary font-semibold mt-3">Vicinanza</h3>
               <p class="mt-2 text-gray-600 text-[0.95rem] leading-relaxed">Un rapporto diretto con il professionista che segue la vostra realtà.</p>
