@@ -174,19 +174,35 @@
           <div class="stage-studio-inner mx-auto max-w-site w-full px-5 md:px-8">
             <div class="stage-studio-text">
               <span class="eyebrow">Lo Studio</span>
-              <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">
+              <h2 class="stage-h2 font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">
                 Un punto di riferimento per chi fa impresa nel distretto.
               </h2>
-              <p class="mt-6 text-gray-600 leading-relaxed text-lg">
+              <p class="stage-p mt-6 text-gray-600 leading-relaxed text-lg">
                 Cavallini &amp; Partners è uno studio di dottori commercialisti con sede a Sassuolo.
                 Seguiamo i nostri clienti in modo continuativo, dagli adempimenti quotidiani alle decisioni
                 strategiche, con un unico obiettivo: dare risposte chiare e soluzioni sostenibili nel tempo.
               </p>
-              <p class="mt-4 text-gray-600 leading-relaxed hidden md:block">
-                Il lavoro di squadra tra i professionisti dello studio ci permette di affrontare ogni tema,
-                fiscale, societario o contabile, con una visione d'insieme e un interlocutore sempre riconoscibile.
-              </p>
-              <a href="#servizi" class="btn btn-outline mt-8">Le nostre aree di competenza</a>
+              <!-- I quattro valori, nella stessa schermata (desktop/tablet): entrano uno alla volta
+                   mentre le parti del logo si separano. Su smartphone sono nella sezione #valori. -->
+              <dl class="stage-values hidden md:grid" aria-label="I nostri valori">
+                <div class="sv">
+                  <dt><span class="sv-n">01</span>Competenza</dt>
+                  <dd>Aggiornamento costante su normativa fiscale, societaria e contabile.</dd>
+                </div>
+                <div class="sv">
+                  <dt><span class="sv-n">02</span>Riservatezza</dt>
+                  <dd>Ogni pratica è gestita con la massima discrezione e cura dei dati.</dd>
+                </div>
+                <div class="sv">
+                  <dt><span class="sv-n">03</span>Chiarezza</dt>
+                  <dd>Spieghiamo scadenze, costi e opzioni in modo semplice e trasparente.</dd>
+                </div>
+                <div class="sv">
+                  <dt><span class="sv-n">04</span>Vicinanza</dt>
+                  <dd>Un rapporto diretto con il professionista che segue la vostra realtà.</dd>
+                </div>
+              </dl>
+              <a href="#servizi" class="btn btn-outline mt-8 stage-btn-mobile">Le nostre aree di competenza</a>
             </div>
           </div>
         </div>
@@ -215,7 +231,8 @@
       <!-- =========================================================
            VALORI — WP: pattern "cp/valori" (4 colonne)
            ========================================================= -->
-      <section id="valori" class="bg-surface py-20 md:py-28" aria-label="I nostri valori">
+      <!-- Su desktop i valori sono già nel palco: questa sezione si vede solo su smartphone -->
+      <section id="valori" class="bg-surface py-16 md:hidden" aria-label="I nostri valori">
         <div class="mx-auto max-w-site px-5 md:px-8">
           <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200 rounded-md overflow-hidden">
             <div class="bg-white p-8 reveal">

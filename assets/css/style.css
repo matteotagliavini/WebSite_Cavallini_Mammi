@@ -134,7 +134,7 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
    La sezione è alta più schermate; il contenitore interno resta agganciato
    (sticky) e il JS traduce l'avanzamento dello scroll in trasformazioni.
    Livelli: palco (disco < hero blu < testo Studio) < logo fisso(1) < sezioni(3) < header(50).  */
-.js-stage .stage { height: 420vh; background: var(--cp-surface-alt); }
+.js-stage .stage { height: 270vh; background: var(--cp-surface-alt); }
 .js-stage .stage-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .js-stage .stage-hero { position: absolute; inset: 0; z-index: 2; min-height: 0; will-change: opacity; }
 .js-stage .stage-disk { display: block; position: absolute; z-index: 1; left: 0; top: 0; width: 100px; height: 100px; border-radius: 50%;
@@ -142,12 +142,28 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .js-stage .stage-mark { position: fixed; z-index: 1; left: 0; top: 0; transform-origin: 0 0; will-change: transform; perspective: 1400px; pointer-events: none; }
 .js-stage .stage-mark-rot { transform-style: preserve-3d; will-change: transform; }
 .js-stage .stage-studio { position: absolute; inset: 0; z-index: 4; background: none; padding: 0; display: flex; align-items: center; opacity: 0; visibility: hidden; will-change: opacity, transform; }
-.js-stage .stage-studio-text { max-width: min(46%, 36rem); }
+.js-stage .stage-studio-text { max-width: min(50%, 40rem); }
 @media (max-width: 767px) {
-  .js-stage .stage { height: 380vh; }
+  .js-stage .stage { height: 240vh; }
   .js-stage .stage-studio { align-items: flex-end; padding-bottom: 9vh; }
   .js-stage .stage-studio-text { max-width: none; }
   .js-stage .stage-studio h2 { font-size: 1.9rem; }
+}
+
+/* ---------- Valori dentro il palco ---------- */
+.stage-values { grid-template-columns: 1fr 1fr; gap: 1.4rem 2.2rem; margin-top: 2.2rem; }
+.stage-values .sv { border-top: 1px solid var(--cp-line); padding-top: .9rem; }
+.stage-values dt { font-family: var(--cp-font-serif); font-size: 1.45rem; font-weight: 600; color: var(--cp-primary); line-height: 1.2; display: flex; align-items: baseline; gap: .6rem; }
+.stage-values .sv-n { font-size: 1rem; font-weight: 500; color: var(--cp-secondary); }
+.stage-values dd { margin-top: .35rem; font-size: .9rem; line-height: 1.55; color: var(--cp-muted); }
+.js-stage .stage-values .sv { opacity: 0; will-change: opacity, transform; }
+@media (min-width: 768px) { .stage-btn-mobile { display: none; } }   /* su desktop al posto del pulsante ci sono i valori */
+/* Schermi bassi (portatili 13"): testo più compatto per far stare tutto in una schermata */
+@media (min-width: 768px) and (max-height: 820px) {
+  .js-stage .stage-h2 { font-size: 2.4rem; }
+  .js-stage .stage-p { font-size: 1rem; margin-top: 1rem; }
+  .js-stage .stage-values { margin-top: 1.4rem; gap: 1rem 2rem; }
+  .js-stage .stage-values dd { font-size: .85rem; }
 }
 
 /* ---------- Filigrana fissa (dopo il palco) ---------- */
