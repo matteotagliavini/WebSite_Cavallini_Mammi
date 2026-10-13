@@ -156,7 +156,13 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .stage-values dt { font-family: var(--cp-font-serif); font-size: 1.45rem; font-weight: 600; color: var(--cp-primary); line-height: 1.2; display: flex; align-items: baseline; gap: .6rem; }
 .stage-values .sv-n { font-size: 1rem; font-weight: 500; color: var(--cp-secondary); }
 .stage-values dd { margin-top: .35rem; font-size: .9rem; line-height: 1.55; color: var(--cp-muted); }
-.js-stage .stage-values .sv { opacity: 0; will-change: opacity, transform; }
+.js-stage .stage-values .sv { opacity: 0; transform: translateY(18px); transition: opacity .25s ease, transform .25s ease; }
+/* Entrata automatica in cascata, come i testi dell'hero (non dipende dallo scroll) */
+.js-stage .stage-values.is-in .sv { opacity: 1; transform: none; transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+.js-stage .stage-values.is-in .sv:nth-child(1) { transition-delay: .15s; }
+.js-stage .stage-values.is-in .sv:nth-child(2) { transition-delay: .4s; }
+.js-stage .stage-values.is-in .sv:nth-child(3) { transition-delay: .65s; }
+.js-stage .stage-values.is-in .sv:nth-child(4) { transition-delay: .9s; }
 @media (min-width: 768px) { .stage-btn-mobile { display: none; } }   /* su desktop al posto del pulsante ci sono i valori */
 /* Schermi bassi (portatili 13"): testo più compatto per far stare tutto in una schermata */
 @media (min-width: 768px) and (max-height: 820px) {

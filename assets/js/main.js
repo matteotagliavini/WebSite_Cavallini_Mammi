@@ -49,7 +49,7 @@
                     colore da bianco a blu mentre lo sfondo passa dal blu al chiaro
        p 0.03–0.30  il logo vola dal centro a destra e si ingrandisce, compare il disco
        p 0.22–0.34  a sinistra entra il testo "Lo Studio"
-       p 0.32–0.57  i quattro valori entrano uno alla volta (solo desktop/tablet)
+       p ≥ 0.30     i quattro valori compaiono da soli in cascata (a tempo, solo desktop/tablet)
        p 0.36–0.68  "gioco": vela, albero e fiocco si separano e si ricompongono
        p 0.76–1.00  testo e disco escono, il logo diventa la filigrana
        p ≥ 1        il palco si sgancia e la filigrana fissa (#brand-mark) prende il posto
@@ -70,7 +70,7 @@
   var studio = document.querySelector('.stage-studio');
   var cue = document.querySelector('.stage-hero .scroll-cue');
   var anchor = document.getElementById('studio');
-  var values = Array.prototype.slice.call(document.querySelectorAll('.stage-values .sv'));
+  var valuesWrap = document.querySelector('.stage-values');
 
   var animated = !!(stage && sticky && sm && slot && studio && !reduceMotion);
   // Il logo diventa un elemento fisso a livello di pagina: non "salta" quando il palco si sgancia
@@ -199,12 +199,12 @@
       ? 'translateY(' + ((1 - tin) * 40 - tout * 40).toFixed(1) + 'px)'
       : 'translate(' + ((1 - tin) * -60).toFixed(1) + 'px,' + (-tout * 40).toFixed(1) + 'px)';
 
-    /* ---- I quattro valori entrano uno alla volta (mentre il logo "gioca") ---- */
-    values.forEach(function (v, i) {
-      var a = smooth(seg(p, 0.32 + i * 0.05, 0.42 + i * 0.05));
-      v.style.opacity = a.toFixed(3);
-      v.style.transform = 'translateY(' + ((1 - a) * 18).toFixed(1) + 'px)';
-    });
+    /* ---- I quattro valori: compaiono da soli "in cascata" (animazione a tempo, CSS)
+       appena il testo dello Studio è entrato; spariscono se si torna su ---- */
+    if (valuesWrap) {
+      if (p >= 0.30) valuesWrap.classList.add('is-in');
+      else if (p < 0.24) valuesWrap.classList.remove('is-in');
+    }
   }
 
   /* ---- Scroll "morbido": l'animazione insegue la posizione reale con un'inerzia
