@@ -139,7 +139,7 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .js-stage .stage-hero { position: absolute; inset: 0; z-index: 2; min-height: 0; will-change: opacity; }
 .js-stage .stage-disk { display: block; position: absolute; z-index: 1; left: 0; top: 0; width: 100px; height: 100px; border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #EEF3F8, #DCE5EF 70%); transform-origin: 50% 50%; will-change: transform; transform: scale(0); }
-.js-stage .stage-mark { position: fixed; z-index: 1; left: 0; top: 0; transform-origin: 0 0; will-change: transform; perspective: 1400px; pointer-events: none; }
+.js-stage .stage-mark { position: fixed; z-index: 1; left: 0; top: 0; transform-origin: 0 0; will-change: transform, opacity; perspective: 1400px; pointer-events: none; }
 .js-stage .stage-mark-rot { transform-style: preserve-3d; will-change: transform; }
 .js-stage .stage-studio { position: absolute; inset: 0; z-index: 4; background: none; padding: 0; display: flex; align-items: center; opacity: 0; visibility: hidden; will-change: opacity, transform; }
 .js-stage .stage-studio-text { max-width: min(50%, 40rem); }
@@ -173,7 +173,7 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 }
 
 /* ---------- Filigrana fissa (dopo il palco) ---------- */
-.brand-mark { position: fixed; left: 0; top: 0; z-index: 1; pointer-events: none; opacity: 0; transform-origin: 0 0; will-change: transform; }
+.brand-mark { position: fixed; left: 0; top: 0; z-index: 1; pointer-events: none; opacity: 0; transform-origin: 0 0; will-change: transform, opacity; }
 .brand-mark.is-on { opacity: 1; }
 .brand-mark svg { display: block; width: 100%; height: auto; overflow: visible; }
 .gb .wb-fill  { fill: var(--cp-primary); opacity: .045; }
