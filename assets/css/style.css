@@ -134,7 +134,7 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
    La sezione è alta più schermate; il contenitore interno resta agganciato
    (sticky) e il JS traduce l'avanzamento dello scroll in trasformazioni.
    Livelli: palco (disco < hero blu < testo Studio) < logo fisso(1) < sezioni(3) < header(50).  */
-.js-stage .stage { height: 270vh; background: var(--cp-surface-alt); }
+.js-stage .stage { height: 200vh; background: var(--cp-surface-alt); }
 .js-stage .stage-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .js-stage .stage-hero { position: absolute; inset: 0; z-index: 2; min-height: 0; will-change: opacity; }
 .js-stage .stage-disk { display: block; position: absolute; z-index: 1; left: 0; top: 0; width: 100px; height: 100px; border-radius: 50%;
@@ -144,7 +144,7 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .js-stage .stage-studio { position: absolute; inset: 0; z-index: 4; background: none; padding: 0; display: flex; align-items: center; opacity: 0; visibility: hidden; will-change: opacity, transform; }
 .js-stage .stage-studio-text { max-width: min(50%, 40rem); }
 @media (max-width: 767px) {
-  .js-stage .stage { height: 240vh; }
+  .js-stage .stage { height: 190vh; }
   .js-stage .stage-studio { align-items: flex-end; padding-bottom: 9vh; }
   .js-stage .stage-studio-text { max-width: none; }
   .js-stage .stage-studio h2 { font-size: 1.9rem; }

@@ -41,17 +41,17 @@
 
   /* ==========================================================================
      PALCO "SCROLLYTELLING" DEL LOGO (ispirato al video di riferimento)
-     La sezione .stage è alta ~2,7 schermate; il suo contenitore resta agganciato
+     La sezione .stage è alta 2 schermate; il suo contenitore resta agganciato
      allo schermo (sticky) e l'avanzamento p (0→1) guida una "timeline":
 
-       p 0.00–0.10  il testo dell'hero sale e svanisce
-       p 0.03–0.27  il logo ruota in 3D (mezzo giro): a metà è di taglio, lì cambia
+       p 0.00–0.12  il testo dell'hero sale e svanisce
+       p 0.03–0.33  il logo ruota in 3D (mezzo giro): a metà è di taglio, lì cambia
                     colore da bianco a blu mentre lo sfondo passa dal blu al chiaro
-       p 0.03–0.30  il logo vola dal centro a destra e si ingrandisce, compare il disco
-       p 0.22–0.34  a sinistra entra il testo "Lo Studio"
-       p ≥ 0.30     i quattro valori compaiono da soli in cascata (a tempo, solo desktop/tablet)
-       p 0.36–0.68  "gioco": vela, albero e fiocco si separano e si ricompongono
-       p 0.76–1.00  testo e disco escono, il logo diventa la filigrana
+       p 0.03–0.38  il logo vola dal centro a destra e si ingrandisce, compare il disco
+       p 0.28–0.42  a sinistra entra il testo "Lo Studio"
+       p ≥ 0.38     i quattro valori compaiono da soli in cascata (a tempo, solo desktop/tablet)
+       p 0.42–0.66  momento di lettura: il logo resta FERMO
+       p 0.66–1.00  testo e disco escono, il logo diventa la filigrana
        p ≥ 1        il palco si sgancia e la filigrana fissa (#brand-mark) prende il posto
 
      Solo transform/opacity e variabili CSS (niente reflow). Con "riduci movimento"
@@ -64,7 +64,6 @@
   var slot = document.getElementById('hero-mark-slot');
   var brand = document.getElementById('brand-mark');
   var smRot = sm ? sm.querySelector('.stage-mark-rot') : null;
-  var pcs = ['pc1', 'pc2', 'pc3'].map(function (id) { return document.getElementById(id); });
   var disk = document.querySelector('.stage-disk');
   var heroContent = document.querySelector('.stage-hero .hero-content');
   var studio = document.querySelector('.stage-studio');
@@ -83,7 +82,6 @@
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
   function easeIn(t) { return t * t * t; }
   function smooth(t) { return t * t * t * (t * (t * 6 - 15) + 10); }        // smootherstep: parte e arriva con velocità zero
-  function bell(t) { var s = Math.sin(Math.PI * t); return s * s; }          // 0 → 1 → 0 senza scatti agli estremi
 
   var S = { top: 0, len: 1 }, K0 = {}, K2 = {}, WM = {}, D = 0;
 
@@ -114,7 +112,7 @@
     sm.style.width = WM.W + 'px';
     D = K2.w * 1.45;
     if (disk) { disk.style.width = D + 'px'; disk.style.height = D + 'px'; }
-    if (anchor) anchor.style.top = Math.round(S.len * 0.52) + 'px';       // "Lo Studio" nel menu porta al momento giusto
+    if (anchor) anchor.style.top = Math.round(S.len * 0.52) + 'px';   // momento di lettura (logo fermo)       // "Lo Studio" nel menu porta al momento giusto
   }
 
   function markTransform(cx, cy, s, rot) {
@@ -147,25 +145,19 @@
     sm.style.visibility = p >= 1 ? 'hidden' : '';
 
     /* ---- Posizione e scala del logo: K0 (hero) → K2 (protagonista) → filigrana ---- */
-    var m1 = smooth(seg(p, 0.03, 0.30)), m3 = smooth(seg(p, 0.76, 1));
+    var m1 = smooth(seg(p, 0.03, 0.38)), m3 = smooth(seg(p, 0.66, 1));
     var wmCx = WM.tx + WM.W / 2, wmCy = WM.ty + WM.par0 + WM.H / 2;
     var cx = lerp(lerp(K0.cx, K2.cx, m1), wmCx, m3);
     var cy = lerp(lerp(K0.cy, K2.cy, m1), wmCy, m3);
     var w  = lerp(lerp(K0.w,  K2.w,  m1), WM.W, m3);
 
-    /* ---- "Gioco": le tre parti si separano e si ricompongono ---- */
-    var g = seg(p, 0.36, 0.68), e = bell(g);                              // 0 → 1 → 0, morbido agli estremi
-    var sway = 4 * Math.sin(2 * Math.PI * g) * Math.sin(Math.PI * g);
-    var rot2d = sway + lerp(0, -3.5, m3);
-    sm.style.transform = markTransform(cx, cy, w / WM.W, rot2d);
-    if (pcs[0]) pcs[0].style.transform = 'translate(' + (-24 * e).toFixed(2) + 'px,' + (12 * e).toFixed(2) + 'px) rotate(' + (-16 * e).toFixed(2) + 'deg)';
-    if (pcs[1]) pcs[1].style.transform = 'translate(' + (2 * e).toFixed(2) + 'px,' + (-24 * e).toFixed(2) + 'px) rotate(' + (5 * e).toFixed(2) + 'deg)';
-    if (pcs[2]) pcs[2].style.transform = 'translate(' + (28 * e).toFixed(2) + 'px,' + (-10 * e).toFixed(2) + 'px) rotate(' + (20 * e).toFixed(2) + 'deg)';
+    /* ---- Nessun movimento "a pezzi": una volta arrivato, il logo resta fermo ---- */
+    sm.style.transform = markTransform(cx, cy, w / WM.W, lerp(0, -3.5, m3));
 
     /* ---- Rotazione 3D con cambio colore quando il logo è di taglio ---- */
     // Mezzo giro continuo (0→180°) con velocità costante nel punto "di taglio": oltre 90° si
     // sottraggono 180° così il logo non appare mai specchiato.
-    var r = seg(p, 0.03, 0.27), a180 = 180 * smooth(r);
+    var r = seg(p, 0.03, 0.33), a180 = 180 * smooth(r);
     var ang = a180 > 90 ? a180 - 180 : a180;
     smRot.style.transform = 'rotateY(' + ang.toFixed(2) + 'deg)';
     sm.classList.toggle('is-dark', a180 > 90);
@@ -177,20 +169,20 @@
 
     /* ---- Disco chiaro dietro al logo protagonista ---- */
     if (disk) {
-      var ds = smooth(seg(p, 0.16, 0.34)) * (1 - smooth(seg(p, 0.74, 0.9))) * (1 + 0.08 * e);
+      var ds = smooth(seg(p, 0.2, 0.4)) * (1 - smooth(seg(p, 0.66, 0.84)));
       disk.style.transform = 'translate(' + (K2.cx - D / 2).toFixed(1) + 'px,' + (K2.cy - D / 2).toFixed(1) + 'px) scale(' + ds.toFixed(4) + ')';
     }
 
     /* ---- Hero: il testo sale e svanisce, poi lo sfondo blu lascia il posto al chiaro ---- */
-    var h = smooth(seg(p, 0, 0.10));
+    var h = smooth(seg(p, 0, 0.12));
     if (heroContent) { heroContent.style.opacity = (1 - h).toFixed(3); heroContent.style.transform = 'translateY(' + (-70 * h).toFixed(1) + 'px)'; }
     if (cue) cue.style.opacity = (1 - seg(p, 0, 0.03)).toFixed(3);
-    var bg = 1 - smooth(seg(p, 0.10, 0.20));                             // centrato sul momento "di taglio" (p≈0.15)
+    var bg = 1 - smooth(seg(p, 0.12, 0.25));                             // centrato sul momento "di taglio" (p≈0.15)
     hero.style.opacity = bg.toFixed(3);
     hero.style.visibility = bg <= 0 ? 'hidden' : '';
 
     /* ---- Testo "Lo Studio" ---- */
-    var tin = smooth(seg(p, 0.22, 0.34)), tout = smooth(seg(p, 0.76, 0.86));
+    var tin = smooth(seg(p, 0.28, 0.42)), tout = smooth(seg(p, 0.68, 0.80));
     var op = tin * (1 - tout);
     var mobile = window.innerWidth < 768;
     studio.style.opacity = op.toFixed(3);
@@ -202,8 +194,8 @@
     /* ---- I quattro valori: compaiono da soli "in cascata" (animazione a tempo, CSS)
        appena il testo dello Studio è entrato; spariscono se si torna su ---- */
     if (valuesWrap) {
-      if (p >= 0.30) valuesWrap.classList.add('is-in');
-      else if (p < 0.24) valuesWrap.classList.remove('is-in');
+      if (p >= 0.38) valuesWrap.classList.add('is-in');
+      else if (p < 0.30) valuesWrap.classList.remove('is-in');
     }
   }
 
