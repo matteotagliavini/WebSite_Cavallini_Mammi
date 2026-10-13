@@ -1,0 +1,184 @@
+/* ==========================================================================
+   Cavallini & Partners — Foglio di stile personalizzato
+   Le variabili qui sotto corrispondono 1:1 alla futura palette di theme.json
+   (WordPress): primary, secondary, surface, surface-alt, ink.
+   ========================================================================== */
+
+:root {
+  --cp-primary: #1E3A5F;      /* Blu notte (logo) */
+  --cp-primary-700: #152B47;
+  --cp-primary-900: #0F2036;
+  --cp-secondary: #5B7B9C;    /* Blu avio (logo) */
+  --cp-secondary-300: #A9BCD0;
+  --cp-surface: #FFFFFF;
+  --cp-surface-alt: #F8FAFC;
+  --cp-ink: #111827;
+  --cp-muted: #4B5563;
+  --cp-line: #E5E7EB;
+
+  --cp-font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --cp-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --cp-radius: 6px;
+  --cp-header-h: 76px;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--cp-header-h); }
+body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(--cp-surface); -webkit-font-smoothing: antialiased; }
+.font-serif { font-family: var(--cp-font-serif); }
+
+.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--cp-primary); color: #fff; padding: .6rem 1rem; border-radius: var(--cp-radius); }
+.skip-link:focus { left: 8px; }
+:focus-visible { outline: 2px solid var(--cp-secondary); outline-offset: 3px; }
+
+/* ---------- Header ---------- */
+.site-header { transition: background-color .35s ease, box-shadow .35s ease; }
+.site-header.is-scrolled { background: rgba(255,255,255,.95); backdrop-filter: saturate(160%) blur(10px); -webkit-backdrop-filter: saturate(160%) blur(10px); box-shadow: 0 1px 0 var(--cp-line); }
+.site-header .nav-link { position: relative; color: rgba(255,255,255,.9); transition: color .2s; }
+.site-header.is-scrolled .nav-link { color: var(--cp-primary); }
+.site-header .nav-link::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -6px; height: 1px; background: currentColor; transition: right .3s ease; }
+.site-header .nav-link:hover::after, .site-header .nav-link[aria-current="page"]::after { right: 0; }
+.site-header .brand-text { color: #fff; transition: color .3s; }
+.site-header.is-scrolled .brand-text { color: var(--cp-primary); }
+.site-header .brand-logo { filter: brightness(0) invert(1); transition: filter .3s; }
+.site-header.is-scrolled .brand-logo { filter: none; }
+.site-header .menu-toggle { color: #fff; }
+.site-header.is-scrolled .menu-toggle { color: var(--cp-primary); }
+/* CTA del menu: bianca sopra l'hero scuro, blu dopo lo scroll */
+.site-header:not(.is-scrolled):not(.is-solid) .nav-cta { background: #fff; color: var(--cp-primary); }
+
+/* Header sempre "chiaro" nelle pagine interne senza hero scuro */
+.site-header.is-solid { background: #fff; box-shadow: 0 1px 0 var(--cp-line); }
+.site-header.is-solid .nav-link, .site-header.is-solid .brand-text, .site-header.is-solid .menu-toggle { color: var(--cp-primary); }
+.site-header.is-solid .brand-logo { filter: none; }
+
+.mobile-nav { transform: translateY(-8px); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+.mobile-nav.is-open { transform: none; opacity: 1; pointer-events: auto; }
+
+/* ---------- Bottoni ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; padding: .9rem 1.6rem; border-radius: var(--cp-radius); font-weight: 500; font-size: .95rem; letter-spacing: .01em; transition: background-color .25s, color .25s, border-color .25s, transform .25s; }
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--cp-primary); color: #fff; }
+.btn-primary:hover { background: var(--cp-primary-700); }
+.btn-light { background: #fff; color: var(--cp-primary); }
+.btn-light:hover { background: var(--cp-surface-alt); }
+.btn-outline-light { border: 1px solid rgba(255,255,255,.55); color: #fff; }
+.btn-outline-light:hover { background: rgba(255,255,255,.1); border-color: #fff; }
+.btn-outline { border: 1px solid var(--cp-primary); color: var(--cp-primary); }
+.btn-outline:hover { background: var(--cp-primary); color: #fff; }
+
+.eyebrow { display: inline-flex; align-items: center; gap: .75rem; font-size: .75rem; letter-spacing: .22em; text-transform: uppercase; color: var(--cp-secondary); font-weight: 600; }
+.eyebrow::before { content: ""; width: 32px; height: 1px; background: currentColor; }
+
+/* ==========================================================================
+   MARCHIO A LINEE (hero + filigrana)
+   Ogni tratto del logo ha due livelli: .mk-stroke (contorno che si "disegna")
+   e .mk-fill (riempimento che compare dopo). pathLength="1" nei path SVG
+   permette di animare con dasharray/dashoffset normalizzati.
+   ========================================================================== */
+.mark .mk-stroke { fill: none; stroke-width: .6; stroke-dasharray: 1; stroke-dashoffset: 1; vector-effect: non-scaling-stroke; }
+.mark .mk-fill { opacity: 0; }
+
+/* Hero: disegno automatico all'apertura */
+.hero .mark .mk-stroke { stroke-width: 1.4; animation: cp-draw 2.4s cubic-bezier(.65,0,.35,1) forwards; }
+.hero .mark .mk-stroke.s2 { animation-delay: .45s; }
+.hero .mark .mk-stroke.s3 { animation-delay: .8s; }
+.hero .mark .mk-fill { animation: cp-fill 1.2s ease forwards; animation-delay: 2s; }
+.hero .mark .mk-fill.s2 { animation-delay: 2.3s; }
+.hero .mark .mk-fill.s3 { animation-delay: 2.5s; }
+@keyframes cp-draw { to { stroke-dashoffset: 0; } }
+@keyframes cp-fill { to { opacity: 1; } }
+
+/* ---------- HERO ---------- */
+.hero { position: relative; min-height: 100svh; color: #fff; overflow: hidden; isolation: isolate;
+  background-color: var(--cp-primary);
+  /* Inserire una foto di Sassuolo in assets/img/hero-sassuolo.jpg: verrà mostrata sotto il velo blu. */
+  background-image:
+    linear-gradient(180deg, rgba(15,32,54,.82) 0%, rgba(30,58,95,.78) 55%, rgba(15,32,54,.92) 100%),
+    var(--cp-hero-img, none),
+    radial-gradient(120% 90% at 85% 10%, #2A4B74 0%, var(--cp-primary) 45%, var(--cp-primary-900) 100%);
+  background-size: cover; background-position: center; }
+.hero-rays { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; opacity: .5; }
+.hero-rays path { fill: none; stroke: var(--cp-secondary-300); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .25; stroke-dasharray: 1; stroke-dashoffset: 1; animation: cp-draw 3.5s cubic-bezier(.65,0,.35,1) forwards; }
+.hero-rays path:nth-child(2) { animation-delay: .3s; opacity: .18; }
+.hero-rays path:nth-child(3) { animation-delay: .6s; opacity: .12; }
+.hero-rays path:nth-child(4) { animation-delay: .9s; opacity: .1; }
+.hero-rays { animation: cp-sway 26s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+@keyframes cp-sway { from { transform: rotate(-.6deg) translateX(-10px); } to { transform: rotate(.6deg) translateX(10px); } }
+
+.hero .mark { width: clamp(150px, 22vw, 260px); height: auto; }
+.hero .mark .c-dark { stroke: #fff; } .hero .mark .f-dark { fill: #fff; }
+.hero .mark .c-light { stroke: var(--cp-secondary-300); } .hero .mark .f-light { fill: var(--cp-secondary-300); }
+
+.hero-title, .hero-sub, .hero-cta, .hero-rule { opacity: 0; animation: cp-fade-up 1s ease forwards; }
+.hero-title { animation-delay: 1.6s; } .hero-rule { animation-delay: 1.9s; } .hero-sub { animation-delay: 2.1s; } .hero-cta { animation-delay: 2.4s; }
+@keyframes cp-fade-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+.scroll-cue { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); width: 1px; height: 56px; background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,.7)); }
+.scroll-cue::after { content: ""; position: absolute; left: -2px; top: 0; width: 5px; height: 5px; border-radius: 50%; background: #fff; animation: cp-cue 2.2s ease-in-out infinite; }
+@keyframes cp-cue { 0% { top: 0; opacity: 0; } 30% { opacity: 1; } 100% { top: 52px; opacity: 0; } }
+
+/* ---------- Filigrana fissa del logo (resta sullo sfondo scorrendo) ---------- */
+.watermark { position: fixed; z-index: 0; pointer-events: none; right: -6vw; top: 50%; width: min(62vw, 720px); transform: translateY(-50%); opacity: 0; transition: opacity .6s ease; }
+.watermark.is-active { opacity: 1; }
+.watermark .mark .mk-stroke { stroke: var(--cp-primary); stroke-width: 1.4; opacity: .28; }
+.watermark .mark .mk-fill.f-dark { fill: var(--cp-primary); }
+.watermark .mark .mk-fill.f-light { fill: var(--cp-secondary); }
+.watermark .mark .mk-stroke.c-light { stroke: var(--cp-secondary); }
+@media (max-width: 767px) { .watermark { right: -30vw; width: 110vw; } }
+
+/* Contenuto sopra la filigrana: sezioni con fondo semitrasparente */
+.page-content { position: relative; z-index: 1; }
+.bg-surface { background: transparent; }
+.bg-surface-alt { background: rgba(241,245,249,.55); }
+
+/* ---------- Card servizi ---------- */
+.service-card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 2rem; transition: border-color .3s, box-shadow .3s, transform .3s; overflow: hidden; }
+.service-card::before { content: ""; position: absolute; left: 0; top: 0; height: 3px; width: 0; background: var(--cp-secondary); transition: width .45s ease; }
+.service-card:hover, .service-card:focus-within { border-color: transparent; box-shadow: 0 18px 40px -18px rgba(30,58,95,.35); transform: translateY(-4px); }
+.service-card:hover::before, .service-card:focus-within::before { width: 100%; }
+.service-card .icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; background: var(--cp-surface-alt); color: var(--cp-primary); transition: background-color .3s, color .3s; }
+.service-card:hover .icon { background: var(--cp-primary); color: #fff; }
+.service-card .more { margin-top: auto; padding-top: 1.5rem; color: var(--cp-primary); font-weight: 500; font-size: .9rem; display: inline-flex; align-items: center; gap: .4rem; }
+.service-card .more::after { content: ""; position: absolute; inset: 0; } /* card interamente cliccabile */
+.service-card .more svg { transition: transform .25s; }
+.service-card:hover .more svg { transform: translateX(4px); }
+.service-card ul li { position: relative; padding-left: 1rem; }
+.service-card ul li::before { content: ""; position: absolute; left: 0; top: .7em; width: 6px; height: 1px; background: var(--cp-secondary); }
+
+/* ---------- Team teaser ("maschera") ---------- */
+.team-teaser { background: var(--cp-primary); color: #fff; position: relative; overflow: hidden; isolation: isolate; }
+.team-teaser .deco { position: absolute; left: -90px; bottom: -70px; width: 380px; max-width: 70%; opacity: .07; z-index: -1; }
+.team-teaser .silhouettes span { display: block; aspect-ratio: 3/4; border-radius: var(--cp-radius); background: linear-gradient(160deg, rgba(255,255,255,.14), rgba(255,255,255,.03)); border: 1px solid rgba(255,255,255,.12); position: relative; overflow: hidden; }
+.team-teaser .silhouettes span::before { content: ""; position: absolute; left: 50%; top: 26%; width: 34%; aspect-ratio: 1; border-radius: 50%; transform: translateX(-50%); background: rgba(255,255,255,.14); }
+.team-teaser .silhouettes span::after { content: ""; position: absolute; left: 50%; bottom: -12%; width: 70%; height: 46%; border-radius: 50% 50% 0 0; transform: translateX(-50%); background: rgba(255,255,255,.1); }
+.team-teaser .silhouettes span:nth-child(2) { transform: translateY(-18px); }
+
+/* ---------- Sede: galleria ---------- */
+.photo-slot { position: relative; border-radius: var(--cp-radius); overflow: hidden; background: linear-gradient(135deg, #E8EEF5, #D5DFEA); display: grid; place-items: center; color: var(--cp-secondary); font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+.photo-slot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Form ---------- */
+.field label { display: block; font-size: .8rem; font-weight: 500; color: var(--cp-primary); margin-bottom: .4rem; letter-spacing: .02em; }
+.field input, .field textarea { width: 100%; border: 1px solid #D1D5DB; border-radius: var(--cp-radius); padding: .8rem 1rem; background: #fff; font-size: .95rem; transition: border-color .2s, box-shadow .2s; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--cp-secondary); box-shadow: 0 0 0 3px rgba(91,123,156,.18); }
+.field .error-msg { display: none; color: #B91C1C; font-size: .78rem; margin-top: .35rem; }
+.field.has-error input, .field.has-error textarea { border-color: #B91C1C; }
+.field.has-error .error-msg { display: block; }
+.form-status { display: none; }
+.form-status.is-visible { display: block; }
+
+.map-consent { background: linear-gradient(135deg, var(--cp-surface-alt), #E8EEF5); }
+
+/* ---------- Reveal on scroll ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+.reveal[data-delay="1"] { transition-delay: .1s; } .reveal[data-delay="2"] { transition-delay: .2s; } .reveal[data-delay="3"] { transition-delay: .3s; }
+
+@media (min-width: 1024px) { .call-fab { display: none !important; } }
+.call-fab { position: fixed; right: 16px; bottom: 16px; z-index: 40; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--cp-primary); color: #fff; box-shadow: 0 10px 24px -8px rgba(17,24,39,.5); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}
