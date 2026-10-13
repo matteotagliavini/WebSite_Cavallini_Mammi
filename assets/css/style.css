@@ -24,7 +24,7 @@
 }
 
 html { scroll-behavior: smooth; scroll-padding-top: var(--cp-header-h); }
-body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(--cp-surface); -webkit-font-smoothing: antialiased; }
+body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(--cp-surface-alt); -webkit-font-smoothing: antialiased; }
 .font-serif { font-family: var(--cp-font-serif); }
 
 .skip-link { position: absolute; left: -9999px; top: 8px; z-index: 100; background: var(--cp-primary); color: #fff; padding: .6rem 1rem; border-radius: var(--cp-radius); }
@@ -154,7 +154,6 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .stage-values { grid-template-columns: 1fr 1fr; gap: 1.4rem 2.2rem; margin-top: 2.2rem; }
 .stage-values .sv { border-top: 1px solid var(--cp-line); padding-top: .9rem; }
 .stage-values dt { font-family: var(--cp-font-serif); font-size: 1.45rem; font-weight: 600; color: var(--cp-primary); line-height: 1.2; display: flex; align-items: baseline; gap: .6rem; }
-.stage-values .sv-n { font-size: 1rem; font-weight: 500; color: var(--cp-secondary); }
 .stage-values dd { margin-top: .35rem; font-size: .9rem; line-height: 1.55; color: var(--cp-muted); }
 .js-stage .stage-values .sv { opacity: 0; transform: translateY(18px); transition: opacity .25s ease, transform .25s ease; }
 /* Entrata automatica in cascata, come i testi dell'hero (non dipende dallo scroll) */
@@ -175,7 +174,9 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 /* ---------- Filigrana fissa (dopo il palco) ---------- */
 .brand-mark { position: fixed; left: 0; top: 0; z-index: 1; pointer-events: none; opacity: 0; transform-origin: 0 0; will-change: transform, opacity; }
 .brand-mark.is-on { opacity: 1; }
-.brand-mark svg { display: block; width: 100%; height: auto; overflow: visible; }
+.brand-mark svg { display: block; width: 100%; height: auto; overflow: visible; will-change: transform;
+  animation: cp-float 9s ease-in-out infinite alternate; }   /* respiro lento e continuo della filigrana */
+@keyframes cp-float { from { transform: translateY(-12px) rotate(-1.2deg); } to { transform: translateY(12px) rotate(1.2deg); } }
 .gb .wb-fill  { fill: var(--cp-primary); opacity: .045; }
 .gb .wb-line  { fill: none; stroke: var(--cp-primary); stroke-width: 1.1; opacity: .2; vector-effect: non-scaling-stroke; }
 .gb .wb-trace { fill: none; stroke: var(--cp-secondary); stroke-width: 2.2; opacity: calc(.55 * var(--tro, 1)); stroke-linecap: round; vector-effect: non-scaling-stroke;
@@ -185,8 +186,9 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 
 /* Contenuto sopra la filigrana: sezioni con fondo semitrasparente */
 .page-content { position: relative; z-index: 3; }  /* livelli: palco < filigrana(1) < sezioni(3) < header(50) */
+/* Sezioni trasparenti: la filigrana del logo resta visibile in modo uniforme (nessun "taglio" ai bordi) */
 .bg-surface { background: transparent; }
-.bg-surface-alt { background: rgba(241,245,249,.55); }
+.bg-surface-alt { background: transparent; }
 
 /* ---------- Card servizi ---------- */
 .service-card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 2rem; transition: border-color .3s, box-shadow .3s, transform .3s; overflow: hidden; }
