@@ -72,7 +72,8 @@
   var anchor = document.getElementById('studio');
 
   var animated = !!(stage && sticky && sm && slot && studio && !reduceMotion);
-  if (animated) { root.classList.add('js-stage'); sticky.appendChild(sm); }
+  // Il logo diventa un elemento fisso a livello di pagina: non "salta" quando il palco si sgancia
+  if (animated) { root.classList.add('js-stage'); document.body.appendChild(sm); }
 
   function clamp(v) { return Math.max(0, Math.min(1, v)); }
   function lerp(a, b, t) { return a + (b - a) * t; }
@@ -80,6 +81,8 @@
   function easeInOut(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
   function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
   function easeIn(t) { return t * t * t; }
+  function smooth(t) { return t * t * t * (t * (t * 6 - 15) + 10); }        // smootherstep: parte e arriva con velocità zero
+  function bell(t) { var s = Math.sin(Math.PI * t); return s * s; }          // 0 → 1 → 0 senza scatti agli estremi
 
   var S = { top: 0, len: 1 }, K0 = {}, K2 = {}, WM = {}, D = 0;
 
@@ -119,8 +122,8 @@
       'translate(' + W / 2 + 'px,' + H / 2 + 'px) rotate(' + rot.toFixed(2) + 'deg) translate(' + (-W / 2) + 'px,' + (-H / 2) + 'px)';
   }
 
-  function onStage() {
-    var y = window.scrollY, vh = window.innerHeight;
+  function onStage(y) {
+    var vh = window.innerHeight;
     var stageEnd = animated ? S.top + S.len : (stage ? stage.offsetTop + stage.offsetHeight - vh : vh);
     var docEnd = Math.max(1, document.documentElement.scrollHeight - vh - stageEnd);
     var after = clamp((y - stageEnd) / docEnd);
@@ -143,15 +146,15 @@
     sm.style.visibility = p >= 1 ? 'hidden' : '';
 
     /* ---- Posizione e scala del logo: K0 (hero) → K2 (protagonista) → filigrana ---- */
-    var m1 = easeInOut(seg(p, 0.05, 0.32)), m3 = easeInOut(seg(p, 0.74, 1));
+    var m1 = smooth(seg(p, 0.04, 0.34)), m3 = smooth(seg(p, 0.72, 1));
     var wmCx = WM.tx + WM.W / 2, wmCy = WM.ty + WM.par0 + WM.H / 2;
     var cx = lerp(lerp(K0.cx, K2.cx, m1), wmCx, m3);
     var cy = lerp(lerp(K0.cy, K2.cy, m1), wmCy, m3);
     var w  = lerp(lerp(K0.w,  K2.w,  m1), WM.W, m3);
 
     /* ---- "Gioco": le tre parti si separano e si ricompongono ---- */
-    var g = seg(p, 0.44, 0.68), e = Math.sin(Math.PI * g);                // 0 → 1 → 0
-    var sway = 4 * Math.sin(2 * Math.PI * g);
+    var g = seg(p, 0.42, 0.70), e = bell(g);                              // 0 → 1 → 0, morbido agli estremi
+    var sway = 4 * Math.sin(2 * Math.PI * g) * Math.sin(Math.PI * g);
     var rot2d = sway + lerp(0, -3.5, m3);
     sm.style.transform = markTransform(cx, cy, w / WM.W, rot2d);
     if (pcs[0]) pcs[0].style.transform = 'translate(' + (-24 * e).toFixed(2) + 'px,' + (12 * e).toFixed(2) + 'px) rotate(' + (-16 * e).toFixed(2) + 'deg)';
@@ -159,10 +162,12 @@
     if (pcs[2]) pcs[2].style.transform = 'translate(' + (28 * e).toFixed(2) + 'px,' + (-10 * e).toFixed(2) + 'px) rotate(' + (20 * e).toFixed(2) + 'deg)';
 
     /* ---- Rotazione 3D con cambio colore quando il logo è di taglio ---- */
-    var r = seg(p, 0.06, 0.28);
-    var ang = r < 0.5 ? 90 * easeIn(r * 2) : -90 * (1 - easeOut((r - 0.5) * 2));
+    // Mezzo giro continuo (0→180°) con velocità costante nel punto "di taglio": oltre 90° si
+    // sottraggono 180° così il logo non appare mai specchiato.
+    var r = seg(p, 0.05, 0.30), a180 = 180 * smooth(r);
+    var ang = a180 > 90 ? a180 - 180 : a180;
     smRot.style.transform = 'rotateY(' + ang.toFixed(2) + 'deg)';
-    sm.classList.toggle('is-dark', r >= 0.5);
+    sm.classList.toggle('is-dark', a180 > 90);
 
     /* ---- Da logo pieno a filigrana (solo linee) ---- */
     sm.style.setProperty('--fo', lerp(1, 0.045, m3).toFixed(3));
@@ -171,20 +176,20 @@
 
     /* ---- Disco chiaro dietro al logo protagonista ---- */
     if (disk) {
-      var ds = easeOut(seg(p, 0.2, 0.36)) * (1 - easeInOut(seg(p, 0.72, 0.86))) * (1 + 0.08 * e);
+      var ds = smooth(seg(p, 0.18, 0.38)) * (1 - smooth(seg(p, 0.70, 0.88))) * (1 + 0.08 * e);
       disk.style.transform = 'translate(' + (K2.cx - D / 2).toFixed(1) + 'px,' + (K2.cy - D / 2).toFixed(1) + 'px) scale(' + ds.toFixed(4) + ')';
     }
 
     /* ---- Hero: il testo sale e svanisce, poi lo sfondo blu lascia il posto al chiaro ---- */
-    var h = seg(p, 0, 0.09);
-    if (heroContent) { heroContent.style.opacity = (1 - h).toFixed(3); heroContent.style.transform = 'translateY(' + (-70 * easeOut(h)).toFixed(1) + 'px)'; }
+    var h = smooth(seg(p, 0, 0.11));
+    if (heroContent) { heroContent.style.opacity = (1 - h).toFixed(3); heroContent.style.transform = 'translateY(' + (-70 * h).toFixed(1) + 'px)'; }
     if (cue) cue.style.opacity = (1 - seg(p, 0, 0.03)).toFixed(3);
-    var bg = 1 - seg(p, 0.135, 0.195);                                   // centrato sul momento "di taglio" (p≈0.17)
+    var bg = 1 - smooth(seg(p, 0.12, 0.23));                             // centrato sul momento "di taglio" (p≈0.175)
     hero.style.opacity = bg.toFixed(3);
     hero.style.visibility = bg <= 0 ? 'hidden' : '';
 
     /* ---- Testo "Lo Studio" ---- */
-    var tin = easeOut(seg(p, 0.27, 0.38)), tout = easeIn(seg(p, 0.71, 0.8));
+    var tin = smooth(seg(p, 0.27, 0.40)), tout = smooth(seg(p, 0.69, 0.80));
     var op = tin * (1 - tout);
     var mobile = window.innerWidth < 768;
     studio.style.opacity = op.toFixed(3);
@@ -194,16 +199,26 @@
       : 'translate(' + ((1 - tin) * -60).toFixed(1) + 'px,' + (-tout * 40).toFixed(1) + 'px)';
   }
 
-  var ticking = false;
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () { onHeader(); onStage(); ticking = false; });
+  /* ---- Scroll "morbido": l'animazione insegue la posizione reale con un'inerzia
+     (come lo "scrub" dei siti di riferimento). Gli scatti della rotellina del mouse
+     vengono ammorbiditi; la pagina continua a scorrere in modo nativo. ---- */
+  var sy = window.scrollY, rafId = null, lastT = 0;
+  var INERTIA = 140;                                                       // ms: più alto = più morbido
+  function tick(t) {
+    var target = window.scrollY;
+    var dt = lastT ? Math.min(64, t - lastT) : 16;
+    lastT = t;
+    sy += (target - sy) * (1 - Math.exp(-dt / INERTIA));
+    if (Math.abs(target - sy) < 0.25) sy = target;
+    onHeader(); onStage(sy);
+    if (sy !== target) rafId = requestAnimationFrame(tick);
+    else { rafId = null; lastT = 0; }
   }
+  function onScroll() { if (!rafId) rafId = requestAnimationFrame(tick); }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { layout(); onScroll(); });
-  layout(); onHeader(); onStage();
-  window.addEventListener('load', function () { layout(); onStage(); });   // dopo il caricamento dei font
+  window.addEventListener('resize', function () { layout(); sy = window.scrollY; onHeader(); onStage(sy); });
+  layout(); onHeader(); onStage(sy);
+  window.addEventListener('load', function () { layout(); onStage(sy); });   // dopo il caricamento dei font
 
   /* ---------- Comparsa elementi allo scroll ---------- */
   var reveals = document.querySelectorAll('.reveal');
