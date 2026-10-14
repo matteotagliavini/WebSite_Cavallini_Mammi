@@ -81,17 +81,27 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 @keyframes cp-draw { to { stroke-dashoffset: 0; } }
 @keyframes cp-fill { to { opacity: 1; } }
 
-/* ---------- HERO (sfondo blu) ---------- */
+/* ---------- HERO (sfondo blu + immagine di Sassuolo in trasparenza) ----------
+   IMMAGINE DI SFONDO: assets/img/foto_sfondo.jpg
+   Per cambiarla basta sostituire il file mantenendo lo stesso nome (foto_sfondo.jpg):
+   il sito la usa automaticamente. Consigliato: almeno 2000 px di larghezza, soggetto al centro.
+   L'immagine viene "tinta" di blu (luminosity) e tenuta a bassa opacità: resta elegante e
+   non compete con logo e testi, qualunque foto si usi. */
 .hero { position: relative; min-height: 100svh; color: #fff; overflow: hidden;
   background-color: var(--cp-primary);
-  /* Inserire una foto di Sassuolo in assets/img/hero-sassuolo.jpg: verrà mostrata sotto il velo blu. */
-  background-image:
-    linear-gradient(180deg, rgba(15,32,54,.82) 0%, rgba(30,58,95,.78) 55%, rgba(15,32,54,.92) 100%),
-    var(--cp-hero-img, none),
-    radial-gradient(120% 90% at 85% 10%, #2A4B74 0%, var(--cp-primary) 45%, var(--cp-primary-900) 100%);
-  background-size: cover; background-position: center;
+  background-image: radial-gradient(120% 90% at 85% 10%, #2A4B74 0%, var(--cp-primary) 45%, var(--cp-primary-900) 100%);
   display: flex; align-items: center; }
-.hero-rays { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .5; pointer-events: none;
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: url("../img/foto_sfondo.jpg") center 60% / cover no-repeat;
+  opacity: var(--cp-hero-img-opacity, .2);
+  mix-blend-mode: luminosity;                      /* la foto prende i toni blu del brand */
+  transform-origin: 50% 70%;
+  animation: cp-hero-img 16s cubic-bezier(.2,.6,.2,1) forwards; }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  /* velo per la leggibilità: più scuro in alto (menu) e in basso, più aperto al centro */
+  background: linear-gradient(180deg, rgba(15,32,54,.55) 0%, rgba(15,32,54,.05) 40%, rgba(15,32,54,.3) 65%, rgba(15,32,54,.8) 100%); }
+@keyframes cp-hero-img { from { transform: scale(1.08); } to { transform: scale(1); } }   /* lentissimo zoom all'apertura */
+.hero-rays { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; opacity: .5; pointer-events: none;
   animation: cp-sway 26s ease-in-out infinite alternate; transform-origin: 50% 100%; }
 .hero-rays path { fill: none; stroke: var(--cp-secondary-300); stroke-width: 1; vector-effect: non-scaling-stroke; opacity: .25; stroke-dasharray: 1; stroke-dashoffset: 1; animation: cp-draw 3.5s cubic-bezier(.65,0,.35,1) forwards; }
 .hero-rays path:nth-child(2) { animation-delay: .3s; opacity: .18; }
