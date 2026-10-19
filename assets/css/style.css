@@ -349,3 +349,14 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
   .site-header .brand-logo { height: 1.75rem; }
   .site-header .lang-switch { margin-left: .25rem; }
 }
+
+/* ---------- Dove siamo: scheda della sede ---------- */
+.sede-main { background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 2rem; box-shadow: 0 18px 40px -28px rgba(30,58,95,.35); }
+.sede-main .sede-label { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cp-secondary); font-weight: 600; }
+.sede-info { display: grid; gap: .65rem; border-top: 1px solid var(--cp-line); padding-top: 1.25rem; }
+.sede-info > div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; align-items: baseline; }
+.sede-info dt { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--cp-secondary); font-weight: 600; }
+.sede-info dd { color: var(--cp-primary); font-size: 1.05rem; }
+.sede-info a:hover { text-decoration: underline; }
+.sede-main .btn svg { width: 16px; height: 16px; }
+@media (max-width: 400px) { .sede-main { padding: 1.5rem; } .sede-info > div { grid-template-columns: 5.25rem 1fr; } }
