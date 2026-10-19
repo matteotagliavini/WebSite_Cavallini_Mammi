@@ -160,6 +160,8 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
   background: radial-gradient(circle at 35% 30%, #EEF3F8, #DCE5EF 70%); transform-origin: 50% 50%; will-change: transform; transform: scale(0); }
 .js-stage .stage-mark { position: fixed; z-index: 1; left: 0; top: 0; transform-origin: 0 0; will-change: transform, opacity; perspective: 1400px; pointer-events: none; }
 .js-stage .stage-mark-rot { transform-style: preserve-3d; will-change: transform; }
+/* a scroll fermo: niente livello GPU "congelato" → logo ridisegnato nitido (vedi sharpen() in main.js) */
+.js-stage .stage-mark.is-sharp, .js-stage .stage-mark.is-sharp .stage-mark-rot { will-change: auto; }
 .js-stage .stage-studio { position: absolute; inset: 0; z-index: 4; background: none; padding: 0; display: flex; align-items: center; opacity: 0; visibility: hidden; will-change: opacity, transform; }
 .js-stage .stage-studio-text { max-width: min(50%, 40rem); }
 @media (max-width: 767px) {
@@ -353,7 +355,8 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 /* ---------- Dove siamo: scheda della sede ---------- */
 .sede-main { background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 2rem; box-shadow: 0 18px 40px -28px rgba(30,58,95,.35); }
 .sede-main .sede-label { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cp-secondary); font-weight: 600; }
-.sede-info { display: grid; gap: .65rem; border-top: 1px solid var(--cp-line); padding-top: 1.25rem; }
+.sede-info { display: grid; gap: 0; border-top: 1px solid var(--cp-line); margin-top: 1.5rem; }
+.sede-info > div { padding: .9rem 0; border-bottom: 1px solid var(--cp-line); }
 .sede-info > div { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1rem; align-items: baseline; }
 .sede-info dt { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--cp-secondary); font-weight: 600; }
 .sede-info dd { color: var(--cp-primary); font-size: 1.05rem; }

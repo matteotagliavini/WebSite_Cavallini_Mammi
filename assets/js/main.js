@@ -188,7 +188,8 @@
     // Mezzo giro continuo (0→180°): oltre 90° si sottraggono 180° così non appare mai specchiato.
     var r = seg(p, 0.05, 0.55), a180 = 180 * smooth(r);
     var ang = a180 > 90 ? a180 - 180 : a180;
-    smRot.style.transform = 'rotateY(' + ang.toFixed(2) + 'deg)';
+    // a rotazione finita niente trasformazione 3D: il browser può ridisegnare il logo nitido
+    smRot.style.transform = Math.abs(ang) < 0.01 ? 'none' : 'rotateY(' + ang.toFixed(2) + 'deg)';
     sm.classList.toggle('is-dark', a180 > 90);
 
     /* ---- Disco chiaro dietro al logo (scorre via insieme alla schermata) ---- */
@@ -233,13 +234,23 @@
     if (Math.abs(target - sy) < 0.25) sy = target;
     onHeader(); onStage(sy);
     if (sy !== target) rafId = requestAnimationFrame(tick);
-    else { rafId = null; lastT = 0; }
+    else { rafId = null; lastT = 0; sharpen(true); }
   }
-  function onScroll() { if (!rafId) rafId = requestAnimationFrame(tick); }
+  /* Nitidezza del logo: durante il movimento il logo è un livello GPU (fluido ma "fotografato"
+     alla dimensione iniziale, quindi ingrandendolo si sfoca). A scroll fermo il livello
+     viene rilasciato e il logo ridisegnato in alta risoluzione alla dimensione attuale. */
+  var sharpTimer = null;
+  function sharpen(on) {
+    if (!sm || !animated) return;
+    clearTimeout(sharpTimer);
+    if (on) sharpTimer = setTimeout(function () { sm.classList.add('is-sharp'); }, 120);
+    else sm.classList.remove('is-sharp');
+  }
+  function onScroll() { sharpen(false); if (!rafId) rafId = requestAnimationFrame(tick); }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function () { layout(); sy = window.scrollY; onHeader(); onStage(sy); });
-  layout(); onHeader(); onStage(sy);
-  window.addEventListener('load', function () { layout(); onStage(sy); });   // dopo il caricamento dei font
+  layout(); onHeader(); onStage(sy); sharpen(true);
+  window.addEventListener('load', function () { layout(); onStage(sy); sharpen(true); });   // dopo il caricamento dei font
 
   /* ---------- Comparsa elementi allo scroll ---------- */
   var reveals = document.querySelectorAll('.reveal');
