@@ -251,3 +251,92 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
   *, *::before, *::after { animation-duration: .001ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ==========================================================================
+   COMPONENTI AGGIUNTI (pagine interne, sedi, foto, lingua)
+   ========================================================================== */
+
+/* ---------- Selettore lingua IT / EN ---------- */
+.lang-switch { display: inline-flex; align-items: center; gap: .15rem; font-size: .78rem; font-weight: 600; letter-spacing: .08em; }
+.lang-switch > * { padding: .3rem .45rem; border-radius: 4px; }
+.lang-switch .is-current { opacity: 1; }
+.lang-switch a { opacity: .6; transition: opacity .2s; }
+.lang-switch a:hover { opacity: 1; }
+.site-header .lang-switch { color: #fff; }
+.site-header.is-scrolled .lang-switch, .site-header.is-solid .lang-switch { color: var(--cp-primary); }
+.lang-switch .is-current { border: 1px solid currentColor; }
+
+/* ---------- Testata delle pagine interne ---------- */
+.page-hero { position: relative; overflow: hidden; isolation: isolate; color: #fff; padding: 9.5rem 0 4.5rem;
+  background: radial-gradient(120% 120% at 85% 0%, #2A4B74 0%, var(--cp-primary) 50%, var(--cp-primary-900) 100%); }
+.page-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--page-img) center / cover no-repeat;
+  opacity: .2; mix-blend-mode: luminosity; }
+.page-hero-mark { position: absolute; right: -40px; bottom: -60px; width: 340px; max-width: 55%; z-index: -1; fill: #fff; opacity: .07; }
+.inner-page main { position: relative; z-index: 3; }
+
+/* ---------- Foto ---------- */
+.photo-frame { position: relative; overflow: hidden; border-radius: var(--cp-radius); background: #E8EEF5; }
+.photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: inherit; }
+#rete .photo-frame img { aspect-ratio: 4 / 3; }
+.photo-card { position: relative; display: block; overflow: hidden; border-radius: var(--cp-radius); min-height: 320px; color: #fff; isolation: isolate; }
+.photo-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.photo-card::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(15,32,54,.15) 0%, rgba(15,32,54,.85) 100%); }
+.photo-card:hover img { transform: scale(1.04); }
+.photo-card-body { position: absolute; left: 0; right: 0; bottom: 0; padding: 2rem; display: flex; flex-direction: column; gap: .4rem; }
+.photo-card-title { font-family: var(--cp-font-serif); font-size: 2rem; font-weight: 600; line-height: 1.1; }
+.photo-card-text { color: rgba(255,255,255,.85); max-width: 28rem; }
+
+/* ---------- Fascia "Internazionale" ---------- */
+.intl-band { position: relative; z-index: 0; color: #fff; overflow: hidden; isolation: isolate; background: var(--cp-primary-900); }
+.intl-band::before { content: ""; position: absolute; inset: 0; z-index: -2; background: var(--band-img) center / cover no-repeat; opacity: .5; filter: saturate(.55); }
+.intl-band::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(15,32,54,.95) 0%, rgba(15,32,54,.8) 45%, rgba(15,32,54,.35) 100%); }
+
+/* ---------- Etichette (chips) ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chips li { border: 1px solid var(--cp-line); background: #fff; color: var(--cp-primary); font-size: .82rem; padding: .4rem .8rem; border-radius: 999px; }
+
+/* ---------- Sedi ---------- */
+.sede-card { position: relative; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 1.75rem; }
+.sede-card .sede-label { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cp-secondary); font-weight: 600; }
+.sede-card .more { margin-top: auto; color: var(--cp-primary); font-weight: 500; font-size: .9rem; display: inline-flex; align-items: center; gap: .4rem; }
+.sede-card .more:hover { text-decoration: underline; }
+
+/* ---------- Pagina servizi ---------- */
+.service-index { position: sticky; top: 100px; display: flex; flex-direction: column; border-left: 1px solid var(--cp-line); }
+.service-index a { padding: .55rem 0 .55rem 1.1rem; margin-left: -1px; border-left: 2px solid transparent; color: var(--cp-muted); font-size: .92rem; transition: color .2s, border-color .2s; }
+.service-index a:hover, .service-index a.is-active { color: var(--cp-primary); border-left-color: var(--cp-secondary); }
+@media (max-width: 1023px) { .service-index { position: static; flex-direction: row; flex-wrap: wrap; gap: .5rem; border: 0; }
+  .service-index a { border: 1px solid var(--cp-line); border-radius: 999px; padding: .4rem .85rem; margin: 0; background: #fff; font-size: .82rem; } }
+.service-detail { scroll-margin-top: 100px; display: grid; gap: 1.5rem; }
+.service-detail-head .icon { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 50%; background: #fff; border: 1px solid var(--cp-line); color: var(--cp-primary); margin-bottom: 1.25rem; }
+.prose-cp p { color: var(--cp-muted); line-height: 1.75; font-size: 1.05rem; }
+.prose-cp p + p { margin-top: 1rem; }
+.check-list { margin-top: 1.5rem; display: grid; gap: .65rem; }
+@media (min-width: 768px) { .check-list { grid-template-columns: 1fr 1fr; gap: .75rem 2rem; } }
+.check-list li { position: relative; padding-left: 1.75rem; color: var(--cp-ink); line-height: 1.55; font-size: .95rem; }
+.check-list li::before { content: ""; position: absolute; left: 0; top: .35em; width: 1rem; height: 1rem; border-radius: 50%; background: #E8EEF5;
+  box-shadow: inset 0 0 0 4px #E8EEF5, inset 0 0 0 10px var(--cp-secondary); }
+.cta-box { background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 2.25rem; }
+.empty-state { background: #fff; border: 1px dashed #CBD5E1; border-radius: var(--cp-radius); padding: 3rem 2rem; text-align: center; color: var(--cp-secondary); display: flex; flex-direction: column; align-items: center; }
+
+/* ---------- Team ---------- */
+.profile { display: grid; gap: 2.5rem; background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 1.5rem; scroll-margin-top: 100px; }
+@media (min-width: 1024px) { .profile { grid-template-columns: 5fr 7fr; padding: 2.5rem; gap: 3.5rem; } }
+.profile-photo { border-radius: var(--cp-radius); overflow: hidden; background: #E8EEF5; aspect-ratio: 4 / 5; }
+.profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+.lavora { background: #fff; border-top: 1px solid var(--cp-line); scroll-margin-top: 76px; }
+.form-card { background: var(--cp-surface-alt); border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 2rem; }
+.field select { width: 100%; border: 1px solid #D1D5DB; border-radius: var(--cp-radius); padding: .8rem 1rem; background: #fff; font-size: .95rem; }
+.field.has-error select { border-color: #B91C1C; }
+
+/* ---------- Pagine legali ---------- */
+.legal h2 { font-family: var(--cp-font-serif); color: var(--cp-primary); font-size: 1.75rem; font-weight: 600; margin: 2.5rem 0 .75rem; }
+.legal a { color: var(--cp-primary); text-decoration: underline; }
+.legal strong { color: var(--cp-ink); }
+
+/* Header su smartphone stretti: marchio più compatto per lasciare spazio a IT/EN e menu */
+@media (max-width: 430px) {
+  .site-header .brand-text { font-size: 1.05rem; letter-spacing: .01em; white-space: nowrap; }
+  .site-header .brand-logo { height: 1.75rem; }
+  .site-header .lang-switch { margin-left: .25rem; }
+}

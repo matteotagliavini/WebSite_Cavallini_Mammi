@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cavallini &amp; Partners | Commercialisti a Sassuolo</title>
-  <meta name="description" content="Cavallini & Partners, studio di commercialisti a Sassuolo (MO): consulenza fiscale, societaria, contabile e revisione legale per imprese, professionisti e privati.">
+  <title>Cavallini &amp; Partners | Commercialisti a Sassuolo e Modena</title>
+  <meta name="description" content="Cavallini & Partners, Dottori Commercialisti e Revisori Legali a Sassuolo e Modena: consulenza tributaria, societaria, contabile e internazionale.">
   <meta name="theme-color" content="#1E3A5F">
-  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Cavallini & Partners | Commercialisti a Sassuolo">
-  <meta property="og:description" content="Consulenza fiscale, societaria, contabile e revisione legale a Sassuolo (MO).">
+  <link rel="icon" href="assets/img/logo/logo.svg" type="image/svg+xml">
+  <meta property="og:title" content="Cavallini &amp; Partners | Commercialisti a Sassuolo e Modena">
+  <meta property="og:description" content="Cavallini & Partners, Dottori Commercialisti e Revisori Legali a Sassuolo e Modena: consulenza tributaria, societaria, contabile e internazionale.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="it_IT">
 
@@ -23,87 +21,79 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     if (window.tailwind) tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary:   { DEFAULT: '#1E3A5F', 700: '#152B47', 900: '#0F2036' },
-            secondary: { DEFAULT: '#5B7B9C', 300: '#A9BCD0' },
-            surface:   { DEFAULT: '#FFFFFF', alt: '#F8FAFC' },
-            ink: '#111827'
-          },
-          fontFamily: {
-            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans:  ['Inter', 'system-ui', 'sans-serif']
-          },
-          maxWidth: { site: '1200px' }
-        }
-      }
+      theme: { extend: {
+        colors: {
+          primary:   { DEFAULT: '#1E3A5F', 700: '#152B47', 900: '#0F2036' },
+          secondary: { DEFAULT: '#5B7B9C', 300: '#A9BCD0' },
+          ink: '#111827'
+        },
+        fontFamily: { serif: ['"Cormorant Garamond"', 'Georgia', 'serif'], sans: ['Inter', 'system-ui', 'sans-serif'] },
+        maxWidth: { site: '1200px' }
+      } }
     }
   </script>
   <link rel="stylesheet" href="assets/css/style.css">
-
-  <!-- Dati strutturati per Google (attività locale) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "AccountingService",
     "name": "Cavallini & Partners",
+    "description": "Studio professionale di Dottori Commercialisti e Revisori Legali",
     "telephone": "+39 0536 980303",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Via Mazzini, 182/F2",
-      "addressLocality": "Sassuolo",
-      "addressRegion": "MO",
-      "postalCode": "41049",
-      "addressCountry": "IT"
-    },
-    "areaServed": "Sassuolo, Modena, Reggio Emilia"
+    "faxNumber": "+39 0536 980563",
+    "email": "info@cdbpartners.it",
+    "address": { "@type": "PostalAddress", "streetAddress": "Via Mazzini, 182/F", "addressLocality": "Sassuolo", "addressRegion": "MO", "postalCode": "41049", "addressCountry": "IT" },
+    "areaServed": ["Sassuolo", "Modena", "Emilia-Romagna"]
   }
   </script>
 </head>
 
 <body class="text-ink">
   <a href="#main" class="skip-link">Vai al contenuto</a>
-
-  <!-- Simbolo del marchio riutilizzabile (hero, filigrana, decorazioni).
-       WP: diventa un template-part "parts/brand-mark.php" o un SVG nel tema. -->
+  <!-- Simbolo del marchio (logo ufficiale) riutilizzabile in tutta la pagina -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
-      <path id="mk-p1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/>
-      <path id="mk-p2" d="M66 5h2.4l2.6 83h-4.6z"/>
-      <path id="mk-p3" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/>
+      <path id="mk-p1" d="M 22.14,91.1 C 15.09,90.41 9.99,88.73 6.13,85.82 C 2.01,82.7 0,78.54 0,73.1 C -0,68.12 1.75,61.39 4.65,55.26 C 5.56,53.32 6.49,51.33 6.84,50.55 C 7.03,50.14 7.54,49.19 7.98,48.44 C 8.42,47.7 8.78,47.06 8.78,47.02 C 8.78,46.78 12.18,41.52 13.87,39.14 C 34.82,9.7 58.26,-1.73 60.8,0.82 C 61.12,1.14 60.86,1.66 60.22,1.97 C 59.88,2.13 58.83,2.64 57.9,3.09 C 56.96,3.54 55.95,4.05 55.66,4.22 C 55.1,4.55 55.05,4.58 52.89,5.97 C 41.33,13.4 31.2,26.51 29.46,28.82 C 22.53,38.03 17.64,47.11 14.65,56.33 C 13.07,61.18 12.52,64.46 12.49,69.06 C 12.47,73.84 13.12,76.41 15.16,79.55 C 17.52,83.16 21.37,85.22 27.33,86.02 C 29.65,86.34 38.51,86.34 41.67,86.02 C 46.57,85.53 52.28,84.71 55.39,84.05 C 58.1,83.47 59.94,83.13 60.32,83.13 C 60.78,83.13 60.87,83.4 60.79,84.56 C 60.7,86 60.62,86.14 59.64,86.5 C 58.56,86.9 53.63,88.14 49.83,88.96 C 48.16,89.32 43.66,90.1 41.05,90.49 C 35.19,91.34 27.21,91.6 22.14,91.1 L 22.14,91.1"/>
+      <path id="mk-p2" d="M 64.94,93.23 C 64.88,93.07 64.89,84.42 64.95,74.01 C 65.3,21.66 65.42,7.28 65.54,5.96 C 65.6,5.17 65.75,4.47 65.86,4.4 C 66.26,4.13 67.03,4.27 67.55,4.71 C 68.26,5.31 68.25,5.23 68.48,15.37 C 68.58,19.96 68.74,25.81 68.84,28.37 C 68.94,30.93 69.09,35.78 69.19,39.13 C 69.28,42.49 69.48,49.27 69.62,54.19 C 69.77,59.12 69.97,66.69 70.08,71.03 C 70.19,75.37 70.36,81.36 70.47,84.34 C 70.58,87.32 70.61,90.28 70.54,90.92 C 70.43,91.94 70.34,92.14 69.81,92.61 C 69.03,93.3 68.19,93.52 66.45,93.53 C 65.32,93.53 65.03,93.47 64.94,93.23 L 64.94,93.23"/>
+      <path id="mk-p3" d="M 73.84,85.63 C 73.63,85.23 73.85,82.78 74.22,81.47 C 74.45,80.63 74.83,80.38 76.63,79.9 C 82.16,78.4 88.35,76.25 91.08,74.87 C 92.38,74.22 93.71,73.04 94.04,72.25 C 94.35,71.5 94.35,69.38 94.04,67.89 C 93.67,66.14 92.05,61.6 90.86,58.99 C 90.67,58.57 90.52,58.19 90.52,58.13 C 90.52,58.08 89.92,56.62 89.18,54.89 C 88.44,53.17 87.83,51.72 87.83,51.67 C 87.83,51.63 87.64,51.17 87.4,50.65 C 87.16,50.13 86.71,49.05 86.4,48.27 C 86.08,47.48 85.68,46.51 85.51,46.12 C 85.33,45.72 84.85,44.59 84.43,43.61 C 84.01,42.62 83.53,41.49 83.35,41.1 C 83.17,40.7 82.67,39.53 82.22,38.5 C 81.78,37.46 81.08,35.85 80.66,34.91 C 80.24,33.98 79.59,32.48 79.22,31.6 C 78.85,30.71 77.79,28.21 76.85,26.04 C 72.26,15.41 71.96,14.54 72.69,13.93 C 73.21,13.5 73.74,14.36 76.32,19.79 C 77.82,22.95 80.62,28.8 84.33,36.53 C 85.54,39.04 86.74,41.54 86.98,42.08 C 87.23,42.62 87.81,43.87 88.28,44.86 C 88.74,45.85 89.75,48.02 90.52,49.7 C 91.29,51.38 92.29,53.53 92.74,54.49 C 93.2,55.44 93.57,56.26 93.57,56.31 C 93.57,56.35 93.84,56.98 94.18,57.71 C 95.39,60.33 97.87,66.12 98.54,67.89 C 101.07,74.61 100.47,76.93 95.51,79.73 C 92.32,81.54 89.33,82.7 84.16,84.17 C 79.57,85.48 76.98,86 75.07,86 C 74.22,86 74.01,85.94 73.84,85.63 L 73.84,85.63"/>
     </defs>
   </svg>
 
   <!-- =========================================================
-       HEADER — WP: header.php (menu: wp_nav_menu 'primary')
+       HEADER — WP: header.php (menu: wp_nav_menu 'primary'; selettore lingua: WPML/Polylang)
        ========================================================= -->
   <header id="site-header" class="site-header fixed inset-x-0 top-0 z-50">
     <div class="mx-auto max-w-site px-5 md:px-8 h-[76px] flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3" aria-label="Cavallini & Partners — Home">
-        <img src="assets/img/logo.svg" alt="" class="brand-logo h-9 w-auto">
+      <a href="index.html" class="flex items-center gap-3" aria-label="Cavallini &amp; Partners — Home">
+        <img src="assets/img/logo/logo.svg" alt="" class="brand-logo h-9 w-auto">
         <span class="brand-text font-serif text-xl md:text-2xl font-semibold tracking-wide">Cavallini <span class="font-medium">&amp;</span> Partners</span>
       </a>
 
-      <nav class="hidden lg:flex items-center gap-9 text-[0.9rem]" aria-label="Menu principale">
+      <nav class="hidden lg:flex items-center gap-8 text-[0.9rem]" aria-label="Menu principale">
         <a class="nav-link" href="#studio">Lo Studio</a>
-        <a class="nav-link" href="#servizi">Servizi</a>
+        <a class="nav-link" href="servizi.html">Servizi</a>
         <a class="nav-link" href="team.html">Team</a>
-        <a class="nav-link" href="#sede">Dove siamo</a>
+        <a class="nav-link" href="circolari.html">Circolari</a>
+        <a class="nav-link" href="#sede">Sedi</a>
         <a class="btn btn-primary nav-cta !py-2.5 !px-5 !text-sm" href="#contatti">Contattaci</a>
+        <span class="lang-switch" aria-label="Lingua"><span class="is-current" aria-current="true">IT</span><a href="en/index.html" hreflang="en" lang="en">EN</a></span>
       </nav>
 
-      <button id="menu-toggle" class="menu-toggle lg:hidden p-2 -mr-2" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobile-nav">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
+      <div class="flex items-center gap-3 lg:hidden">
+        <span class="lang-switch"><span class="is-current" aria-current="true">IT</span><a href="en/index.html" hreflang="en" lang="en">EN</a></span>
+        <button id="menu-toggle" class="menu-toggle p-2 -mr-2" aria-label="Apri il menu" aria-expanded="false" aria-controls="mobile-nav">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
     </div>
 
     <div id="mobile-nav" class="mobile-nav lg:hidden absolute inset-x-0 top-full bg-white shadow-lg border-t border-gray-100">
       <nav class="px-5 py-4 flex flex-col text-primary" aria-label="Menu mobile">
         <a class="py-3 border-b border-gray-100" href="#studio">Lo Studio</a>
-        <a class="py-3 border-b border-gray-100" href="#servizi">Servizi</a>
+        <a class="py-3 border-b border-gray-100" href="servizi.html">Servizi</a>
         <a class="py-3 border-b border-gray-100" href="team.html">Team</a>
-        <a class="py-3 border-b border-gray-100" href="#sede">Dove siamo</a>
+        <a class="py-3 border-b border-gray-100" href="circolari.html">Circolari</a>
+        <a class="py-3 border-b border-gray-100" href="#sede">Sedi</a>
         <a class="btn btn-primary mt-4" href="#contatti">Contattaci</a>
       </nav>
     </div>
@@ -118,7 +108,6 @@
            1. Hero blu: il logo si traccia, poi ruota in 3D (si vede di taglio) mentre
               lo sfondo passa dal blu al chiaro e il logo cambia colore;
            2. Il logo atterra grande a destra, con il testo "Lo Studio" a sinistra;
-           3. "Gioco": le tre parti del logo (vela, albero, fiocco) si separano e si ricompongono;
            4. Il logo si sposta e si alleggerisce fino a diventare la filigrana di sfondo.
          Senza JavaScript o con "riduci movimento": hero e testo in sequenza, statici.
          WP: pattern "cp/stage" (HTML personalizzato) + main.js accodato nel tema.
@@ -143,9 +132,9 @@
               <div class="stage-mark" id="stage-mark">
                 <div class="stage-mark-rot">
                   <svg class="mark" viewBox="0 0 100 94" role="img" aria-label="Logo Cavallini &amp; Partners">
-                    <g class="pc" id="pc1"><g class="pf"><use href="#mk-p1" class="mk-fill fa"/></g><path class="mk-stroke la" pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/></g>
-                    <g class="pc" id="pc2"><g class="pf"><use href="#mk-p2" class="mk-fill fb s2"/></g><path class="mk-stroke lb s2" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/></g>
-                    <g class="pc" id="pc3"><g class="pf"><use href="#mk-p3" class="mk-fill fb s3"/></g><path class="mk-stroke lb s3" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/></g>
+                    <g class="pc" id="pc1"><g class="pf"><use href="#mk-p1" class="mk-fill fa"/></g><path class="mk-stroke la" pathLength="1" d="M 22.14,91.1 C 15.09,90.41 9.99,88.73 6.13,85.82 C 2.01,82.7 0,78.54 0,73.1 C -0,68.12 1.75,61.39 4.65,55.26 C 5.56,53.32 6.49,51.33 6.84,50.55 C 7.03,50.14 7.54,49.19 7.98,48.44 C 8.42,47.7 8.78,47.06 8.78,47.02 C 8.78,46.78 12.18,41.52 13.87,39.14 C 34.82,9.7 58.26,-1.73 60.8,0.82 C 61.12,1.14 60.86,1.66 60.22,1.97 C 59.88,2.13 58.83,2.64 57.9,3.09 C 56.96,3.54 55.95,4.05 55.66,4.22 C 55.1,4.55 55.05,4.58 52.89,5.97 C 41.33,13.4 31.2,26.51 29.46,28.82 C 22.53,38.03 17.64,47.11 14.65,56.33 C 13.07,61.18 12.52,64.46 12.49,69.06 C 12.47,73.84 13.12,76.41 15.16,79.55 C 17.52,83.16 21.37,85.22 27.33,86.02 C 29.65,86.34 38.51,86.34 41.67,86.02 C 46.57,85.53 52.28,84.71 55.39,84.05 C 58.1,83.47 59.94,83.13 60.32,83.13 C 60.78,83.13 60.87,83.4 60.79,84.56 C 60.7,86 60.62,86.14 59.64,86.5 C 58.56,86.9 53.63,88.14 49.83,88.96 C 48.16,89.32 43.66,90.1 41.05,90.49 C 35.19,91.34 27.21,91.6 22.14,91.1 L 22.14,91.1"/></g>
+                    <g class="pc" id="pc2"><g class="pf"><use href="#mk-p2" class="mk-fill fb s2"/></g><path class="mk-stroke lb s2" pathLength="1" d="M 64.94,93.23 C 64.88,93.07 64.89,84.42 64.95,74.01 C 65.3,21.66 65.42,7.28 65.54,5.96 C 65.6,5.17 65.75,4.47 65.86,4.4 C 66.26,4.13 67.03,4.27 67.55,4.71 C 68.26,5.31 68.25,5.23 68.48,15.37 C 68.58,19.96 68.74,25.81 68.84,28.37 C 68.94,30.93 69.09,35.78 69.19,39.13 C 69.28,42.49 69.48,49.27 69.62,54.19 C 69.77,59.12 69.97,66.69 70.08,71.03 C 70.19,75.37 70.36,81.36 70.47,84.34 C 70.58,87.32 70.61,90.28 70.54,90.92 C 70.43,91.94 70.34,92.14 69.81,92.61 C 69.03,93.3 68.19,93.52 66.45,93.53 C 65.32,93.53 65.03,93.47 64.94,93.23 L 64.94,93.23"/></g>
+                    <g class="pc" id="pc3"><g class="pf"><use href="#mk-p3" class="mk-fill fb s3"/></g><path class="mk-stroke lb s3" pathLength="1" d="M 73.84,85.63 C 73.63,85.23 73.85,82.78 74.22,81.47 C 74.45,80.63 74.83,80.38 76.63,79.9 C 82.16,78.4 88.35,76.25 91.08,74.87 C 92.38,74.22 93.71,73.04 94.04,72.25 C 94.35,71.5 94.35,69.38 94.04,67.89 C 93.67,66.14 92.05,61.6 90.86,58.99 C 90.67,58.57 90.52,58.19 90.52,58.13 C 90.52,58.08 89.92,56.62 89.18,54.89 C 88.44,53.17 87.83,51.72 87.83,51.67 C 87.83,51.63 87.64,51.17 87.4,50.65 C 87.16,50.13 86.71,49.05 86.4,48.27 C 86.08,47.48 85.68,46.51 85.51,46.12 C 85.33,45.72 84.85,44.59 84.43,43.61 C 84.01,42.62 83.53,41.49 83.35,41.1 C 83.17,40.7 82.67,39.53 82.22,38.5 C 81.78,37.46 81.08,35.85 80.66,34.91 C 80.24,33.98 79.59,32.48 79.22,31.6 C 78.85,30.71 77.79,28.21 76.85,26.04 C 72.26,15.41 71.96,14.54 72.69,13.93 C 73.21,13.5 73.74,14.36 76.32,19.79 C 77.82,22.95 80.62,28.8 84.33,36.53 C 85.54,39.04 86.74,41.54 86.98,42.08 C 87.23,42.62 87.81,43.87 88.28,44.86 C 88.74,45.85 89.75,48.02 90.52,49.7 C 91.29,51.38 92.29,53.53 92.74,54.49 C 93.2,55.44 93.57,56.26 93.57,56.31 C 93.57,56.35 93.84,56.98 94.18,57.71 C 95.39,60.33 97.87,66.12 98.54,67.89 C 101.07,74.61 100.47,76.93 95.51,79.73 C 92.32,81.54 89.33,82.7 84.16,84.17 C 79.57,85.48 76.98,86 75.07,86 C 74.22,86 74.01,85.94 73.84,85.63 L 73.84,85.63"/></g>
                   </svg>
                 </div>
               </div>
@@ -178,9 +167,9 @@
                 Un punto di riferimento per chi fa impresa nel distretto.
               </h2>
               <p class="stage-p mt-6 text-gray-600 leading-relaxed text-lg">
-                Cavallini &amp; Partners è uno studio di dottori commercialisti con sede a Sassuolo.
-                Seguiamo i nostri clienti in modo continuativo, dagli adempimenti quotidiani alle decisioni
-                strategiche, con un unico obiettivo: dare risposte chiare e soluzioni sostenibili nel tempo.
+                Cavallini &amp; Partners è uno Studio professionale di Dottori Commercialisti e Revisori Legali,
+                con sedi a Sassuolo e Modena. Operiamo nella consulenza tributaria, contrattuale, societaria,
+                aziendale e contabile, con esperienza a livello internazionale.
               </p>
               <!-- I quattro valori, nella stessa schermata (desktop/tablet): entrano uno alla volta
                    mentre le parti del logo si separano. Su smartphone sono nella sezione #valori. -->
@@ -219,19 +208,18 @@
         <g class="gb">
           <use href="#mk-p1" class="wb-fill"/><use href="#mk-p2" class="wb-fill"/><use href="#mk-p3" class="wb-fill"/>
           <use href="#mk-p1" class="wb-line"/><use href="#mk-p2" class="wb-line"/><use href="#mk-p3" class="wb-line"/>
-          <path class="wb-trace"    pathLength="1" d="M62 0C32 10 2 40 2 66c0 16 9 23 24 23 14 0 26-3 36-6l-1-4c-12 2-24 4-33 3-9-1-13-7-13-17C15 42 37 13 62 0z"/>
-          <path class="wb-trace t2" pathLength="1" d="M66 5h2.4l2.6 83h-4.6z"/>
-          <path class="wb-trace t3" pathLength="1" d="M73 15l1.9-.6L99 69.5c.8 2.6-.2 4-2.6 4.8L74.5 85v-5.6l21.2-8.3z"/>
+          <path class="wb-trace"    pathLength="1" d="M 22.14,91.1 C 15.09,90.41 9.99,88.73 6.13,85.82 C 2.01,82.7 0,78.54 0,73.1 C -0,68.12 1.75,61.39 4.65,55.26 C 5.56,53.32 6.49,51.33 6.84,50.55 C 7.03,50.14 7.54,49.19 7.98,48.44 C 8.42,47.7 8.78,47.06 8.78,47.02 C 8.78,46.78 12.18,41.52 13.87,39.14 C 34.82,9.7 58.26,-1.73 60.8,0.82 C 61.12,1.14 60.86,1.66 60.22,1.97 C 59.88,2.13 58.83,2.64 57.9,3.09 C 56.96,3.54 55.95,4.05 55.66,4.22 C 55.1,4.55 55.05,4.58 52.89,5.97 C 41.33,13.4 31.2,26.51 29.46,28.82 C 22.53,38.03 17.64,47.11 14.65,56.33 C 13.07,61.18 12.52,64.46 12.49,69.06 C 12.47,73.84 13.12,76.41 15.16,79.55 C 17.52,83.16 21.37,85.22 27.33,86.02 C 29.65,86.34 38.51,86.34 41.67,86.02 C 46.57,85.53 52.28,84.71 55.39,84.05 C 58.1,83.47 59.94,83.13 60.32,83.13 C 60.78,83.13 60.87,83.4 60.79,84.56 C 60.7,86 60.62,86.14 59.64,86.5 C 58.56,86.9 53.63,88.14 49.83,88.96 C 48.16,89.32 43.66,90.1 41.05,90.49 C 35.19,91.34 27.21,91.6 22.14,91.1 L 22.14,91.1"/>
+          <path class="wb-trace t2" pathLength="1" d="M 64.94,93.23 C 64.88,93.07 64.89,84.42 64.95,74.01 C 65.3,21.66 65.42,7.28 65.54,5.96 C 65.6,5.17 65.75,4.47 65.86,4.4 C 66.26,4.13 67.03,4.27 67.55,4.71 C 68.26,5.31 68.25,5.23 68.48,15.37 C 68.58,19.96 68.74,25.81 68.84,28.37 C 68.94,30.93 69.09,35.78 69.19,39.13 C 69.28,42.49 69.48,49.27 69.62,54.19 C 69.77,59.12 69.97,66.69 70.08,71.03 C 70.19,75.37 70.36,81.36 70.47,84.34 C 70.58,87.32 70.61,90.28 70.54,90.92 C 70.43,91.94 70.34,92.14 69.81,92.61 C 69.03,93.3 68.19,93.52 66.45,93.53 C 65.32,93.53 65.03,93.47 64.94,93.23 L 64.94,93.23"/>
+          <path class="wb-trace t3" pathLength="1" d="M 73.84,85.63 C 73.63,85.23 73.85,82.78 74.22,81.47 C 74.45,80.63 74.83,80.38 76.63,79.9 C 82.16,78.4 88.35,76.25 91.08,74.87 C 92.38,74.22 93.71,73.04 94.04,72.25 C 94.35,71.5 94.35,69.38 94.04,67.89 C 93.67,66.14 92.05,61.6 90.86,58.99 C 90.67,58.57 90.52,58.19 90.52,58.13 C 90.52,58.08 89.92,56.62 89.18,54.89 C 88.44,53.17 87.83,51.72 87.83,51.67 C 87.83,51.63 87.64,51.17 87.4,50.65 C 87.16,50.13 86.71,49.05 86.4,48.27 C 86.08,47.48 85.68,46.51 85.51,46.12 C 85.33,45.72 84.85,44.59 84.43,43.61 C 84.01,42.62 83.53,41.49 83.35,41.1 C 83.17,40.7 82.67,39.53 82.22,38.5 C 81.78,37.46 81.08,35.85 80.66,34.91 C 80.24,33.98 79.59,32.48 79.22,31.6 C 78.85,30.71 77.79,28.21 76.85,26.04 C 72.26,15.41 71.96,14.54 72.69,13.93 C 73.21,13.5 73.74,14.36 76.32,19.79 C 77.82,22.95 80.62,28.8 84.33,36.53 C 85.54,39.04 86.74,41.54 86.98,42.08 C 87.23,42.62 87.81,43.87 88.28,44.86 C 88.74,45.85 89.75,48.02 90.52,49.7 C 91.29,51.38 92.29,53.53 92.74,54.49 C 93.2,55.44 93.57,56.26 93.57,56.31 C 93.57,56.35 93.84,56.98 94.18,57.71 C 95.39,60.33 97.87,66.12 98.54,67.89 C 101.07,74.61 100.47,76.93 95.51,79.73 C 92.32,81.54 89.33,82.7 84.16,84.17 C 79.57,85.48 76.98,86 75.07,86 C 74.22,86 74.01,85.94 73.84,85.63 L 73.84,85.63"/>
         </g>
       </svg>
     </div>
 
+
+
     <div class="page-content">
 
-      <!-- =========================================================
-           VALORI — WP: pattern "cp/valori" (4 colonne)
-           ========================================================= -->
-      <!-- Su desktop i valori sono già nel palco: questa sezione si vede solo su smartphone -->
+      <!-- VALORI (solo smartphone: su desktop sono già nel palco) — WP: pattern "cp/valori" -->
       <section id="valori" class="sec-clear py-16 md:hidden" aria-label="I nostri valori">
         <div class="mx-auto max-w-site px-5 md:px-8">
           <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 border border-gray-200 rounded-md overflow-hidden">
@@ -256,89 +244,152 @@
       </section>
 
       <!-- =========================================================
-           SERVIZI — WP: pattern "cp/servizi" (4 card) o CPT "servizio"
-           Ogni card rimanda all'approfondimento in servizi.html#...
+           LO STUDIO — rete multidisciplinare — WP: pattern "cp/studio-rete"
+           ========================================================= -->
+      <section id="rete" class="sec-clear py-24 md:py-32">
+        <div class="mx-auto max-w-site px-5 md:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <figure class="lg:col-span-6 photo-frame reveal">
+            <img src="assets/img/foto/studio-libreria.jpg" alt="La biblioteca tecnica dello studio, con raccolte di riviste e codici tributari" loading="lazy" width="1600" height="1066">
+          </figure>
+          <div class="lg:col-span-6 reveal" data-delay="1">
+            <span class="eyebrow">Un'assistenza multidisciplinare</span>
+            <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">Competenze specialistiche, un unico interlocutore.</h2>
+            <p class="mt-6 text-gray-600 text-lg leading-relaxed">
+              Lo Studio opera nel vasto campo delle attività del commercialista, in particolare nella consulenza
+              e assistenza tributaria, contrattuale, societaria, aziendale e contabile, con operatività ed esperienza
+              a livello internazionale.
+            </p>
+            <p class="mt-4 text-gray-600 leading-relaxed">
+              Grazie a una rete di collaborazione con altre figure professionali specialistiche, è in grado di
+              garantire ai clienti un'assistenza multidisciplinare.
+            </p>
+            <ul class="chips mt-8" aria-label="La nostra rete di collaborazioni"><li>Studi legali</li><li>Studi notarili</li><li>Consulenti del lavoro</li><li>Società di revisione</li><li>Fondi di private equity</li><li>Trust company</li></ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SERVIZI — WP: pattern "cp/servizi" o CPT "servizio"
            ========================================================= -->
       <section id="servizi" class="sec-clear py-24 md:py-32">
         <div class="mx-auto max-w-site px-5 md:px-8">
           <div class="max-w-2xl reveal">
             <span class="eyebrow">Servizi</span>
-            <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">Le nostre aree di competenza</h2>
-            <p class="mt-5 text-gray-600 text-lg leading-relaxed">Quattro ambiti, un'unica regia. Scegli l'area di tuo interesse per approfondire.</p>
+            <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">Le nostre aree di attività</h2>
+            <p class="mt-5 text-gray-600 text-lg leading-relaxed">Dalla consulenza fiscale e societaria al supporto internazionale: scegli l'area di tuo interesse per approfondire.</p>
           </div>
-
           <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Card 1 -->
             <article class="service-card reveal">
-              <div class="icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>
-              </div>
-              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Consulenza Fiscale</h3>
-              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Pianificazione e adempimenti fiscali per imprese, professionisti e persone fisiche.</p>
+              <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div>
+              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Consulenza fiscale</h3>
+              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Consulenza ordinaria, straordinaria e internazionale, bilanci e rapporti con l'Amministrazione finanziaria.</p>
               <ul class="mt-5 space-y-2 text-sm text-gray-700">
-                <li>Dichiarazioni dei redditi e IVA</li>
-                <li>Pianificazione fiscale</li>
+                <li>Consulenza fiscale ordinaria e straordinaria</li>
+                <li>Assistenza durante le verifiche fiscali</li>
                 <li>Contenzioso tributario</li>
               </ul>
-              <a href="servizi.html#fiscale" class="more">Approfondisci
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
+              <a href="servizi.html#fiscale" class="more">Approfondisci <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </article>
-            <!-- Card 2 -->
             <article class="service-card reveal" data-delay="1">
-              <div class="icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg>
-              </div>
-              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Consulenza Societaria</h3>
-              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Supporto nella vita della società, dalla costituzione alle operazioni straordinarie.</p>
+              <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
+              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Consulenza societaria</h3>
+              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Costituzioni in Italia e all'estero, operazioni sul capitale, operazioni straordinarie, collegio sindacale e revisione legale.</p>
               <ul class="mt-5 space-y-2 text-sm text-gray-700">
-                <li>Costituzioni e modifiche statutarie</li>
-                <li>Operazioni straordinarie</li>
-                <li>Passaggi generazionali</li>
+                <li>Costituzione di società in Italia e all'estero</li>
+                <li>Fusioni, scissioni, passaggi generazionali</li>
+                <li>Collegio sindacale e revisione legale</li>
               </ul>
-              <a href="servizi.html#societaria" class="more">Approfondisci
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
+              <a href="servizi.html#societaria" class="more">Approfondisci <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </article>
-            <!-- Card 3 -->
             <article class="service-card reveal" data-delay="2">
-              <div class="icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h2M12 18h4"/></svg>
-              </div>
-              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Consulenza Contabile</h3>
-              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Tenuta della contabilità e bilanci, con strumenti di controllo per decidere meglio.</p>
+              <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg></div>
+              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Internazionale</h3>
+              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Assistenza alle imprese nelle iniziative estere, con una rete di corrispondenti nei paesi industrializzati.</p>
               <ul class="mt-5 space-y-2 text-sm text-gray-700">
-                <li>Contabilità ordinaria e semplificata</li>
-                <li>Bilanci d'esercizio</li>
-                <li>Controllo di gestione</li>
+                <li>Espansione aziendale internazionale</li>
+                <li>Operazioni strutturate cross-border</li>
+                <li>Due diligence fiscali e contabili</li>
               </ul>
-              <a href="servizi.html#contabile" class="more">Approfondisci
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
+              <a href="servizi.html#estero" class="more">Approfondisci <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </article>
-            <!-- Card 4 -->
             <article class="service-card reveal" data-delay="3">
-              <div class="icon" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
-              </div>
-              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Revisione Legale</h3>
-              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Revisione dei conti e incarichi di controllo, nel rispetto dei principi di indipendenza.</p>
+              <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h7M8.5 14h4"/></svg></div>
+              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Assistenza continuativa</h3>
+              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Un affiancamento costante all'imprenditore negli obblighi fiscali e civilistici di ogni giorno.</p>
               <ul class="mt-5 space-y-2 text-sm text-gray-700">
-                <li>Revisione legale dei conti</li>
-                <li>Collegio sindacale</li>
-                <li>Due diligence</li>
+                <li>Assistenza continuativa</li>
+                <li>Circolari informative</li>
+                <li>Pareri specifici e consulenza presso il cliente</li>
               </ul>
-              <a href="servizi.html#revisione" class="more">Approfondisci
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </a>
+              <a href="servizi.html#assistenza" class="more">Approfondisci <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </article>
+            <article class="service-card reveal">
+              <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 8v4l3 2"/></svg></div>
+              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Procedure concorsuali</h3>
+              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Analisi delle situazioni di crisi, piani di risanamento, concordati e incarichi giudiziali.</p>
+              <ul class="mt-5 space-y-2 text-sm text-gray-700">
+                <li>Analisi della situazione di crisi</li>
+                <li>Programmi di risanamento</li>
+                <li>Concordati giudiziali e stragiudiziali</li>
+              </ul>
+              <a href="servizi.html#concorsuali" class="more">Approfondisci <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </article>
+            <article class="service-card reveal" data-delay="1">
+              <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18M7 21h10M5 7h14M5 7l-3 6a3 3 0 0 0 6 0zM19 7l-3 6a3 3 0 0 0 6 0z"/></svg></div>
+              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Contenzioso tributario</h3>
+              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Assistenza in ogni fase delle controversie con l'Amministrazione finanziaria, privilegiando le soluzioni deflattive.</p>
+              <ul class="mt-5 space-y-2 text-sm text-gray-700">
+                <li>Analisi della pratica e strategia</li>
+                <li>Autotutela, adesione, conciliazione</li>
+                <li>Contenzioso tributario e previdenziale</li>
+              </ul>
+              <a href="servizi.html#contenzioso" class="more">Approfondisci <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </article>
+            <article class="service-card reveal" data-delay="2">
+              <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Controllo di gestione</h3>
+              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Interventi su misura per redditività, efficienza e gestione della liquidità.</p>
+              <ul class="mt-5 space-y-2 text-sm text-gray-700">
+                <li>Analisi del conto economico e finanziaria</li>
+                <li>Marginalità di prodotti e servizi</li>
+                <li>Strategie di uscita dalla crisi</li>
+              </ul>
+              <a href="servizi.html#controllo" class="more">Approfondisci <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </article>
+            <article class="service-card reveal" data-delay="3">
+              <div class="icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
+              <h3 class="font-serif text-2xl text-primary font-semibold mt-6">Elaborazione dati</h3>
+              <p class="mt-3 text-gray-600 text-[0.95rem] leading-relaxed">Elaborazione e gestione dei dati contabili con personale esperto e software gestionali evoluti.</p>
+              <ul class="mt-5 space-y-2 text-sm text-gray-700">
+                <li>Tenuta della contabilità</li>
+                <li>Adempimenti periodici</li>
+                <li>Supporto alle start-up</li>
+              </ul>
+              <a href="servizi.html#elaborazione" class="more">Approfondisci <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             </article>
           </div>
         </div>
       </section>
 
       <!-- =========================================================
+           INTERNAZIONALE — fascia con immagine — WP: blocco "Cover"
+           ========================================================= -->
+      <section class="intl-band" style="--band-img:url('assets/img/foto/estero-bandiere.jpg')">
+        <div class="mx-auto max-w-site px-5 md:px-8 py-24 md:py-32">
+          <div class="max-w-2xl reveal">
+            <span class="eyebrow !text-secondary-300">Internazionale</span>
+            <h2 class="font-serif text-4xl md:text-5xl font-semibold mt-5 leading-tight">Operiamo a livello internazionale.</h2>
+            <p class="mt-6 text-white/85 text-lg leading-relaxed">
+              Professionisti con esperienza e relazioni internazionali e una rete di corrispondenti in tutti i paesi
+              industrializzati: affianchiamo le imprese nelle iniziative all'estero, dagli studi fiscali alle due diligence.
+            </p>
+            <a href="servizi.html#estero" class="btn btn-light mt-10">Scopri il servizio <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
            TEAM (maschera di invito) — WP: pattern "cp/team-teaser"
-           Le foto stanno solo nella pagina dedicata team.html
            ========================================================= -->
       <section id="team" class="team-teaser py-24 md:py-28">
         <svg class="deco" viewBox="0 0 100 94" aria-hidden="true"><use href="#mk-p1" fill="#fff"/><use href="#mk-p2" fill="#A9BCD0"/><use href="#mk-p3" fill="#A9BCD0"/></svg>
@@ -348,11 +399,12 @@
             <h2 class="font-serif text-4xl md:text-5xl font-semibold mt-5 leading-tight">Scopri chi lavora con noi</h2>
             <p class="mt-6 text-white/80 text-lg leading-relaxed max-w-xl">
               Dietro ogni pratica c'è un professionista che conosce la vostra storia.
-              Conosci i commercialisti e i collaboratori dello studio, i loro ruoli e le loro specializzazioni.
+              Conosci i professionisti dello studio, i loro percorsi e le loro specializzazioni.
             </p>
-            <a href="team.html" class="btn btn-light mt-10">Conosci il team
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-            </a>
+            <div class="mt-10 flex flex-wrap gap-4">
+              <a href="team.html" class="btn btn-light">Conosci il team <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a href="team.html#lavora" class="btn btn-outline-light">Lavora con noi</a>
+            </div>
           </div>
           <div class="md:col-span-5 silhouettes grid grid-cols-3 gap-3 reveal" data-delay="1" aria-hidden="true">
             <span></span><span></span><span></span>
@@ -361,35 +413,82 @@
       </section>
 
       <!-- =========================================================
-           SEDE & CONTATTI — WP: pattern "cp/sede-contatti"
+           CIRCOLARI + LAVORA CON NOI — due schede con foto
+           ========================================================= -->
+      <section class="sec-clear pt-24 md:pt-32">
+        <div class="mx-auto max-w-site px-5 md:px-8 grid md:grid-cols-2 gap-6">
+          <a href="circolari.html" class="photo-card reveal">
+            <img src="assets/img/foto/studio-giornali.jpg" alt="Quotidiani economici sulla scrivania dello studio" loading="lazy" width="1600" height="1065">
+            <span class="photo-card-body">
+              <span class="eyebrow !text-secondary-300">Aggiornamenti</span>
+              <span class="photo-card-title">Circolari</span>
+              <span class="photo-card-text">Le novità fiscali e normative più importanti, spiegate dallo Studio.</span>
+            </span>
+          </a>
+          <a href="team.html#lavora" class="photo-card reveal" data-delay="1">
+            <img src="assets/img/foto/studio-barca.jpg" alt="Modellino di barca a vela nello studio" loading="lazy" width="1600" height="1065">
+            <span class="photo-card-body">
+              <span class="eyebrow !text-secondary-300">Carriere</span>
+              <span class="photo-card-title">Lavora con noi</span>
+              <span class="photo-card-text">Crediamo nelle persone: cresci con noi a livello nazionale e internazionale.</span>
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           SEDI & CONTATTI — WP: pattern "cp/sedi-contatti"
            Form → Contact Form 7 / WPForms; Mappa → blocco HTML con consenso
            ========================================================= -->
       <section id="sede" class="sec-clear py-24 md:py-32">
         <div class="mx-auto max-w-site px-5 md:px-8">
           <div class="grid lg:grid-cols-12 gap-12 items-end">
-            <div class="lg:col-span-5 reveal">
+            <div class="lg:col-span-6 reveal">
               <span class="eyebrow">Dove siamo</span>
-              <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">La nostra sede a Sassuolo</h2>
-              <p class="mt-5 text-gray-600 text-lg leading-relaxed">Ci trovate in centro, facilmente raggiungibili. Riceviamo su appuntamento.</p>
+              <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">Le nostre sedi</h2>
+              <p class="mt-5 text-gray-600 text-lg leading-relaxed">Siamo presenti nel territorio modenese, a Sassuolo e a Modena: al centro dell'Emilia-Romagna, facilmente raggiungibili in auto e in treno. La segreteria è centralizzata nella sede di Via Mazzini a Sassuolo.</p>
             </div>
-            <dl class="lg:col-span-7 grid sm:grid-cols-2 gap-6 reveal" data-delay="1">
-              <div class="border-l-2 border-secondary pl-5">
-                <dt class="text-xs uppercase tracking-[0.2em] text-secondary font-semibold">Indirizzo</dt>
-                <dd class="mt-2 text-primary text-lg">Via Mazzini, 182/F2<br>41049 Sassuolo (MO)</dd>
-              </div>
+            <dl class="lg:col-span-6 grid sm:grid-cols-[1fr_1fr_auto] gap-6 reveal" data-delay="1">
               <div class="border-l-2 border-secondary pl-5">
                 <dt class="text-xs uppercase tracking-[0.2em] text-secondary font-semibold">Telefono</dt>
                 <dd class="mt-2 text-primary text-lg"><a href="tel:+390536980303" class="hover:underline">0536 980303</a></dd>
               </div>
+              <div class="border-l-2 border-secondary pl-5">
+                <dt class="text-xs uppercase tracking-[0.2em] text-secondary font-semibold">Fax</dt>
+                <dd class="mt-2 text-primary text-lg">0536 980563</dd>
+              </div>
+              <div class="border-l-2 border-secondary pl-5">
+                <dt class="text-xs uppercase tracking-[0.2em] text-secondary font-semibold">Email</dt>
+                <dd class="mt-2 text-primary text-lg whitespace-nowrap"><a href="mailto:info@cdbpartners.it" class="hover:underline">info@cdbpartners.it</a></dd>
+              </div>
             </dl>
           </div>
 
-          <!-- Foto della sede: sostituire i segnaposto con <img src="assets/img/sede-1.jpg" alt="..." loading="lazy"> -->
-          <div class="mt-14 grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-4 h-[420px] md:h-[460px] reveal">
-            <div class="photo-slot col-span-2 row-span-2">Foto sede · esterno</div>
-            <div class="photo-slot">Foto · reception</div>
-            <div class="photo-slot">Foto · sala riunioni</div>
-            <div class="photo-slot col-span-2">Foto · uffici</div>
+          <div class="mt-14 grid md:grid-cols-3 gap-6">
+            <article class="sede-card reveal">
+              <p class="sede-label">Sassuolo · Sede principale</p>
+              <p class="mt-3 text-primary text-lg leading-snug">Via Mazzini, 182/F<br>41049 Sassuolo (MO)</p>
+              <p class="mt-2 text-sm text-secondary">Segreteria centralizzata</p>
+              <a class="more !pt-5" href="https://www.google.com/maps/search/?api=1&query=Via+Mazzini+182%2FF%2C+41049+Sassuolo+MO" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg> Apri in Google Maps</a>
+            </article>
+            <article class="sede-card reveal" data-delay="1">
+              <p class="sede-label">Modena</p>
+              <p class="mt-3 text-primary text-lg leading-snug">Via Parenti, 47/E<br>41122 Modena (MO)</p>
+              
+              <a class="more !pt-5" href="https://www.google.com/maps/search/?api=1&query=Via+Parenti+47%2FE%2C+41122+Modena+MO" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg> Apri in Google Maps</a>
+            </article>
+            <article class="sede-card reveal" data-delay="2">
+              <p class="sede-label">Sassuolo · Seconda sede</p>
+              <p class="mt-3 text-primary text-lg leading-snug">Via Del Pretorio, 43<br>41049 Sassuolo (MO)</p>
+              
+              <a class="more !pt-5" href="https://www.google.com/maps/search/?api=1&query=Via+Del+Pretorio+43%2C+41049+Sassuolo+MO" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg> Apri in Google Maps</a>
+            </article>
+          </div>
+
+          <!-- Foto dello studio (assets/img/foto/) -->
+          <div class="mt-14 grid md:grid-cols-3 gap-4 reveal">
+            <figure class="photo-frame md:col-span-2 aspect-[16/9]"><img src="assets/img/foto/studio-libreria.jpg" alt="La biblioteca tecnica dello studio" loading="lazy" width="1600" height="1066"></figure>
+            <figure class="photo-frame aspect-[16/9] md:aspect-auto"><img src="assets/img/foto/studio-attestato.jpg" alt="Attestato di Revisore Contabile appeso nello studio" loading="lazy" width="1600" height="1065"></figure>
           </div>
 
           <!-- Contatti: form + mappa -->
@@ -399,7 +498,7 @@
               <p class="mt-3 text-gray-600">Compila il modulo: ti ricontatteremo al più presto.</p>
 
               <!-- Sostituire YOUR_FORM_ID con l'ID Formspree (o altro servizio). In WordPress: Contact Form 7 / WPForms. -->
-              <form id="contact-form" class="mt-8 grid sm:grid-cols-2 gap-5" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+              <form id="contact-form" class="js-form mt-8 grid sm:grid-cols-2 gap-5" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
                 <div class="field">
                   <label for="f-nome">Nome e cognome *</label>
                   <input id="f-nome" name="nome" type="text" autocomplete="name" required>
@@ -420,7 +519,6 @@
                   <textarea id="f-msg" name="messaggio" rows="5" required></textarea>
                   <p class="error-msg">Scrivi il tuo messaggio.</p>
                 </div>
-                <!-- anti-spam honeypot -->
                 <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true">
                 <div class="field sm:col-span-2">
                   <label class="!flex items-start gap-3 !font-normal !text-sm !text-gray-600 cursor-pointer">
@@ -433,20 +531,20 @@
                   <button type="submit" class="btn btn-primary">Invia richiesta</button>
                   <a href="tel:+390536980303" class="text-primary text-sm hover:underline">oppure chiama lo 0536 980303</a>
                 </div>
-                <p id="form-status" class="form-status sm:col-span-2 rounded-md p-4 text-sm" role="status" aria-live="polite"></p>
+                <p class="form-status sm:col-span-2 rounded-md p-4 text-sm" role="status" aria-live="polite"></p>
               </form>
             </div>
 
-            <!-- Mappa: caricata solo su consenso (GDPR / cookie di terze parti) -->
+            <!-- Mappa della sede principale: caricata solo su consenso (cookie di terze parti) -->
             <div class="reveal" data-delay="1">
-              <div id="map" class="map-consent relative rounded-md overflow-hidden h-full min-h-[380px] border border-gray-200 grid place-items-center text-center p-8">
+              <div id="map" data-address="Via Mazzini 182/F, 41049 Sassuolo MO" class="map-consent relative rounded-md overflow-hidden h-full min-h-[380px] border border-gray-200 grid place-items-center text-center p-8">
                 <div>
-                  <svg class="mx-auto text-secondary" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-                  <p class="mt-4 text-primary font-serif text-2xl font-semibold">Via Mazzini, 182/F2 · Sassuolo</p>
+                  <svg class="mx-auto text-secondary" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                  <p class="mt-4 text-primary font-serif text-2xl font-semibold">Via Mazzini, 182/F · Sassuolo</p>
                   <p class="mt-2 text-sm text-gray-600 max-w-sm mx-auto">Caricando la mappa accetti i cookie di Google Maps.</p>
                   <div class="mt-6 flex flex-wrap justify-center gap-3">
                     <button id="load-map" type="button" class="btn btn-primary !py-2.5">Mostra la mappa</button>
-                    <a class="btn btn-outline !py-2.5" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Via+Mazzini+182%2FF2%2C+41049+Sassuolo+MO">Indicazioni stradali</a>
+                    <a class="btn btn-outline !py-2.5" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&amp;destination=Via+Mazzini+182%2FF%2C+41049+Sassuolo+MO">Indicazioni stradali</a>
                   </div>
                 </div>
               </div>
@@ -458,36 +556,46 @@
       <!-- =========================================================
            FOOTER — WP: footer.php
            ========================================================= -->
-      <footer class="bg-primary-900 text-white/75">
+      <footer class="site-footer bg-primary-900 text-white/75">
         <div class="mx-auto max-w-site px-5 md:px-8 py-16 grid md:grid-cols-12 gap-10">
-          <div class="md:col-span-5">
+          <div class="md:col-span-4">
             <div class="flex items-center gap-3">
-              <img src="assets/img/logo.svg" alt="" class="h-10 w-auto" style="filter:brightness(0) invert(1)">
+              <img src="assets/img/logo/logo.svg" alt="" class="h-10 w-auto" style="filter:brightness(0) invert(1)">
               <span class="font-serif text-2xl text-white font-semibold">Cavallini &amp; Partners</span>
             </div>
-            <p class="mt-5 text-sm leading-relaxed max-w-sm">Dottori commercialisti a Sassuolo. Consulenza fiscale, societaria, contabile e revisione legale.</p>
+            <p class="mt-5 text-sm leading-relaxed max-w-sm">Dottori Commercialisti e Revisori Legali a Sassuolo e Modena. Consulenza tributaria, societaria, contabile e internazionale.</p>
           </div>
-          <div class="md:col-span-3">
+          <div class="md:col-span-2">
             <h4 class="text-white text-xs uppercase tracking-[0.2em] font-semibold">Studio</h4>
             <ul class="mt-4 space-y-2 text-sm">
               <li><a class="hover:text-white" href="#studio">Lo Studio</a></li>
-              <li><a class="hover:text-white" href="#servizi">Servizi</a></li>
+              <li><a class="hover:text-white" href="servizi.html">Servizi</a></li>
               <li><a class="hover:text-white" href="team.html">Team</a></li>
-              <li><a class="hover:text-white" href="#contatti">Contatti</a></li>
+              <li><a class="hover:text-white" href="team.html#lavora">Lavora con noi</a></li>
+              <li><a class="hover:text-white" href="circolari.html">Circolari</a></li>
             </ul>
           </div>
-          <div class="md:col-span-4">
-            <h4 class="text-white text-xs uppercase tracking-[0.2em] font-semibold">Contatti</h4>
-            <address class="not-italic mt-4 space-y-2 text-sm">
-              <p>Via Mazzini, 182/F2 – 41049 Sassuolo (MO)</p>
-              <p><a class="hover:text-white" href="tel:+390536980303">Tel. 0536 980303</a></p>
+          <div class="md:col-span-3">
+            <h4 class="text-white text-xs uppercase tracking-[0.2em] font-semibold">Sedi</h4>
+            <address class="not-italic mt-4 space-y-3 text-sm">
+              <p><span class="text-white/90">Sassuolo · Sede principale</span><br>Via Mazzini, 182/F – 41049 Sassuolo (MO)</p>
+              <p><span class="text-white/90">Modena</span><br>Via Parenti, 47/E – 41122 Modena (MO)</p>
+              <p><span class="text-white/90">Sassuolo · Seconda sede</span><br>Via Del Pretorio, 43 – 41049 Sassuolo (MO)</p>
             </address>
+          </div>
+          <div class="md:col-span-3">
+            <h4 class="text-white text-xs uppercase tracking-[0.2em] font-semibold">Contatti</h4>
+            <ul class="mt-4 space-y-2 text-sm">
+              <li><a class="hover:text-white" href="tel:+390536980303">Tel. 0536 980303</a></li>
+              <li>Fax 0536 980563</li>
+              <li><a class="hover:text-white" href="mailto:info@cdbpartners.it">info@cdbpartners.it</a></li>
+            </ul>
           </div>
         </div>
         <div class="border-t border-white/10">
           <div class="mx-auto max-w-site px-5 md:px-8 py-6 flex flex-col md:flex-row gap-3 justify-between text-xs text-white/55">
             <p>© <span id="year">2026</span> Cavallini &amp; Partners · P.IVA <span class="text-white/40">[da inserire]</span></p>
-            <p class="flex gap-5"><a class="hover:text-white" href="privacy.html">Privacy policy</a><a class="hover:text-white" href="cookie.html">Cookie policy</a></p>
+            <p class="flex gap-5"><a class="hover:text-white" href="privacy.html">Privacy e cookie</a><a class="hover:text-white" href="note-legali.html">Note legali</a></p>
           </div>
         </div>
       </footer>

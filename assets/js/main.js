@@ -27,7 +27,6 @@
     toggle.addEventListener('click', function () {
       var open = mobileNav.classList.toggle('is-open');
       toggle.setAttribute('aria-expanded', open);
-      toggle.setAttribute('aria-label', open ? 'Chiudi il menu' : 'Apri il menu');
       if (open) header.classList.add('is-scrolled'); else onHeader();
     });
     mobileNav.querySelectorAll('a').forEach(function (a) {
@@ -255,75 +254,101 @@
     reveals.forEach(function (el) { el.classList.add('is-visible'); });
   }
 
-  /* ---------- Mappa Google: caricata solo dopo il consenso ---------- */
+  /* ---------- Testi dell'interfaccia nelle due lingue (lingua letta da <html lang>) ---------- */
+  var LANG = (document.documentElement.lang || 'it').slice(0, 2);
+  var T = {
+    it: { menuOpen: 'Apri il menu', menuClose: 'Chiudi il menu', sending: 'Invio in corso…',
+          demo: 'Modulo in modalità demo: configura l\'endpoint (Formspree o WordPress) per ricevere i messaggi.',
+          ok: 'Grazie! Abbiamo ricevuto la tua richiesta e ti ricontatteremo al più presto.',
+          err: 'Si è verificato un errore. Riprova o chiamaci allo 0536 980303.', mapTitle: 'Mappa' },
+    en: { menuOpen: 'Open menu', menuClose: 'Close menu', sending: 'Sending…',
+          demo: 'Demo form: configure the endpoint (Formspree or WordPress) to receive messages.',
+          ok: 'Thank you! We have received your request and will get back to you shortly.',
+          err: 'Something went wrong. Please try again or call us on +39 0536 980303.', mapTitle: 'Map' }
+  }[LANG] || null;
+  if (!T) T = { menuOpen: 'Apri il menu', menuClose: 'Chiudi il menu', sending: '…', demo: '', ok: '', err: '', mapTitle: 'Mappa' };
+  if (toggle) toggle.addEventListener('click', function () {
+    toggle.setAttribute('aria-label', toggle.getAttribute('aria-expanded') === 'true' ? T.menuClose : T.menuOpen);
+  });
+
+  /* ---------- Mappa Google: caricata solo dopo il consenso ----------
+     L'indirizzo è nell'attributo data-address del contenitore #map. */
   var loadMap = document.getElementById('load-map');
   if (loadMap) {
     loadMap.addEventListener('click', function () {
       var box = document.getElementById('map');
-      box.innerHTML = '<iframe title="Mappa: Cavallini & Partners, Via Mazzini 182/F2, Sassuolo" ' +
-        'src="https://www.google.com/maps?q=Via+Mazzini+182%2FF2,+41049+Sassuolo+MO&output=embed" ' +
+      var addr = box.getAttribute('data-address') || 'Via Mazzini 182/F, 41049 Sassuolo MO';
+      box.innerHTML = '<iframe title="' + T.mapTitle + ': ' + addr.replace(/"/g, '') + '" ' +
+        'src="https://www.google.com/maps?q=' + encodeURIComponent(addr) + '&output=embed" ' +
         'class="absolute inset-0 w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>';
     });
   }
 
-  /* ---------- Form contatti: validazione + invio AJAX ---------- */
-  var form = document.getElementById('contact-form');
-  if (form) {
-    var status = document.getElementById('form-status');
-    var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    var telRe = /^[+0-9 ()./-]{6,20}$/;
+  /* ---------- Moduli (contatti, lavora con noi): validazione + invio AJAX ----------
+     Ogni <form class="js-form"> ha campi .field; i campi con "required" sono obbligatori,
+     type="email" e type="tel" vengono controllati nel formato. */
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var telRe = /^[+0-9 ()./-]{6,20}$/;
+  document.querySelectorAll('form.js-form').forEach(function (form) {
+    var status = form.querySelector('.form-status');
+    var btn = form.querySelector('button[type="submit"]');
+    var btnLabel = btn ? btn.textContent : '';
 
     function setError(input, bad) {
-      input.closest('.field').classList.toggle('has-error', bad);
+      var f = input.closest('.field'); if (f) f.classList.toggle('has-error', bad);
       input.setAttribute('aria-invalid', bad ? 'true' : 'false');
       return !bad;
     }
     function validate() {
       var ok = true;
-      ok = setError(form.nome, form.nome.value.trim().length < 2) && ok;
-      ok = setError(form.email, !emailRe.test(form.email.value.trim())) && ok;
-      ok = setError(form.telefono, form.telefono.value.trim() !== '' && !telRe.test(form.telefono.value.trim())) && ok;
-      ok = setError(form.messaggio, form.messaggio.value.trim().length < 5) && ok;
-      ok = setError(form.privacy, !form.privacy.checked) && ok;
+      form.querySelectorAll('.field input, .field textarea, .field select').forEach(function (el) {
+        var v = (el.value || '').trim(), bad = false;
+        if (el.type === 'checkbox') bad = el.required && !el.checked;
+        else if (el.required && v.length < 2) bad = true;
+        else if (el.type === 'email' && v && !emailRe.test(v)) bad = true;
+        else if (el.type === 'tel' && v && !telRe.test(v)) bad = true;
+        ok = setError(el, bad) && ok;
+      });
       return ok;
     }
     function showStatus(msg, good) {
+      if (!status) return;
       status.textContent = msg;
       status.className = 'form-status is-visible sm:col-span-2 rounded-md p-4 text-sm ' +
         (good ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200');
     }
-
-    form.querySelectorAll('input, textarea').forEach(function (el) {
-      el.addEventListener('input', function () {
-        if (el.closest('.field') && el.closest('.field').classList.contains('has-error')) validate();
-      });
+    form.addEventListener('input', function (e) {
+      var f = e.target.closest('.field');
+      if (f && f.classList.contains('has-error')) validate();
     });
-
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!validate()) {
-        var first = form.querySelector('.has-error input, .has-error textarea');
+        var first = form.querySelector('.has-error input, .has-error textarea, .has-error select');
         if (first) first.focus();
         return;
       }
       // Modalità demo finché non è configurato l'endpoint reale
-      if (form.action.indexOf('YOUR_FORM_ID') !== -1) {
-        showStatus('Modulo in modalità demo: configura l\'endpoint (Formspree o WordPress) per ricevere i messaggi.', true);
-        form.reset();
-        return;
-      }
-      var btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = 'Invio in corso…';
+      if (form.action.indexOf('YOUR_FORM_ID') !== -1) { showStatus(T.demo, true); form.reset(); return; }
+      if (btn) { btn.disabled = true; btn.textContent = T.sending; }
       fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
-        .then(function (r) {
-          if (!r.ok) throw new Error();
-          showStatus('Grazie! Abbiamo ricevuto la tua richiesta e ti ricontatteremo al più presto.', true);
-          form.reset();
-        })
-        .catch(function () {
-          showStatus('Si è verificato un errore. Riprova o chiamaci allo 0536 980303.', false);
-        })
-        .finally(function () { btn.disabled = false; btn.textContent = 'Invia richiesta'; });
+        .then(function (r) { if (!r.ok) throw new Error(); showStatus(T.ok, true); form.reset(); })
+        .catch(function () { showStatus(T.err, false); })
+        .finally(function () { if (btn) { btn.disabled = false; btn.textContent = btnLabel; } });
     });
+  });
+
+  /* ---------- Pagina servizi: evidenzia nell'indice laterale la sezione in lettura ---------- */
+  var idx = document.querySelector('.service-index');
+  if (idx && 'IntersectionObserver' in window) {
+    var links = {};
+    idx.querySelectorAll('a[href^="#"]').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        Object.keys(links).forEach(function (k) { links[k].classList.toggle('is-active', k === e.target.id); });
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+    Object.keys(links).forEach(function (k) { var el = document.getElementById(k); if (el) spy.observe(el); });
   }
 })();
