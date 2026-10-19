@@ -262,7 +262,7 @@
  "Cookie": "Cookies",
  "I cookie sono piccoli file di testo che i siti visitati salvano nel browser. Questo sito utilizza esclusivamente cookie tecnici, strettamente necessari al suo funzionamento, e non utilizza cookie di profilazione o pubblicitari.": "Cookies are small text files that the websites you visit save in your browser. This website uses only technical cookies, strictly necessary for it to work, and does not use profiling or advertising cookies.",
  "La mappa di Google Maps viene caricata soltanto se l'utente la richiede premendo \"Mostra la mappa\": solo in quel momento Google può installare i propri cookie, secondo la sua": "The Google Maps map is loaded only if the user requests it by clicking \"Show the map\": only then may Google set its own cookies, in accordance with its",
- ". Il sito utilizza inoltre i caratteri tipografici di Google Fonts.": ". The website also uses Google Fonts typefaces.",
+ ". Il sito utilizza inoltre i caratteri tipografici di Google Fonts.": " applies. The website also uses Google Fonts typefaces.",
  "Come gestire i cookie": "How to manage cookies",
  "La maggior parte dei browser accetta i cookie automaticamente, ma è possibile modificare le impostazioni per rifiutarli, eliminarli o ricevere un avviso quando vengono inviati. Le istruzioni si trovano nella sezione \"Impostazioni\", \"Privacy\" o \"Aiuto\" del browser (Chrome, Firefox, Safari, Edge). Disabilitando i cookie tecnici alcune funzionalità del sito potrebbero non essere disponibili.": "Most browsers accept cookies automatically, but you can change your settings to refuse them, delete them or be notified when they are sent. Instructions can be found in the \"Settings\", \"Privacy\" or \"Help\" section of your browser (Chrome, Firefox, Safari, Edge). Disabling technical cookies may make some features of the website unavailable.",
  "Note legali | Cavallini & Partners": "Legal notice | Cavallini & Partners",
@@ -281,5 +281,6 @@
  "Dottori Commercialisti e Revisori Legali a Sassuolo (MO). Consulenza tributaria, societaria, contabile e internazionale.": "Chartered Accountants and Statutory Auditors in Sassuolo (Modena, Italy). Tax, corporate, accounting and international advisory.",
  "Sede": "Office",
  "Contattateci per un primo incontro presso il nostro Studio di Sassuolo.": "Contact us for an initial meeting at our office in Sassuolo.",
- "Lo Studio ha sede a Sassuolo, nel cuore del distretto, ed è facilmente raggiungibile in auto e in treno. La segreteria è a disposizione per fissare un appuntamento.": "The Firm is based in Sassuolo, in the heart of the district, and is easy to reach by car and by train. Our secretariat will be happy to arrange an appointment."
+ "Lo Studio ha sede a Sassuolo, nel cuore del distretto, ed è facilmente raggiungibile in auto e in treno. La segreteria è a disposizione per fissare un appuntamento.": "The Firm is based in Sassuolo, in the heart of the district, and is easy to reach by car and by train. Our secretariat will be happy to arrange an appointment.",
+ "Il sito non incorpora mappe di terze parti: il collegamento \"Apri in Google Maps\" apre il servizio di Google in una nuova scheda, dove si applica la sua": "This website does not embed third-party maps: the \"Open in Google Maps\" link opens Google's service in a new tab, where its"
 }

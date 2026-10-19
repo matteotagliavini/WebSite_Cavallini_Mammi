@@ -32,7 +32,7 @@
       } }
     }
   </script>
-  <link rel="stylesheet" href="assets/css/style.css?v=202610192327">
+  <link rel="stylesheet" href="assets/css/style.css?v=202610192338">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -214,6 +214,7 @@
         </g>
       </svg>
     </div>
+
 
 
 
@@ -443,13 +444,13 @@
       </section>
 
       <!-- =========================================================
-           SEDI & CONTATTI — WP: pattern "cp/sedi-contatti"
-           Form → Contact Form 7 / WPForms; Mappa → blocco HTML con consenso
+           DOVE SIAMO + SCRIVICI (affiancati) — WP: pattern "cp/sede-contatti"
+           Form → Contact Form 7 / WPForms
            ========================================================= -->
       <section id="sede" class="sec-clear py-24 md:py-32">
         <div class="mx-auto max-w-site px-5 md:px-8">
-          <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
-            <div class="lg:col-span-5 flex flex-col reveal">
+          <div class="grid lg:grid-cols-2 gap-14 lg:gap-20 items-start">
+            <div class="flex flex-col reveal">
               <span class="eyebrow">Dove siamo</span>
               <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">Ci trovate a Sassuolo</h2>
               <p class="mt-5 text-gray-600 text-lg leading-relaxed">Lo Studio ha sede a Sassuolo, nel cuore del distretto, ed è facilmente raggiungibile in auto e in treno. La segreteria è a disposizione per fissare un appuntamento.</p>
@@ -469,18 +470,10 @@
               </div>
             </div>
 
-            <!-- Foto dello studio (assets/img/foto/) -->
-            <div class="lg:col-span-7 grid grid-cols-5 gap-4 reveal" data-delay="1">
-              <figure class="photo-frame col-span-5 sm:col-span-3 aspect-[4/3] sm:aspect-auto sm:min-h-[420px]"><img src="assets/img/foto/studio-libreria.jpg" alt="La biblioteca tecnica dello studio" loading="lazy" width="1600" height="1066"></figure>
-              <figure class="photo-frame hidden sm:block sm:col-span-2"><img src="assets/img/foto/studio-attestato.jpg" alt="Attestato di Revisore Contabile appeso nello studio" loading="lazy" width="1600" height="1065"></figure>
-            </div>
-          </div>
-
-          <!-- Contatti: form + mappa -->
-          <div id="contatti" class="mt-20 grid lg:grid-cols-2 gap-10 lg:gap-14">
-            <div class="reveal">
-              <h3 class="font-serif text-3xl text-primary font-semibold">Scrivici</h3>
-              <p class="mt-3 text-gray-600">Compila il modulo: ti ricontatteremo al più presto.</p>
+            <div id="contatti" class="contact-col reveal" data-delay="1">
+              <span class="eyebrow">Contatti</span>
+              <h2 class="font-serif text-4xl md:text-5xl text-primary font-semibold mt-5 leading-tight">Scrivici</h2>
+              <p class="mt-5 text-gray-600 text-lg leading-relaxed">Compila il modulo: ti ricontatteremo al più presto.</p>
 
               <!-- Sostituire YOUR_FORM_ID con l'ID Formspree (o altro servizio). In WordPress: Contact Form 7 / WPForms. -->
               <form id="contact-form" class="js-form mt-8 grid sm:grid-cols-2 gap-5" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
@@ -518,21 +511,6 @@
                 </div>
                 <p class="form-status sm:col-span-2 rounded-md p-4 text-sm" role="status" aria-live="polite"></p>
               </form>
-            </div>
-
-            <!-- Mappa della sede principale: caricata solo su consenso (cookie di terze parti) -->
-            <div class="reveal" data-delay="1">
-              <div id="map" data-address="Via Mazzini 182/F, 41049 Sassuolo MO" class="map-consent relative rounded-md overflow-hidden h-full min-h-[380px] border border-gray-200 grid place-items-center text-center p-8">
-                <div>
-                  <svg class="mx-auto text-secondary" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-                  <p class="mt-4 text-primary font-serif text-2xl font-semibold">Via Mazzini, 182/F · Sassuolo</p>
-                  <p class="mt-2 text-sm text-gray-600 max-w-sm mx-auto">Caricando la mappa accetti i cookie di Google Maps.</p>
-                  <div class="mt-6 flex flex-wrap justify-center gap-3">
-                    <button id="load-map" type="button" class="btn btn-primary !py-2.5">Mostra la mappa</button>
-                    <a class="btn btn-outline !py-2.5" target="_blank" rel="noopener" href="https://maps.app.goo.gl/86rqUQJ81KDmFrHd9">Indicazioni stradali</a>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -590,6 +568,6 @@
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
   </a>
 
-  <script src="assets/js/main.js?v=202610192327" defer></script>
+  <script src="assets/js/main.js?v=202610192338" defer></script>
 </body>
 </html>
