@@ -165,6 +165,8 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
   background: radial-gradient(circle at 35% 30%, #EEF3F8, #DCE5EF 70%); transform-origin: 50% 50%; will-change: transform; transform: scale(0); }
 .js-stage .stage-mark { position: fixed; z-index: 1; left: 0; top: 0; transform-origin: 50% 50%; will-change: transform, opacity; perspective: 1400px; pointer-events: none; }
 .js-stage .stage-mark-rot { transform-style: preserve-3d; will-change: transform; }
+.js-stage .stage-mark.is-flat { perspective: none; }
+.js-stage .stage-mark.is-flat .stage-mark-rot { transform-style: flat; will-change: auto; }
 .js-stage .stage-studio { position: absolute; inset: 0; z-index: 4; background: none; padding: 0; display: flex; align-items: center; opacity: 0; visibility: hidden; will-change: opacity, transform; }
 .js-stage .stage-studio-text { max-width: min(50%, 40rem); }
 @media (max-width: 767px) {

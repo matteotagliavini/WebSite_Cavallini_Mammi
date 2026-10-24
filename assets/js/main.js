@@ -119,9 +119,13 @@
   function place(cx, cy, w, rot) { return { cx: cx, cy: cy, w: w, rot: rot || 0 }; }
   function applyMark(m) {
     var h = m.w * 0.94;
-    sm.style.width = Math.round(m.w) + 'px';
+    sm.style.width = (Math.round(m.w * (window.devicePixelRatio || 1)) / (window.devicePixelRatio || 1)) + 'px';
     // posizione arrotondata al pixel intero: un livello GPU spostato di frazioni di pixel viene "ricampionato" e sfoca
-    sm.style.transform = 'translate3d(' + Math.round(m.cx - m.w / 2) + 'px,' + Math.round(m.cy - h / 2) + 'px,0)' +
+    // posizione agganciata ai pixel FISICI dello schermo (anche con zoom di Windows 125/150%):
+    // un livello spostato di frazioni di pixel viene "ricampionato" dal browser e appare sfocato
+    var dpr = window.devicePixelRatio || 1;
+    var x = Math.round((m.cx - m.w / 2) * dpr) / dpr, y = Math.round((m.cy - h / 2) * dpr) / dpr;
+    sm.style.transform = 'translate(' + x + 'px,' + y + 'px)' +
       (Math.abs(m.rot) > 0.01 ? ' rotate(' + m.rot.toFixed(2) + 'deg)' : '');
   }
 
@@ -200,7 +204,11 @@
     var r = seg(p, 0.05, 0.55), a180 = 180 * smooth(r);
     var ang = a180 > 90 ? a180 - 180 : a180;
     // a rotazione finita niente trasformazione 3D: il browser può ridisegnare il logo nitido
-    smRot.style.transform = Math.abs(ang) < 0.01 ? 'none' : 'rotateY(' + ang.toFixed(2) + 'deg)';
+    // Logo fermo (non in rotazione): si esce dalla modalità 3D. Dentro un contesto 3D (perspective)
+    // il browser disegna il logo come una "texture" filtrata e lo rende sfocato anche quando è dritto.
+    var flat = Math.abs(ang) < 0.01;
+    smRot.style.transform = flat ? 'none' : 'rotateY(' + ang.toFixed(2) + 'deg)';
+    sm.classList.toggle('is-flat', flat);
     sm.classList.toggle('is-dark', a180 > 90);
 
     /* ---- Disco chiaro dietro al logo (scorre via insieme alla schermata) ---- */
