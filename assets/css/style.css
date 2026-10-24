@@ -158,10 +158,8 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .js-stage .stage-hero { position: absolute; inset: 0; z-index: 2; min-height: 0; will-change: opacity; }
 .js-stage .stage-disk { display: block; position: absolute; z-index: 1; left: 0; top: 0; width: 100px; height: 100px; border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #EEF3F8, #DCE5EF 70%); transform-origin: 50% 50%; will-change: transform; transform: scale(0); }
-.js-stage .stage-mark { position: fixed; z-index: 1; left: 0; top: 0; transform-origin: 0 0; will-change: transform, opacity; perspective: 1400px; pointer-events: none; }
+.js-stage .stage-mark { position: fixed; z-index: 1; left: 0; top: 0; transform-origin: 50% 50%; will-change: transform, opacity; perspective: 1400px; pointer-events: none; }
 .js-stage .stage-mark-rot { transform-style: preserve-3d; will-change: transform; }
-/* a scroll fermo: niente livello GPU "congelato" → logo ridisegnato nitido (vedi sharpen() in main.js) */
-.js-stage .stage-mark.is-sharp, .js-stage .stage-mark.is-sharp .stage-mark-rot { will-change: auto; }
 .js-stage .stage-studio { position: absolute; inset: 0; z-index: 4; background: none; padding: 0; display: flex; align-items: center; opacity: 0; visibility: hidden; will-change: opacity, transform; }
 .js-stage .stage-studio-text { max-width: min(50%, 40rem); }
 @media (max-width: 767px) {
@@ -363,3 +361,27 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .sede-info a:hover { text-decoration: underline; }
 .sede-main .btn svg { width: 16px; height: 16px; }
 @media (max-width: 400px) { .sede-main { padding: 1.5rem; } .sede-info > div { grid-template-columns: 5.25rem 1fr; } }
+
+/* ---------- Home: aree di attività in forma compatta (solo icona + titolo) ---------- */
+.service-tile { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 1.5rem; min-height: 168px;
+  background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 1.6rem 1.5rem; overflow: hidden;
+  transition: border-color .3s, box-shadow .3s, transform .3s; }
+.service-tile::before { content: ""; position: absolute; left: 0; top: 0; height: 3px; width: 0; background: var(--cp-secondary); transition: width .45s ease; }
+.service-tile:hover, .service-tile:focus-visible { border-color: transparent; box-shadow: 0 18px 40px -18px rgba(30,58,95,.35); transform: translateY(-4px); }
+.service-tile:hover::before, .service-tile:focus-visible::before { width: 100%; }
+.service-tile .icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; background: var(--cp-surface-alt); color: var(--cp-primary); transition: background-color .3s, color .3s; }
+.service-tile:hover .icon { background: var(--cp-primary); color: #fff; }
+.service-tile-title { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.45rem; line-height: 1.15; font-weight: 600; color: var(--cp-primary); }
+@media (max-width: 639px) { .service-tile { min-height: 140px; padding: 1.25rem; } .service-tile-title { font-size: 1.2rem; } }
+
+/* ---------- Dove siamo + Scrivici: griglia 2×2 allineata ---------- */
+.sede-grid { display: grid; grid-template-columns: 1fr; row-gap: 2rem; }
+.sede-head { display: flex; flex-direction: column; align-items: flex-start; }
+.sede-head-r { margin-top: 3.5rem; }
+@media (min-width: 1024px) {
+  .sede-grid { grid-template-columns: 1fr 1fr; column-gap: 5rem; row-gap: 2.5rem; align-items: start; }
+  .sede-head-l { grid-column: 1; grid-row: 1; }
+  .sede-body-l { grid-column: 1; grid-row: 2; }
+  .sede-head-r { grid-column: 2; grid-row: 1; margin-top: 0; }
+  .sede-body-r { grid-column: 2; grid-row: 2; }
+}

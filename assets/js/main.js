@@ -108,10 +108,19 @@
     // K2 = logo "protagonista" accanto al testo Lo Studio
     K2 = mobile ? { cx: vw * 0.5, cy: vh * 0.24, w: Math.min(vw * 0.44, 230) }
                 : { cx: vw * 0.72, cy: vh * 0.53, w: Math.min(vw * 0.34, 470) };
-    sm.style.width = WM.W + 'px';
     D = K2.w * 1.45;
     if (disk) { disk.style.width = D + 'px'; disk.style.height = D + 'px'; }
     if (anchor) anchor.style.top = Math.round(S.len * 0.9) + 'px';    // "Lo Studio" nel menu: momento di lettura (logo fermo)
+  }
+
+  /* Logo protagonista: posizione con transform, DIMENSIONE con la larghezza reale (non con scale).
+     Così il browser ridisegna il vettoriale alla misura effettiva in ogni fotogramma ed è sempre
+     nitido (con scale() la GPU ingrandiva un'"istantanea" fatta quando il logo era piccolo → sfocato). */
+  function place(cx, cy, w, rot) { return { cx: cx, cy: cy, w: w, rot: rot || 0 }; }
+  function applyMark(m) {
+    var h = m.w * 0.94;
+    sm.style.width = m.w.toFixed(1) + 'px';
+    sm.style.transform = 'translate3d(' + (m.cx - m.w / 2).toFixed(1) + 'px,' + (m.cy - h / 2).toFixed(1) + 'px,0) rotate(' + m.rot.toFixed(2) + 'deg)';
   }
 
   function markTransform(cx, cy, s, rot) {
@@ -152,20 +161,20 @@
     var cy = lerp(lerp(K0.cy, K2.cy, m1), wmCy, m3);
     var w  = lerp(lerp(K0.w,  K2.w,  m1), WM.W, m3);
     var rot = lerp(0, wmRot, m3);
-    var T = markTransform(cx, cy, w / WM.W, rot);
+    var T = place(cx, cy, w, rot);
 
 
     /* ---- Passaggio logo pieno → filigrana: dissolvenza incrociata tra due livelli che si
        muovono insieme. Solo transform + opacity (gestiti dalla GPU): nessun ridisegno
        dell'SVG durante lo scroll, quindi niente scatti. ---- */
     var mobileExit = window.innerWidth < 768;
-    var solid, wmOp, TB = T;
+    var solid, wmOp, TB = markTransform(cx, cy, w / WM.W, rot);
     if (mobileExit) {
       // Smartphone: il testo è sotto il logo, quindi il logo NON lo attraversa: sale insieme
       // alla schermata e svanisce; la filigrana compare dopo, già al suo posto.
       var up = Math.max(0, y - stageEnd);
-      T = markTransform(K2.cx, K2.cy - up, K2.w / WM.W, 0);
-      if (p < 1) T = markTransform(cx, cy, w / WM.W, 0);
+      T = place(K2.cx, K2.cy - up, K2.w, 0);
+      if (p < 1) T = place(cx, cy, w, 0);
       TB = markTransform(wmCx, wmCy, 1, wmRot);
       solid = 1 - smooth(seg(q, 0, 0.5));
       wmOp = smooth(seg(q, 0.45, 1));
@@ -173,7 +182,7 @@
       solid = 1 - smooth(seg(q, 0.15, 0.85));
       wmOp = smooth(seg(q, 0.05, 0.75));
     }
-    sm.style.transform = T;
+    applyMark(T);
     sm.style.opacity = solid.toFixed(3);
     sm.style.visibility = solid <= 0.001 ? 'hidden' : '';
     if (brand) {
@@ -234,23 +243,13 @@
     if (Math.abs(target - sy) < 0.25) sy = target;
     onHeader(); onStage(sy);
     if (sy !== target) rafId = requestAnimationFrame(tick);
-    else { rafId = null; lastT = 0; sharpen(true); }
+    else { rafId = null; lastT = 0; }
   }
-  /* Nitidezza del logo: durante il movimento il logo è un livello GPU (fluido ma "fotografato"
-     alla dimensione iniziale, quindi ingrandendolo si sfoca). A scroll fermo il livello
-     viene rilasciato e il logo ridisegnato in alta risoluzione alla dimensione attuale. */
-  var sharpTimer = null;
-  function sharpen(on) {
-    if (!sm || !animated) return;
-    clearTimeout(sharpTimer);
-    if (on) sharpTimer = setTimeout(function () { sm.classList.add('is-sharp'); }, 120);
-    else sm.classList.remove('is-sharp');
-  }
-  function onScroll() { sharpen(false); if (!rafId) rafId = requestAnimationFrame(tick); }
+  function onScroll() { if (!rafId) rafId = requestAnimationFrame(tick); }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function () { layout(); sy = window.scrollY; onHeader(); onStage(sy); });
-  layout(); onHeader(); onStage(sy); sharpen(true);
-  window.addEventListener('load', function () { layout(); onStage(sy); sharpen(true); });   // dopo il caricamento dei font
+  layout(); onHeader(); onStage(sy);
+  window.addEventListener('load', function () { layout(); onStage(sy); });   // dopo il caricamento dei font
 
   /* ---------- Comparsa elementi allo scroll ---------- */
   var reveals = document.querySelectorAll('.reveal');
@@ -281,19 +280,6 @@
   if (toggle) toggle.addEventListener('click', function () {
     toggle.setAttribute('aria-label', toggle.getAttribute('aria-expanded') === 'true' ? T.menuClose : T.menuOpen);
   });
-
-  /* ---------- Mappa Google: caricata solo dopo il consenso ----------
-     L'indirizzo è nell'attributo data-address del contenitore #map. */
-  var loadMap = document.getElementById('load-map');
-  if (loadMap) {
-    loadMap.addEventListener('click', function () {
-      var box = document.getElementById('map');
-      var addr = box.getAttribute('data-address') || 'Via Mazzini 182/F, 41049 Sassuolo MO';
-      box.innerHTML = '<iframe title="' + T.mapTitle + ': ' + addr.replace(/"/g, '') + '" ' +
-        'src="https://www.google.com/maps?q=' + encodeURIComponent(addr) + '&output=embed" ' +
-        'class="absolute inset-0 w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>';
-    });
-  }
 
   /* ---------- Moduli (contatti, lavora con noi): validazione + invio AJAX ----------
      Ogni <form class="js-form"> ha campi .field; i campi con "required" sono obbligatori,

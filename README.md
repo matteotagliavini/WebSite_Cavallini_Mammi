@@ -7,10 +7,9 @@ e strutturato per la successiva conversione in tema **WordPress**. Bilingue: ita
 
 ```
 /
-├── index.html            Home (palco animato del logo, studio, rete, servizi, internazionale, team, sedi, contatti)
+├── index.html            Home (palco animato del logo, studio, rete, aree di attività, team, dove siamo + contatti)
 ├── servizi.html          Le 8 aree di attività (#fiscale #societaria #estero #assistenza #concorsuali #contenzioso #controllo #elaborazione)
 ├── team.html             Profili dei professionisti + "Lavora con noi" (#lavora)
-├── circolari.html        Circolari informative (archivio in preparazione)
 ├── privacy.html          Informativa privacy e cookie
 ├── note-legali.html      Note legali
 ├── 404.html              Pagina "in preparazione"
@@ -28,11 +27,11 @@ e strutturato per la successiva conversione in tema **WordPress**. Bilingue: ita
         │   ├── logo.svg            Logo ufficiale ripulito (usato dal sito)
         │   └── logo-originale.svg  File vettoriale ricevuto dal cliente
         └── foto/
-            ├── studio-libreria.jpg   Biblioteca (rete, sedi)
-            ├── studio-attestato.jpg  Attestato (sedi, team: provvisoria al posto del ritratto)
-            ├── studio-giornali.jpg   Circolari
-            ├── studio-barca.jpg      Lavora con noi
-            └── estero-bandiere.jpg   Internazionale
+            ├── studio-libreria.jpg   Biblioteca (home, servizi)
+            ├── studio-attestato.jpg  Attestato (team: provvisoria al posto del ritratto; privacy, note legali)
+            ├── studio-barca.jpg      Lavora con noi (team)
+            ├── studio-giornali.jpg   (al momento non usata)
+            └── estero-bandiere.jpg   (al momento non usata)
 ```
 
 ## Versione inglese
@@ -49,7 +48,6 @@ Dopo aver modificato un testo nelle pagine italiane:
 
 ## Da completare prima della messa online
 
-- P.IVA nel footer (`[da inserire]`).
 - Form: creare un form su Formspree e sostituire `YOUR_FORM_ID` (home e team).
 - Ritratto di Corrado Cavallini: `assets/img/team/corrado-cavallini.jpg` (oggi c'è la foto dell'attestato).
 - Testi di privacy e note legali da far verificare a un legale.
@@ -63,7 +61,6 @@ Dopo aver modificato un testo nelle pagine italiane:
 | Sezioni con commento `WP: pattern`| Block pattern o sezioni Elementor                                |
 | Aree di attività                  | Custom Post Type "Servizio" o pagine figlie di /servizi          |
 | team.html                         | Custom Post Type "Professionista"                                |
-| Circolari                         | Articoli (categoria "Circolari")                                 |
 | Versione inglese `en/`            | WPML o Polylang                                                  |
 | Form                              | Contact Form 7 / WPForms (stesse classi `.field`)                |
 | Mappa con consenso                | Plugin cookie (Complianz / Iubenda)                              |

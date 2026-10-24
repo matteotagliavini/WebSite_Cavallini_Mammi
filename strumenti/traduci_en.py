@@ -6,7 +6,7 @@ Il dizionario strumenti/en.json associa ogni testo italiano alla sua traduzione.
 import sys, os, re, json, html
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DICT = os.path.join(ROOT, 'strumenti', 'en.json')
-PAGES = ['index.html', 'servizi.html', 'team.html', 'circolari.html', 'privacy.html', 'note-legali.html']
+PAGES = ['index.html', 'servizi.html', 'team.html', 'privacy.html', 'note-legali.html']
 ATTRS = ('alt', 'aria-label', 'title', 'placeholder', 'data-address-label')
 LETTER = re.compile('[A-Za-zÀ-ÿ]')
 
