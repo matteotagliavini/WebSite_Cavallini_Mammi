@@ -140,6 +140,11 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .stage-mark .mk-stroke.s2 { animation-delay: .45s; } .stage-mark .mk-stroke.s3 { animation-delay: .8s; }
 .stage-mark .mk-fill { animation: cp-fill 1.2s ease forwards; animation-delay: 2s; }
 .stage-mark .mk-fill.s2 { animation-delay: 2.3s; } .stage-mark .mk-fill.s3 { animation-delay: 2.5s; }
+/* Quando il riempimento è comparso, il contorno di "disegno" svanisce: altrimenti la linea sottile
+   sovrapposta al bordo del riempimento crea un alone che fa sembrare il logo sfocato */
+.stage-mark .mk-stroke { animation: cp-draw 2.4s cubic-bezier(.65,0,.35,1) forwards, cp-stroke-out .8s ease 3.3s forwards; }
+.stage-mark .mk-stroke.s2 { animation-delay: .45s, 3.5s; } .stage-mark .mk-stroke.s3 { animation-delay: .8s, 3.7s; }
+@keyframes cp-stroke-out { to { opacity: 0; } }
 .stage-mark .pc { transform-box: fill-box; transform-origin: center; }
 
 /* ---------- STAGE: versione base (senza JS / riduci movimento) ---------- */

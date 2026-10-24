@@ -119,8 +119,10 @@
   function place(cx, cy, w, rot) { return { cx: cx, cy: cy, w: w, rot: rot || 0 }; }
   function applyMark(m) {
     var h = m.w * 0.94;
-    sm.style.width = m.w.toFixed(1) + 'px';
-    sm.style.transform = 'translate3d(' + (m.cx - m.w / 2).toFixed(1) + 'px,' + (m.cy - h / 2).toFixed(1) + 'px,0) rotate(' + m.rot.toFixed(2) + 'deg)';
+    sm.style.width = Math.round(m.w) + 'px';
+    // posizione arrotondata al pixel intero: un livello GPU spostato di frazioni di pixel viene "ricampionato" e sfoca
+    sm.style.transform = 'translate3d(' + Math.round(m.cx - m.w / 2) + 'px,' + Math.round(m.cy - h / 2) + 'px,0)' +
+      (Math.abs(m.rot) > 0.01 ? ' rotate(' + m.rot.toFixed(2) + 'deg)' : '');
   }
 
   function markTransform(cx, cy, s, rot) {
