@@ -163,10 +163,13 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .js-stage .stage-hero { position: absolute; inset: 0; z-index: 2; min-height: 0; will-change: opacity; }
 .js-stage .stage-disk { display: block; position: absolute; z-index: 1; left: 0; top: 0; width: 100px; height: 100px; border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #EEF3F8, #DCE5EF 70%); transform-origin: 50% 50%; will-change: transform; transform: scale(0); }
-.js-stage .stage-mark { position: fixed; z-index: 1; left: 0; top: 0; transform-origin: 50% 50%; will-change: transform, opacity; perspective: 1400px; pointer-events: none; }
-.js-stage .stage-mark-rot { transform-style: preserve-3d; will-change: transform; }
+/* NB: niente will-change sul logo. Con will-change il browser (Chrome/Edge con GPU) lo trasforma in una
+   "texture" disegnata una volta sola e poi ricampionata → bordi sfocati. Senza, il vettoriale viene
+   ridisegnato nitido alla dimensione reale (verificato su Edge/Windows con zoom 125%). */
+.js-stage .stage-mark { position: fixed; z-index: 1; left: 0; top: 0; transform-origin: 50% 50%; perspective: 1400px; pointer-events: none; }
+.js-stage .stage-mark-rot { transform-style: preserve-3d; }
 .js-stage .stage-mark.is-flat { perspective: none; }
-.js-stage .stage-mark.is-flat .stage-mark-rot { transform-style: flat; will-change: auto; }
+.js-stage .stage-mark.is-flat .stage-mark-rot { transform-style: flat; }
 .js-stage .stage-studio { position: absolute; inset: 0; z-index: 4; background: none; padding: 0; display: flex; align-items: center; opacity: 0; visibility: hidden; will-change: opacity, transform; }
 .js-stage .stage-studio-text { max-width: min(50%, 40rem); }
 @media (max-width: 767px) {
@@ -198,9 +201,9 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 }
 
 /* ---------- Filigrana fissa (dopo il palco) ---------- */
-.brand-mark { position: fixed; left: 0; top: 0; z-index: 1; pointer-events: none; opacity: 0; transform-origin: 0 0; will-change: transform, opacity; }
+.brand-mark { position: fixed; left: 0; top: 0; z-index: 1; pointer-events: none; opacity: 0; transform-origin: 0 0; } /* niente will-change: resta nitido (vedi .stage-mark) */
 .brand-mark.is-on { opacity: 1; }
-.brand-mark svg { display: block; width: 100%; height: auto; overflow: visible; will-change: transform;
+.brand-mark svg { display: block; width: 100%; height: auto; overflow: visible;
   animation: cp-float 9s ease-in-out infinite alternate; }   /* respiro lento e continuo della filigrana */
 @keyframes cp-float { from { transform: translateY(-12px) rotate(-1.2deg); } to { transform: translateY(12px) rotate(1.2deg); } }
 .gb .wb-fill  { fill: var(--cp-primary); opacity: .045; }
