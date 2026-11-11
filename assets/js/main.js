@@ -258,8 +258,31 @@
   function onScroll() { if (!rafId) rafId = requestAnimationFrame(tick); }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function () { layout(); sy = window.scrollY; onHeader(); onStage(sy); });
-  layout(); onHeader(); onStage(sy);
-  window.addEventListener('load', function () { layout(); onStage(sy); });   // dopo il caricamento dei font
+  /* Arrivo con un'àncora nell'indirizzo (es. index.html#studio dalle pagine interne): si va subito
+     al punto giusto, senza scorrimento animato e senza rivedere l'animazione d'apertura "di corsa". */
+  var root0 = document.documentElement;
+  function jumpToHash() {
+    var id = decodeURIComponent((location.hash || '').slice(1));
+    var el = id ? document.getElementById(id) : null;
+    if (!el) return false;
+    var prev = root0.style.scrollBehavior;
+    root0.style.scrollBehavior = 'auto';
+    el.scrollIntoView({ block: 'start' });
+    root0.style.scrollBehavior = prev;
+    sy = window.scrollY;
+    return true;
+  }
+  layout();
+  if (location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)))) {
+    root0.classList.add('no-intro');
+    jumpToHash();
+  }
+  onHeader(); onStage(sy);
+  window.addEventListener('load', function () {                              // dopo il caricamento dei font
+    layout();
+    if (root0.classList.contains('no-intro') && !window.__cpJumped) { window.__cpJumped = true; jumpToHash(); }
+    onStage(sy);
+  });   // dopo il caricamento dei font
 
   /* ---------- Comparsa elementi allo scroll ---------- */
   var reveals = document.querySelectorAll('.reveal');

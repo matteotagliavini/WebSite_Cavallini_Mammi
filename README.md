@@ -10,6 +10,7 @@ e strutturato per la successiva conversione in tema **WordPress**. Bilingue: ita
 ├── index.html            Home (palco animato del logo, studio, rete, aree di attività, team, dove siamo + contatti)
 ├── servizi.html          Le 8 aree di attività (#fiscale #societaria #estero #assistenza #concorsuali #contenzioso #controllo #elaborazione)
 ├── team.html             Profili dei professionisti + "Lavora con noi" (#lavora)
+├── sedi.html             Le sedi (Sassuolo, Modena, Pieve di Soligo, Bergamo) con illustrazioni al tratto
 ├── privacy.html          Informativa privacy e cookie
 ├── note-legali.html      Note legali
 ├── 404.html              Pagina "in preparazione"

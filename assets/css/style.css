@@ -16,8 +16,10 @@
   --cp-muted: #4B5563;
   --cp-line: #E5E7EB;
 
-  --cp-font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  --cp-font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Font: Avenir Next LT Pro (se installato sul dispositivo) con Nunito Sans come alternativa web gratuita.
+     Titoli e testi usano la stessa famiglia; il nome "serif" resta solo per compatibilità con le classi. */
+  --cp-font-serif: "Avenir Next LT Pro", "Avenir Next", Avenir, "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --cp-font-sans: "Avenir Next LT Pro", "Avenir Next", Avenir, "Nunito Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --cp-radius: 6px;
   --cp-header-h: 76px;
@@ -381,7 +383,7 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
 .service-tile:hover::before, .service-tile:focus-visible::before { width: 100%; }
 .service-tile .icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; background: var(--cp-surface-alt); color: var(--cp-primary); transition: background-color .3s, color .3s; }
 .service-tile:hover .icon { background: var(--cp-primary); color: #fff; }
-.service-tile-title { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.45rem; line-height: 1.15; font-weight: 600; color: var(--cp-primary); }
+.service-tile-title { font-family: var(--cp-font-serif); font-size: 1.45rem; line-height: 1.15; font-weight: 600; color: var(--cp-primary); }
 @media (max-width: 639px) { .service-tile { min-height: 140px; padding: 1.25rem; } .service-tile-title { font-size: 1.2rem; } }
 
 /* ---------- Dove siamo + Scrivici: griglia 2×2 allineata ---------- */
@@ -395,3 +397,29 @@ body { font-family: var(--cp-font-sans); color: var(--cp-ink); background: var(-
   .sede-head-r { grid-column: 2; grid-row: 1; margin-top: 0; }
   .sede-body-r { grid-column: 2; grid-row: 2; }
 }
+
+/* ---------- Team: schede persona (foto, nome, ruolo) ---------- */
+.people-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+@media (min-width: 768px) { .people-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; } }
+@media (min-width: 1024px) { .people-grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.person-card { background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); padding: 1.25rem; text-align: center; }
+.person-photo { display: grid; place-items: center; width: 100%; aspect-ratio: 1 / 1; border-radius: calc(var(--cp-radius) - 2px); background: linear-gradient(160deg, #EEF3F8, #DCE5EF); color: var(--cp-secondary-300); object-fit: cover; }
+.person-photo svg { width: 46%; height: 46%; }
+.person-name { margin-top: 1rem; font-family: var(--cp-font-serif); font-size: 1.2rem; font-weight: 600; color: var(--cp-primary); line-height: 1.2; }
+.person-role { margin-top: .3rem; font-size: .85rem; color: var(--cp-secondary); line-height: 1.35; }
+
+/* ---------- Pagina sedi: scheda città con illustrazione ---------- */
+.sede-city { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--cp-line); border-radius: var(--cp-radius); overflow: hidden; scroll-margin-top: 100px; }
+.sede-city-illu { background: linear-gradient(160deg, #F3F6FA, #E4EBF3); color: var(--cp-primary); padding: 1.5rem 2rem .5rem; border-bottom: 1px solid var(--cp-line); }
+.sede-illu { display: block; width: 100%; max-width: 340px; height: auto; margin: 0 auto; }
+.sede-city-body { display: flex; flex-direction: column; flex: 1; padding: 1.75rem; }
+.sede-city .sede-label { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; color: var(--cp-secondary); font-weight: 600; }
+.sede-city .btn svg { width: 16px; height: 16px; }
+
+/* ---------- Arrivo diretto su una sezione della home (es. "Lo Studio" dalle pagine interne):
+   niente animazioni d'apertura, la schermata compare già composta ---------- */
+.no-intro .hero-title, .no-intro .hero-sub, .no-intro .hero-cta, .no-intro .hero-rule { animation: none; opacity: 1; }
+.no-intro .hero::before, .no-intro .hero-rays, .no-intro .hero-rays path { animation: none; }
+.no-intro .hero-rays path { stroke-dashoffset: 0; }
+.no-intro .stage-mark .mk-stroke { animation: none; opacity: 0; }
+.no-intro .stage-mark .mk-fill { animation: none; opacity: 1; }
